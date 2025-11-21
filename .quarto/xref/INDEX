@@ -1,8 +1,15 @@
 {
-  "about.qmd": {
-    "about.html": "ee6d00ca"
+  "lessons/lsn_1_course_intro.qmd": {
+    "lsn_1_course_intro.html": "7e0dd08f",
+    "lsn_1_course_intro.tex": "958f2e50"
   },
-  "index.qmd": {
-    "index.html": "c483f503"
+  "lessons/Lsn 1 - Course Introduction.Rmd": {
+    "Lsn 1 - Course Introduction.html": "2c3dec51"
+  },
+  "lessons/Lsn 2 - Intro to R Part I.Rmd": {
+    "Lsn 2 - Intro to R Part I.html": "9f45f55e"
+  },
+  "lessons/lsn_2_intro_to_R.Rmd": {
+    "lsn_2_intro_to_R.html": "812caa62"
   }
 }

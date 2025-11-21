@@ -1,0 +1,106 @@
+---
+title: "MA388 Sabermetrics: Lesson 2"
+subtitle: "Introduction to R"
+author: "LTC Mike Powell"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+library(Lahman)
+library(tidyverse)
+library(knitr)
+```
+
+## Compiling an .Rmd file
+
+You'll submit most (all?) assignments in this course as PDFs via the Class Notebook in Teams.  Let's make sure you can produce a PDF from R Markdown.  If you already know how to do this, sit tight for a minute...
+
+If this is new for you, you'll need to install a TeX distribution.  This is easy with `TinyTeX`.
+
+```{r, eval=FALSE}
+install.packages("tinytex")
+```
+
+With that package loaded, you're ready to install TeX.
+
+```{r, eval = FALSE}
+tinytex::install_tinytex()
+```
+
+Now you should be able to download the source file for these class notes (see Class Notebook - Lesson 2) and "Knit to PDF."  Make sure this works before the end of class today.
+
+## Review
+
+* You are investigating whether the hit-and-run is a good strategy.  Which data set should you use?
+
+\vspace{.5in}
+
+* You are investigating whether pitchers throw more fastballs to hitters at the bottom of the batting order.  Which data set would you use?
+
+\vspace{.5in}
+
+* Use R to find career batting average (H/AB) leaders of your favorite team.  More specifically, select a team and report a table of the 10 players with at least 2500 at bats (AB) with the highest batting averages while playing for that team.
+
+\vspace{2in}
+
+```{r, echo=FALSE}
+redSox <- Batting %>% 
+  filter(teamID == "BOS") %>% 
+  group_by(playerID) %>% 
+  summarize(H = sum(H),
+            AB = sum(AB)) %>% 
+  filter(AB >= 2500) %>% 
+  mutate(AVG = H/AB) %>% 
+  arrange(-AVG)
+
+redSox %>% 
+  head(10) %>% 
+  kable(digits = 3, caption = "Red Sox Career Batting Average Leaders")
+```
+
+## Merging Data Frames (pg 41)
+
+When using a relational database (what does that mean again?), a common task is to add information from one table to another.  For example, consider our table above from the review.  Add the player's name and when they played their final game.
+
+```{r}
+# I called my table from the review redSox.
+
+redSox <- redSox %>% 
+  left_join(select(People, playerID, nameLast, nameFirst, finalGame), by = "playerID" )
+```
+
+Your turn...the `HallofFame` data frame contains data on every Hall of Fame ballot.  Add to your table above whether the player is in the Hall of Fame. (hint: `filter(inducted == "Y")`)
+
+\vspace{.5in}
+
+```{r, echo = FALSE}
+inductee <- HallOfFame %>% 
+  filter(inducted == "Y") %>% 
+  select(playerID, yearID, inducted)
+
+redSox <- redSox %>% 
+  left_join(inductee, by = "playerID")
+  
+redSox %>% 
+  head(10) %>% 
+  kable(digits = 3, caption = "Red Sox career batting average leaders")
+```
+
+What cleaning would you still want to do to this table to make it more readable?
+
+\vspace{.25in}
+
+What is the difference between left\_join(), right\_join(), inner\_join(), and outer\_join()?
+
+
+
+

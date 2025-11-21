@@ -21,7 +21,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("tidyverse","ggplot2","dplyr"))'
+          Rscript -e 'install.packages(c("tidyverse","ggplot2","dplyr","Lahman"))'
           # Add any other packages your course uses
 
       - name: Render site

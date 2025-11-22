@@ -21,7 +21,8 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("tidyverse","ggplot2","dplyr","Lahman"))'
+          Rscript -e 'install.packages(c("tidyverse","ggplot2","dplyr","Lahman"),
+          repos="https://cloud.r-project.org", dependencies=TRUE)'
           # Add any other packages your course uses
 
       - name: Render site

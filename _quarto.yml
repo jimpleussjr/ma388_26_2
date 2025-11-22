@@ -8,13 +8,17 @@ website:
         text: Home
       - text: Lessons
         menu:
-          - href: lessons/lsn1_course_intro.qmd
+          - href: lessons/lsn1_course_intro.html
             text: "Lesson 1: Course Introduction"
-          # - href: lessons/lsn2_intro_to_R.Rmd
-          #   text: "Lesson 2: Introduction to R"
+          - href: lessons/lsn2_intro_to_R.html
+            text: "Lesson 2: Introduction to R"
   sidebar:
     style: "floating"
 format:
   html:
     theme: cosmo
     toc: true
+
+    
+execute:
+  freeze: auto   # Ensures code is executed during render

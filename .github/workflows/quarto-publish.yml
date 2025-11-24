@@ -19,10 +19,22 @@ jobs:
         with:
           r-version: '4.3.1'
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+      # - name: Install system dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+
+      # Cache and install R packages
+      - name: Install R packages with caching
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            tidyverse
+            ggplot2
+            dplyr
+            Lahman
+          cache-version: 1
 
       - name: Install R packages
         run: |

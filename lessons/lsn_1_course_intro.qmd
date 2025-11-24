@@ -56,13 +56,13 @@ Please tell us your:
 -   Unique Skill / Random Fact
 
 ```{r, echo=FALSE, out.height="45%", fig.align='center'}
-knitr::include_graphics("./website/lessons/intro_pic_1.png")
+knitr::include_graphics("./lessons/intro_pic_1.png")
 ```
 
 \vspace{.25in}
 
 ```{r, echo=FALSE, out.height="45%", fig.align='center'}
-knitr::include_graphics("./website/lessons/intro_pic_2.png")
+knitr::include_graphics("./lessons/intro_pic_2.png")
 ```
 
 # DAW, Section Marcher Role

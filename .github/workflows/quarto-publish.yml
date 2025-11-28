@@ -1,48 +1,15 @@
-name: Quarto Publish
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.4.1'
-
-      # - name: Install system dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-
-
-      # Cache and install R packages
-      - name: Install R packages with caching
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            tidyverse
-            ggplot2
-            dplyr
-            Lahman
-          cache-version: 1
-
-      - name: Install R packages
-        run: |
-          Rscript -e 'install.packages(c("tidyverse","ggplot2","dplyr","Lahman"),
-          repos="https://cloud.r-project.org", dependencies=TRUE)'
-
-      - name: Render site
-        run: quarto render
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

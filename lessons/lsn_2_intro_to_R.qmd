@@ -2,17 +2,17 @@
 title: "MA388 Sabermetrics: Lesson 2"
 subtitle: "Introduction to R"
 author: "LTC Mike Powell"
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
+format:
+  html:
+    theme: cosmo
+    toc: true
+  pdf:
+    documentclass: article
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      warning = FALSE,
-                      message = FALSE)
-```
 
 ```{r}
 library(Lahman)
@@ -26,13 +26,15 @@ You'll submit most (all?) assignments in this course as PDFs via the Class Noteb
 
 If this is new for you, you'll need to install a TeX distribution.  This is easy with `TinyTeX`.
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 install.packages("tinytex")
 ```
 
 With that package loaded, you're ready to install TeX.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 tinytex::install_tinytex()
 ```
 
@@ -52,18 +54,19 @@ Now you should be able to download the source file for these class notes (see Cl
 
 \vspace{2in}
 
-```{r, echo=FALSE}
-redSox <- Batting %>% 
-  filter(teamID == "BOS") %>% 
-  group_by(playerID) %>% 
+```{r}
+#| echo: false
+redSox <- Batting %>%
+  filter(teamID == "BOS") %>%
+  group_by(playerID) %>%
   summarize(H = sum(H),
-            AB = sum(AB)) %>% 
-  filter(AB >= 2500) %>% 
-  mutate(AVG = H/AB) %>% 
+            AB = sum(AB)) %>%
+  filter(AB >= 2500) %>%
+  mutate(AVG = H/AB) %>%
   arrange(-AVG)
 
-redSox %>% 
-  head(10) %>% 
+redSox %>%
+  head(10) %>%
   kable(digits = 3, caption = "Red Sox Career Batting Average Leaders")
 ```
 
@@ -74,7 +77,7 @@ When using a relational database (what does that mean again?), a common task is 
 ```{r}
 # I called my table from the review redSox.
 
-redSox <- redSox %>% 
+redSox <- redSox %>%
   left_join(select(People, playerID, nameLast, nameFirst, finalGame), by = "playerID" )
 ```
 
@@ -82,16 +85,17 @@ Your turn...the `HallofFame` data frame contains data on every Hall of Fame ball
 
 \vspace{.5in}
 
-```{r, echo = FALSE}
-inductee <- HallOfFame %>% 
-  filter(inducted == "Y") %>% 
+```{r}
+#| echo: false
+inductee <- HallOfFame %>%
+  filter(inducted == "Y") %>%
   select(playerID, yearID, inducted)
 
-redSox <- redSox %>% 
+redSox <- redSox %>%
   left_join(inductee, by = "playerID")
-  
-redSox %>% 
-  head(10) %>% 
+
+redSox %>%
+  head(10) %>%
   kable(digits = 3, caption = "Red Sox career batting average leaders")
 ```
 
@@ -100,7 +104,3 @@ What cleaning would you still want to do to this table to make it more readable?
 \vspace{.25in}
 
 What is the difference between left\_join(), right\_join(), inner\_join(), and outer\_join()?
-
-
-
-

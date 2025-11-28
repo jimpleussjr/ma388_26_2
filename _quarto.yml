@@ -8,12 +8,10 @@ website:
         text: Home
       - text: Lessons
         menu:
-          - href: lessons/lsn1_course_intro.html
+          - href: lessons/lsn_1_course_intro.qmd
             text: "Lesson 1: Course Introduction"
-          - href: lessons/lsn2_intro_to_R.html
+          - href: lessons/lsn_2_intro_to_R.qmd
             text: "Lesson 2: Introduction to R"
-  sidebar:
-    style: "floating"
 format:
   html:
     theme: cosmo

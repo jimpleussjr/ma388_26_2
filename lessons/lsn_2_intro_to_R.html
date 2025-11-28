@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="LTC Mike Powell">
 
-<title>MA388 Sabermetrics AY26-2 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 2 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +21,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">MA388 Sabermetrics</span>
     </a>
   </div>
@@ -89,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -98,11 +134,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons">    
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_1_course_intro.html">
+    <a class="dropdown-item" href="../lessons/lsn_1_course_intro.html">
  <span class="dropdown-text">Lesson 1: Course Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_2_intro_to_R.html">
+    <a class="dropdown-item" href="../lessons/lsn_2_intro_to_R.html">
  <span class="dropdown-text">Lesson 2: Introduction to R</span></a>
   </li>  
     </ul>
@@ -118,21 +154,36 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#compiling-an-.rmd-file" id="toc-compiling-an-.rmd-file" class="nav-link active" data-scroll-target="#compiling-an-.rmd-file">Compiling an .Rmd file</a></li>
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
+  <li><a href="#merging-data-frames-pg-41" id="toc-merging-data-frames-pg-41" class="nav-link" data-scroll-target="#merging-data-frames-pg-41">Merging Data Frames (pg 41)</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_2_intro_to_R.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics AY26-2</h1>
+<h1 class="title">MA388 Sabermetrics: Lesson 2</h1>
+<p class="subtitle lead">Introduction to R</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>LTC Mike Powell </p>
+          </div>
+  </div>
     
   
     
@@ -143,10 +194,271 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to MA388 Sabermetrics for AY26-2.</p>
-<p>Use the navigation menu above to access lesson materials.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="compiling-an-.rmd-file" class="level2">
+<h2 class="anchored" data-anchor-id="compiling-an-.rmd-file">Compiling an .Rmd file</h2>
+<p>You’ll submit most (all?) assignments in this course as PDFs via the Class Notebook in Teams. Let’s make sure you can produce a PDF from R Markdown. If you already know how to do this, sit tight for a minute…</p>
+<p>If this is new for you, you’ll need to install a TeX distribution. This is easy with <code>TinyTeX</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With that package loaded, you’re ready to install TeX.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now you should be able to download the source file for these class notes (see Class Notebook - Lesson 2) and “Knit to PDF.” Make sure this works before the end of class today.</p>
+</section>
+<section id="review" class="level2">
+<h2 class="anchored" data-anchor-id="review">Review</h2>
+<ul>
+<li>You are investigating whether the hit-and-run is a good strategy. Which data set should you use?</li>
+</ul>
+<ul>
+<li>You are investigating whether pitchers throw more fastballs to hitters at the bottom of the batting order. Which data set would you use?</li>
+</ul>
+<ul>
+<li>Use R to find career batting average (H/AB) leaders of your favorite team. More specifically, select a team and report a table of the 10 players with at least 2500 at bats (AB) with the highest batting averages while playing for that team.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Red Sox Career Batting Average Leaders</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">playerID</th>
+<th style="text-align: right;">H</th>
+<th style="text-align: right;">AB</th>
+<th style="text-align: right;">AVG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">willite01</td>
+<td style="text-align: right;">2654</td>
+<td style="text-align: right;">7706</td>
+<td style="text-align: right;">0.344</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">boggswa01</td>
+<td style="text-align: right;">2098</td>
+<td style="text-align: right;">6213</td>
+<td style="text-align: right;">0.338</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">speaktr01</td>
+<td style="text-align: right;">1327</td>
+<td style="text-align: right;">3935</td>
+<td style="text-align: right;">0.337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">garcino01</td>
+<td style="text-align: right;">1281</td>
+<td style="text-align: right;">3968</td>
+<td style="text-align: right;">0.323</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">runnepe01</td>
+<td style="text-align: right;">825</td>
+<td style="text-align: right;">2578</td>
+<td style="text-align: right;">0.320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">foxxji01</td>
+<td style="text-align: right;">1051</td>
+<td style="text-align: right;">3288</td>
+<td style="text-align: right;">0.320</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peskyjo01</td>
+<td style="text-align: right;">1277</td>
+<td style="text-align: right;">4085</td>
+<td style="text-align: right;">0.313</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ramirma02</td>
+<td style="text-align: right;">1232</td>
+<td style="text-align: right;">3953</td>
+<td style="text-align: right;">0.312</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lynnfr01</td>
+<td style="text-align: right;">944</td>
+<td style="text-align: right;">3062</td>
+<td style="text-align: right;">0.308</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">goodmbi01</td>
+<td style="text-align: right;">1344</td>
+<td style="text-align: right;">4399</td>
+<td style="text-align: right;">0.306</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="merging-data-frames-pg-41" class="level2">
+<h2 class="anchored" data-anchor-id="merging-data-frames-pg-41">Merging Data Frames (pg 41)</h2>
+<p>When using a relational database (what does that mean again?), a common task is to add information from one table to another. For example, consider our table above from the review. Add the player’s name and when they played their final game.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I called my table from the review redSox.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>redSox <span class="ot">&lt;-</span> redSox <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(People, playerID, nameLast, nameFirst, finalGame), <span class="at">by =</span> <span class="st">"playerID"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Your turn…the <code>HallofFame</code> data frame contains data on every Hall of Fame ballot. Add to your table above whether the player is in the Hall of Fame. (hint: <code>filter(inducted == "Y")</code>)</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Red Sox career batting average leaders</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">playerID</th>
+<th style="text-align: right;">H</th>
+<th style="text-align: right;">AB</th>
+<th style="text-align: right;">AVG</th>
+<th style="text-align: left;">nameLast</th>
+<th style="text-align: left;">nameFirst</th>
+<th style="text-align: left;">finalGame</th>
+<th style="text-align: right;">yearID</th>
+<th style="text-align: left;">inducted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">willite01</td>
+<td style="text-align: right;">2654</td>
+<td style="text-align: right;">7706</td>
+<td style="text-align: right;">0.344</td>
+<td style="text-align: left;">Williams</td>
+<td style="text-align: left;">Ted</td>
+<td style="text-align: left;">1960-09-28</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: left;">Y</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">boggswa01</td>
+<td style="text-align: right;">2098</td>
+<td style="text-align: right;">6213</td>
+<td style="text-align: right;">0.338</td>
+<td style="text-align: left;">Boggs</td>
+<td style="text-align: left;">Wade</td>
+<td style="text-align: left;">1999-08-27</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">Y</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">speaktr01</td>
+<td style="text-align: right;">1327</td>
+<td style="text-align: right;">3935</td>
+<td style="text-align: right;">0.337</td>
+<td style="text-align: left;">Speaker</td>
+<td style="text-align: left;">Tris</td>
+<td style="text-align: left;">1928-08-30</td>
+<td style="text-align: right;">1937</td>
+<td style="text-align: left;">Y</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">garcino01</td>
+<td style="text-align: right;">1281</td>
+<td style="text-align: right;">3968</td>
+<td style="text-align: right;">0.323</td>
+<td style="text-align: left;">Garciaparra</td>
+<td style="text-align: left;">Nomar</td>
+<td style="text-align: left;">2009-10-04</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">runnepe01</td>
+<td style="text-align: right;">825</td>
+<td style="text-align: right;">2578</td>
+<td style="text-align: right;">0.320</td>
+<td style="text-align: left;">Runnels</td>
+<td style="text-align: left;">Pete</td>
+<td style="text-align: left;">1964-05-14</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">foxxji01</td>
+<td style="text-align: right;">1051</td>
+<td style="text-align: right;">3288</td>
+<td style="text-align: right;">0.320</td>
+<td style="text-align: left;">Foxx</td>
+<td style="text-align: left;">Jimmie</td>
+<td style="text-align: left;">1945-09-23</td>
+<td style="text-align: right;">1951</td>
+<td style="text-align: left;">Y</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peskyjo01</td>
+<td style="text-align: right;">1277</td>
+<td style="text-align: right;">4085</td>
+<td style="text-align: right;">0.313</td>
+<td style="text-align: left;">Pesky</td>
+<td style="text-align: left;">Johnny</td>
+<td style="text-align: left;">1954-09-24</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ramirma02</td>
+<td style="text-align: right;">1232</td>
+<td style="text-align: right;">3953</td>
+<td style="text-align: right;">0.312</td>
+<td style="text-align: left;">Ramirez</td>
+<td style="text-align: left;">Manny</td>
+<td style="text-align: left;">2011-04-06</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lynnfr01</td>
+<td style="text-align: right;">944</td>
+<td style="text-align: right;">3062</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: left;">Lynn</td>
+<td style="text-align: left;">Fred</td>
+<td style="text-align: left;">1990-10-03</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">goodmbi01</td>
+<td style="text-align: right;">1344</td>
+<td style="text-align: right;">4399</td>
+<td style="text-align: right;">0.306</td>
+<td style="text-align: left;">Goodman</td>
+<td style="text-align: left;">Billy</td>
+<td style="text-align: left;">1962-09-30</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>What cleaning would you still want to do to this table to make it more readable?</p>
+<p>What is the difference between left_join(), right_join(), inner_join(), and outer_join()?</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

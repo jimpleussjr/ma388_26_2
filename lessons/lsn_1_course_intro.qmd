@@ -49,20 +49,22 @@ Please tell us your:
 
 -   Major
 
--   Desired Branch
+-   Branch/Desired Branch
 
 -   Activities (Sports, Clubs, Interests)
 
 -   Unique Skill / Random Fact
 
+-   Song (title and artist) that ups your mood anytime you hear it.
+
 ```{r, echo=FALSE, out.height="45%", fig.align='center'}
-# knitr::include_graphics("lessons/intro_pic_1.PNG")
+knitr::include_graphics("who_am_i_1.png")
 ```
 
 \vspace{.25in}
 
 ```{r, echo=FALSE, out.height="45%", fig.align='center'}
-# knitr::include_graphics("lessons/intro_pic_2.PNG")
+knitr::include_graphics("who_am_i_2.png")
 ```
 
 # DAW, Section Marcher Role
@@ -95,6 +97,8 @@ You're going to learn a lot about all three. My hope is that you will recognize 
 
 -   Understand you have other things going on in your life.
 
+-   Make mistakes.
+
 ### I expect you to...
 
 -   Keep an open mind and grow as future officers in our profession.
@@ -107,17 +111,19 @@ You're going to learn a lot about all three. My hope is that you will recognize 
 
 -   Actively participate in class.
 
+-   Be respectful of your classmates
+
+-   Make mistakes. Maybe even more than me...
+
 ### Course Documentation (located on Canvas)
 
 -   Syllabus (Course Calendar)
 
 -   Instructional Memo
 
--   Lesson Notes
+-   Lesson Notes (prior to the lesson)
 
--   Problem Sets
-
--   Project Instructions
+-   Problem Sets (about 10 days in advance of due date)
 
 ### Course Texts
 
@@ -143,7 +149,7 @@ If you need a short introduction to the rules and general flow of a baseball gam
 
 -   Statcast - Launch Angle, Exit Velocity, Distance, Player Positioning (since 2015)
 
-How do we get all this amazing baseball data? Read Section 1.7 in AWBDR closely. Some data we'll use will come from packages, and some data will take a bit more effort to assemble...but we can do it.
+How do we get all this amazing baseball data? Read Section 1.7 in ABDWR closely. Some data we'll use will come from packages, and some data will take a bit more effort to assemble...but we can do it.
 
 \newpage
 

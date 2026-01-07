@@ -11,5 +11,12 @@
   },
   "lessons/lsn_2_intro_to_R.Rmd": {
     "lsn_2_intro_to_R.html": "812caa62"
+  },
+  "index.qmd": {
+    "index.html": "b35a8d72"
+  },
+  "lessons/lsn_2_intro_to_R.qmd": {
+    "lsn_2_intro_to_R.html": "a78faf9a",
+    "lsn_2_intro_to_R.tex": "32217543"
   }
 }

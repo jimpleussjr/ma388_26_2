@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="LTC Mike Powell">
 
-<title>MA388 Sabermetrics: Lesson 2 – MA388 Sabermetrics</title>
+<title>textbook summary – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -75,11 +40,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -105,83 +70,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">MA388 Sabermetrics</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Lessons</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons">    
-        <li>
-    <a class="dropdown-item" href="../lessons/lsn_1_course_intro.html">
- <span class="dropdown-text">Lesson 1: Course Introduction</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lessons/lsn_2_intro_to_R.html">
- <span class="dropdown-text">Lesson 2: Introduction to R</span></a>
-  </li>  
-    </ul>
-  </li>
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      MA388 Sabermetrics
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">MA388 Sabermetrics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#compiling-an-.rmd-file" id="toc-compiling-an-.rmd-file" class="nav-link active" data-scroll-target="#compiling-an-.rmd-file">Compiling an .Rmd file</a></li>
-  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
-  <li><a href="#merging-data-frames-pg-41" id="toc-merging-data-frames-pg-41" class="nav-link" data-scroll-target="#merging-data-frames-pg-41">Merging Data Frames (pg 41)</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_2_intro_to_R.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 2</h1>
-<p class="subtitle lead">Introduction to R</p>
+<h1 class="title">textbook summary</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>LTC Mike Powell </p>
-          </div>
-  </div>
     
   
     
@@ -192,271 +132,176 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="compiling-an-.rmd-file" class="level2">
-<h2 class="anchored" data-anchor-id="compiling-an-.rmd-file">Compiling an .Rmd file</h2>
-<p>You’ll submit most (all?) assignments in this course as PDFs via the Class Notebook in Teams. Let’s make sure you can produce a PDF from R Markdown. If you already know how to do this, sit tight for a minute…</p>
-<p>If this is new for you, you’ll need to install a TeX distribution. This is easy with <code>TinyTeX</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>With that package loaded, you’re ready to install TeX.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now you should be able to download the source file for these class notes (see Class Notebook - Lesson 2) and “Knit to PDF.” Make sure this works before the end of class today.</p>
-</section>
-<section id="review" class="level2">
-<h2 class="anchored" data-anchor-id="review">Review</h2>
 <ul>
-<li>You are investigating whether the hit-and-run is a good strategy. Which data set should you use?</li>
-</ul>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html">1&nbsp; The Baseball Datasets</a>
 <ul>
-<li>You are investigating whether pitchers throw more fastballs to hitters at the bottom of the batting order. Which data set would you use?</li>
-</ul>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#introduction">1.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-lahman">1.2 The Lahman Database: Season-by-Season Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-datasets_Retrosheet">1.3 Retrosheet Game-by-Game Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-retro_pbp">1.4 Retrosheet Play-by-Play Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#pitch-by-pitch-data">1.5 Pitch-by-Pitch Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#player-movement-and-off-the-bat-data">1.6 Player Movement and Off-the-Bat Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#data-used-in-this-book">1.7 Data Used in this Book</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#summary">1.8 Summary</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#further-reading">1.9 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#exercises">1.10 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html">2&nbsp; Introduction to R</a>
 <ul>
-<li>Use R to find career batting average (H/AB) leaders of your favorite team. More specifically, select a team and report a table of the 10 players with at least 2500 at bats (AB) with the highest batting averages while playing for that team.</li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#introduction">2.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#installing-r-and-rstudio">2.2 Installing R and RStudio</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#the-tidyverse">2.3 The Tidyverse</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-df">2.4 Data Frames</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-vectors">2.5 Vectors</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-objectscontainers">2.6 Objects and Containers in R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#collection-of-r-commands">2.7 Collection of R Commands</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-data_import">2.8 Reading and Writing Data in R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-pkg">2.9 Packages</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-split_apply">2.10 Splitting, Applying, and Combining Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-gettinghelp">2.11 Getting Help</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#further-reading">2.12 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#exercises">2.13 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html">3&nbsp; Graphics</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#introduction">3.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#character-variable">3.2 Character Variable</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#saving-graphs">3.3 Saving Graphs</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#numeric-variable-one-dimensional-scatterplot-and-histogram">3.4 Numeric Variable: One-Dimensional Scatterplot and Histogram</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#two-numeric-variables">3.5 Two Numeric Variables</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#a-numeric-variable-and-a-factor-variable">3.6 A Numeric Variable and a Factor Variable</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#sec-comparesluggers">3.7 Comparing Ruth, Aaron, Bonds, and A-Rod</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#sec-section5">3.8 The 1998 Home Run Race</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#further-reading">3.9 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#exercises">3.10 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html">4&nbsp; The Relation Between Runs and Wins</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#introduction">4.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#the-teams-table-in-the-lahman-database">4.2 The Teams Table in the Lahman Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#sec-LinearRegression">4.3 Linear Regression</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#the-pythagorean-formula-for-winning-percentage">4.4 The Pythagorean Formula for Winning Percentage</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#sec-runswin">4.5 How Many Runs for a Win?</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#further-reading">4.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#exercises">4.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html">5&nbsp; Value of Plays Using Run Expectancy</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-matrix">5.1 The Run Expectancy Matrix</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#runs-scored-in-the-remainder-of-the-inning">5.2 Runs Scored in the Remainder of the Inning</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-runsexpectancy">5.3 Creating the Matrix</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-run-values">5.4 Measuring Success of a Batting Play</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#jos%C3%A9-altuve">5.5 José Altuve</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#opportunity-and-success-for-all-hitters">5.6 Opportunity and Success for All Hitters</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#position-in-the-batting-lineup">5.7 Position in the Batting Lineup</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-runvaluebasehit">5.8 Run Values of Different Base Hits</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#value-of-base-stealing">5.9 Value of Base Stealing</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#further-reading-and-software">5.10 Further Reading and Software</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#exercises">5.11 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html">6&nbsp; Balls and Strikes Effects</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#introduction">6.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#sec-hit_pit_counts">6.2 Hitter’s Counts and Pitcher’s Counts</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#behaviors-by-count">6.3 Behaviors by Count</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#further-reading">6.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#exercises">6.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html">7&nbsp; Catcher Framing</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#introduction">7.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#acquiring-pitch-level-data">7.2 Acquiring Pitch-Level Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#where-is-the-strike-zone">7.3 Where Is the Strike Zone?</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#modeling-called-strike-percentage">7.4 Modeling Called Strike Percentage</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#sec-catcher-framing">7.5 Modeling Catcher Framing</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#further-reading">7.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#exercises">7.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html">8&nbsp; Career Trajectories</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#introduction">8.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-mantle">8.2 Mickey Mantle’s Batting Trajectory</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-comparison">8.3 Comparing Trajectories</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-general">8.4 General Patterns of Peak Ages</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-fielding">8.5 Trajectories and Fielding Position</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#further-reading">8.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#exercises">8.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html">9&nbsp; Simulation</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#introduction">9.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#sec-markovchain">9.2 Simulating a Half Inning</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#sec-bradleyterry">9.3 Simulating a Baseball Season</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#further-reading">9.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#exercises">9.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html">10&nbsp; Exploring Streaky Performances</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#introduction">10.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-joed">10.2 The Great Streak</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-individual">10.3 Streaks in Individual At-Bats</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-woba">10.4 Local Patterns of Statcast Launch Velocity</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#further-reading">10.5 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#exercises">10.6 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html">11&nbsp; Using a Database to Compute Park Factors</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#introduction">11.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-startMySQL">11.2 Installing MySQL and Creating a Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#connecting-r-to-mysql">11.3 Connecting R to MySQL</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-gamelog">11.4 Filling a MySQL Game Log Database from R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#querying-data-from-r">11.5 Querying Data from R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-owndb">11.6 Building Your Own Baseball Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-parkfactors">11.7 Calculating Basic Park Factors</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#further-reading">11.8 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#exercises">11.9 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html">12&nbsp; Working with Large Data</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#introduction">12.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-statcast-year">12.2 Acquiring a Year’s Worth of Statcast Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#storing-large-data-efficiently">12.3 Storing Large Data Efficiently</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-performance">12.4 Performance Comparison</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-launch_angle">12.5 Launch Angles and Exit Velocities, Revisited</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#further-reading">12.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#exercises">12.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html">13&nbsp; Home Run Hitting</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#introduction">13.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#sec-hr_exploring">13.2 Exploring a Season of Home Run Hitting</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#sec-hr_changes">13.3 Comparing Home Run Hitting in the 2021 and 2023 Seasons</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#further-reading">13.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#exercises">13.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html">14&nbsp; Making a Scientific Presentation using Quarto</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#introduction-to-slides-in-quarto">14.1 Introduction to Slides in Quarto</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#sec-slides">14.2 Example: Jim’s Presentation on Home Run Hitting</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#sec-beamer">14.3 Alternative Output Formats</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#further-reading">14.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#exercises">14.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html">15&nbsp; Using Shiny for Baseball Applications</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#introduction">15.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-function">15.2 Comparing Two Pitcher Trajectories</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-creating_shiny">15.3 Creating the Shiny App</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-sharing_shiny">15.4 Sharing the App</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-shiny_tips">15.5 Tips for Getting Started Making Apps</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#further-reading">15.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#exercises">15.7 Exercises</a></li>
+</ul></li>
+<li>Appendices
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/A_retrosheet.html">A&nbsp; Retrosheet Files Reference</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/B_mlbam.html">B&nbsp; Historical Notes on PITCHf/x Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/C_statcast.html">C&nbsp; Statcast Data Reference</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/99-references.html">References</a></li>
+</ul></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Red Sox Career Batting Average Leaders</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">playerID</th>
-<th style="text-align: right;">H</th>
-<th style="text-align: right;">AB</th>
-<th style="text-align: right;">AVG</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">willite01</td>
-<td style="text-align: right;">2654</td>
-<td style="text-align: right;">7706</td>
-<td style="text-align: right;">0.344</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">boggswa01</td>
-<td style="text-align: right;">2098</td>
-<td style="text-align: right;">6213</td>
-<td style="text-align: right;">0.338</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">speaktr01</td>
-<td style="text-align: right;">1327</td>
-<td style="text-align: right;">3935</td>
-<td style="text-align: right;">0.337</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">garcino01</td>
-<td style="text-align: right;">1281</td>
-<td style="text-align: right;">3968</td>
-<td style="text-align: right;">0.323</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">runnepe01</td>
-<td style="text-align: right;">825</td>
-<td style="text-align: right;">2578</td>
-<td style="text-align: right;">0.320</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">foxxji01</td>
-<td style="text-align: right;">1051</td>
-<td style="text-align: right;">3288</td>
-<td style="text-align: right;">0.320</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">peskyjo01</td>
-<td style="text-align: right;">1277</td>
-<td style="text-align: right;">4085</td>
-<td style="text-align: right;">0.313</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ramirma02</td>
-<td style="text-align: right;">1232</td>
-<td style="text-align: right;">3953</td>
-<td style="text-align: right;">0.312</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lynnfr01</td>
-<td style="text-align: right;">944</td>
-<td style="text-align: right;">3062</td>
-<td style="text-align: right;">0.308</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">goodmbi01</td>
-<td style="text-align: right;">1344</td>
-<td style="text-align: right;">4399</td>
-<td style="text-align: right;">0.306</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="merging-data-frames-pg-41" class="level2">
-<h2 class="anchored" data-anchor-id="merging-data-frames-pg-41">Merging Data Frames (pg 41)</h2>
-<p>When using a relational database (what does that mean again?), a common task is to add information from one table to another. For example, consider our table above from the review. Add the player’s name and when they played their final game.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I called my table from the review redSox.</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>redSox <span class="ot">&lt;-</span> redSox <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(People, playerID, nameLast, nameFirst, finalGame), <span class="at">by =</span> <span class="st">"playerID"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Your turn…the <code>HallofFame</code> data frame contains data on every Hall of Fame ballot. Add to your table above whether the player is in the Hall of Fame. (hint: <code>filter(inducted == "Y")</code>)</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Red Sox career batting average leaders</caption>
-<colgroup>
-<col style="width: 13%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 16%">
-<col style="width: 13%">
-<col style="width: 14%">
-<col style="width: 9%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">playerID</th>
-<th style="text-align: right;">H</th>
-<th style="text-align: right;">AB</th>
-<th style="text-align: right;">AVG</th>
-<th style="text-align: left;">nameLast</th>
-<th style="text-align: left;">nameFirst</th>
-<th style="text-align: left;">finalGame</th>
-<th style="text-align: right;">yearID</th>
-<th style="text-align: left;">inducted</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">willite01</td>
-<td style="text-align: right;">2654</td>
-<td style="text-align: right;">7706</td>
-<td style="text-align: right;">0.344</td>
-<td style="text-align: left;">Williams</td>
-<td style="text-align: left;">Ted</td>
-<td style="text-align: left;">1960-09-28</td>
-<td style="text-align: right;">1966</td>
-<td style="text-align: left;">Y</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">boggswa01</td>
-<td style="text-align: right;">2098</td>
-<td style="text-align: right;">6213</td>
-<td style="text-align: right;">0.338</td>
-<td style="text-align: left;">Boggs</td>
-<td style="text-align: left;">Wade</td>
-<td style="text-align: left;">1999-08-27</td>
-<td style="text-align: right;">2005</td>
-<td style="text-align: left;">Y</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">speaktr01</td>
-<td style="text-align: right;">1327</td>
-<td style="text-align: right;">3935</td>
-<td style="text-align: right;">0.337</td>
-<td style="text-align: left;">Speaker</td>
-<td style="text-align: left;">Tris</td>
-<td style="text-align: left;">1928-08-30</td>
-<td style="text-align: right;">1937</td>
-<td style="text-align: left;">Y</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">garcino01</td>
-<td style="text-align: right;">1281</td>
-<td style="text-align: right;">3968</td>
-<td style="text-align: right;">0.323</td>
-<td style="text-align: left;">Garciaparra</td>
-<td style="text-align: left;">Nomar</td>
-<td style="text-align: left;">2009-10-04</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">runnepe01</td>
-<td style="text-align: right;">825</td>
-<td style="text-align: right;">2578</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: left;">Runnels</td>
-<td style="text-align: left;">Pete</td>
-<td style="text-align: left;">1964-05-14</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">foxxji01</td>
-<td style="text-align: right;">1051</td>
-<td style="text-align: right;">3288</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: left;">Foxx</td>
-<td style="text-align: left;">Jimmie</td>
-<td style="text-align: left;">1945-09-23</td>
-<td style="text-align: right;">1951</td>
-<td style="text-align: left;">Y</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">peskyjo01</td>
-<td style="text-align: right;">1277</td>
-<td style="text-align: right;">4085</td>
-<td style="text-align: right;">0.313</td>
-<td style="text-align: left;">Pesky</td>
-<td style="text-align: left;">Johnny</td>
-<td style="text-align: left;">1954-09-24</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ramirma02</td>
-<td style="text-align: right;">1232</td>
-<td style="text-align: right;">3953</td>
-<td style="text-align: right;">0.312</td>
-<td style="text-align: left;">Ramirez</td>
-<td style="text-align: left;">Manny</td>
-<td style="text-align: left;">2011-04-06</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lynnfr01</td>
-<td style="text-align: right;">944</td>
-<td style="text-align: right;">3062</td>
-<td style="text-align: right;">0.308</td>
-<td style="text-align: left;">Lynn</td>
-<td style="text-align: left;">Fred</td>
-<td style="text-align: left;">1990-10-03</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">goodmbi01</td>
-<td style="text-align: right;">1344</td>
-<td style="text-align: right;">4399</td>
-<td style="text-align: right;">0.306</td>
-<td style="text-align: left;">Goodman</td>
-<td style="text-align: left;">Billy</td>
-<td style="text-align: left;">1962-09-30</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>What cleaning would you still want to do to this table to make it more readable?</p>
-<p>What is the difference between left_join(), right_join(), inner_join(), and outer_join()?</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

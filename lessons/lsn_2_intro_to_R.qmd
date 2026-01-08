@@ -1,7 +1,6 @@
 ---
 title: "MA388 Sabermetrics: Lesson 2"
 subtitle: "Introduction to R"
-author: "LTC Mike Powell"
 format:
   html:
     theme: cosmo
@@ -20,9 +19,9 @@ library(tidyverse)
 library(knitr)
 ```
 
-## Compiling an .Rmd file
+## Compiling an .qmd file
 
-You'll submit most (all?) assignments in this course as PDFs via the Class Notebook in Teams.  Let's make sure you can produce a PDF from R Markdown.  If you already know how to do this, sit tight for a minute...
+You'll submit most assignments in this course as PDFs via Canvas.  Let's make sure you can produce a PDF from Quarto Markdown.  If you already know how to do this, sit tight for a minute...
 
 If this is new for you, you'll need to install a TeX distribution.  This is easy with `TinyTeX`.
 
@@ -38,7 +37,17 @@ With that package loaded, you're ready to install TeX.
 tinytex::install_tinytex()
 ```
 
-Now you should be able to download the source file for these class notes (see Class Notebook - Lesson 2) and "Knit to PDF."  Make sure this works before the end of class today.
+Now you should be able to download the source file for these class notes (see "lsn_2_intro_to_R.qmd") and "Render to PDF."  Make sure this works before the end of class today.
+
+## R Syntax Best Practices
+
+### Variable Assignemnt
+
+A lot of folks like to use the `=` sign to assign variable names. While it generally does work, the more appropriate syntax is `->` or `<-`, depending on which side of the argument your variable name is. `=` is used more for 
+
+### Piping
+
+The pipe passes the output of the previous argument to the first argument of the following function. It's incredibly useful for data munging. You are probably most familiar with the pipe that looks like `|>`. However, that pipe is specific to the `dplyr` package. There is now a pipe that is native to base R that is probably better to use `|>`.
 
 ## Review
 
@@ -56,17 +65,17 @@ Now you should be able to download the source file for these class notes (see Cl
 
 ```{r}
 #| echo: false
-redSox <- Batting %>%
-  filter(teamID == "BOS") %>%
-  group_by(playerID) %>%
+redSox <- Batting |>
+  filter(teamID == "BOS") |>
+  group_by(playerID) |>
   summarize(H = sum(H),
-            AB = sum(AB)) %>%
-  filter(AB >= 2500) %>%
-  mutate(AVG = H/AB) %>%
+            AB = sum(AB)) |>
+  filter(AB >= 2500) |>
+  mutate(AVG = H/AB) |>
   arrange(-AVG)
 
-redSox %>%
-  head(10) %>%
+redSox |>
+  head(10) |>
   kable(digits = 3, caption = "Red Sox Career Batting Average Leaders")
 ```
 
@@ -77,7 +86,7 @@ When using a relational database (what does that mean again?), a common task is 
 ```{r}
 # I called my table from the review redSox.
 
-redSox <- redSox %>%
+redSox <- redSox |>
   left_join(select(People, playerID, nameLast, nameFirst, finalGame), by = "playerID" )
 ```
 
@@ -87,15 +96,15 @@ Your turn...the `HallofFame` data frame contains data on every Hall of Fame ball
 
 ```{r}
 #| echo: false
-inductee <- HallOfFame %>%
-  filter(inducted == "Y") %>%
+inductee <- HallOfFame |>
+  filter(inducted == "Y") |>
   select(playerID, yearID, inducted)
 
-redSox <- redSox %>%
+redSox <- redSox |>
   left_join(inductee, by = "playerID")
 
-redSox %>%
-  head(10) %>%
+redSox |>
+  head(10) |>
   kable(digits = 3, caption = "Red Sox career batting average leaders")
 ```
 

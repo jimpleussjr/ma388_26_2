@@ -178,11 +178,22 @@ library(tidyverse) # tons of useful stuff - ggplot2, dplyr, ...
 
 # Batting data frame contains one line per player per season per stint.
 # Here are players with the most home runs for a single team in a season.
-Batting %>% 
-  select(playerID, yearID, stint, lgID, HR, AB) %>% 
-  arrange(-HR) %>% 
-  head(10) %>% 
+Batting |> 
+  select(playerID, yearID, stint, lgID, HR, AB) |> 
+  arrange(-HR) |> 
+  head(10) |> 
   kable()
+```
+
+```{r}
+Teams |> 
+  mutate(decade = floor(yearID/10)*10) |> 
+  relocate(decade,.after='yearID') |> 
+  summarize(HRs = sum(HR), Gs = sum(G),.by=decade) |> 
+  mutate(HRperG = HRs/Gs) |> 
+  arrange(decade) |> 
+  ggplot(aes(x=decade,y=HRperG))+
+  geom_bar(stat='identity')
 ```
 
 Steps to coding an exploration of home run rates over the years:
@@ -193,22 +204,22 @@ Steps to coding an exploration of home run rates over the years:
 
 ```{r}
 # Calculate the home run rate for each season.
-homeRuns <- Batting %>% 
-  filter(lgID %in% c("AL","NL")) %>% 
-  group_by(yearID) %>% 
+homeRuns <- Batting |> 
+  filter(lgID %in% c("AL","NL")) |> 
+  group_by(yearID) |> 
   summarize(HR = sum(HR),
-            AB = sum(AB)) %>% 
+            AB = sum(AB)) |> 
   mutate(rate = HR/AB)
 
-homeRuns %>% 
-  head(10) %>% 
+homeRuns |> 
+  head(10) |> 
   kable(digits = 4)
 ```
 
 Let's look at a plot (more on plotting next lesson)...
 
 ```{r, fig.cap = "Home run rate in Major League Baseball by year.", fig.height = 3}
-homeRuns %>% 
+homeRuns |> 
   ggplot(aes(x = yearID,
              y = rate)) +
   geom_line() +

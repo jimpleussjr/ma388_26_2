@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="LTC Mike Powell">
 
 <title>MA388 Sabermetrics: Lesson 2 – MA388 Sabermetrics</title>
 <style>
@@ -157,7 +156,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#compiling-an-.rmd-file" id="toc-compiling-an-.rmd-file" class="nav-link active" data-scroll-target="#compiling-an-.rmd-file">Compiling an .Rmd file</a></li>
+  <li><a href="#compiling-an-.qmd-file" id="toc-compiling-an-.qmd-file" class="nav-link active" data-scroll-target="#compiling-an-.qmd-file">Compiling an .qmd file</a></li>
+  <li><a href="#r-syntax-best-practices" id="toc-r-syntax-best-practices" class="nav-link" data-scroll-target="#r-syntax-best-practices">R Syntax Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#variable-assignemnt" id="toc-variable-assignemnt" class="nav-link" data-scroll-target="#variable-assignemnt">Variable Assignemnt</a></li>
+  <li><a href="#piping" id="toc-piping" class="nav-link" data-scroll-target="#piping">Piping</a></li>
+  </ul></li>
   <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
   <li><a href="#merging-data-frames-pg-41" id="toc-merging-data-frames-pg-41" class="nav-link" data-scroll-target="#merging-data-frames-pg-41">Merging Data Frames (pg 41)</a></li>
   </ul>
@@ -176,12 +180,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>LTC Mike Powell </p>
-          </div>
-  </div>
     
   
     
@@ -197,9 +195,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="compiling-an-.rmd-file" class="level2">
-<h2 class="anchored" data-anchor-id="compiling-an-.rmd-file">Compiling an .Rmd file</h2>
-<p>You’ll submit most (all?) assignments in this course as PDFs via the Class Notebook in Teams. Let’s make sure you can produce a PDF from R Markdown. If you already know how to do this, sit tight for a minute…</p>
+<section id="compiling-an-.qmd-file" class="level2">
+<h2 class="anchored" data-anchor-id="compiling-an-.qmd-file">Compiling an .qmd file</h2>
+<p>You’ll submit most assignments in this course as PDFs via Canvas. Let’s make sure you can produce a PDF from Quarto Markdown. If you already know how to do this, sit tight for a minute…</p>
 <p>If this is new for you, you’ll need to install a TeX distribution. This is easy with <code>TinyTeX</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -208,7 +206,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now you should be able to download the source file for these class notes (see Class Notebook - Lesson 2) and “Knit to PDF.” Make sure this works before the end of class today.</p>
+<p>Now you should be able to download the source file for these class notes (see “lsn_2_intro_to_R.qmd”) and “Knit to PDF.” Make sure this works before the end of class today.</p>
+</section>
+<section id="r-syntax-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="r-syntax-best-practices">R Syntax Best Practices</h2>
+<section id="variable-assignemnt" class="level3">
+<h3 class="anchored" data-anchor-id="variable-assignemnt">Variable Assignemnt</h3>
+<p>A lot of folks like to use the <code>=</code> sign to assign variable names. While it generally does work, the more appropriate syntax is <code>-&gt;</code> or <code>&lt;-</code>, depending on which side of the argument your variable name is. <code>=</code> is used more for</p>
+</section>
+<section id="piping" class="level3">
+<h3 class="anchored" data-anchor-id="piping">Piping</h3>
+<p>The pipe passes the output of the previous argument to the first argument of the following function. It’s incredibly useful for data munging. You are probably most familiar with the pipe that looks like <code>|&gt;</code>. However, that pipe is specific to the <code>dplyr</code> package. There is now a pipe that is native to base R that is probably better to use <code>|&gt;</code>.</p>
+</section>
 </section>
 <section id="review" class="level2">
 <h2 class="anchored" data-anchor-id="review">Review</h2>
@@ -305,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I called my table from the review redSox.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>redSox <span class="ot">&lt;-</span> redSox <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>redSox <span class="ot">&lt;-</span> redSox <span class="sc">|&gt;</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(People, playerID, nameLast, nameFirst, finalGame), <span class="at">by =</span> <span class="st">"playerID"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Your turn…the <code>HallofFame</code> data frame contains data on every Hall of Fame ballot. Add to your table above whether the player is in the Hall of Fame. (hint: <code>filter(inducted == "Y")</code>)</p>

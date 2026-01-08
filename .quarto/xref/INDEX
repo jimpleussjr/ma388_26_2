@@ -18,5 +18,11 @@
   "lessons/lsn_2_intro_to_R.qmd": {
     "lsn_2_intro_to_R.html": "a78faf9a",
     "lsn_2_intro_to_R.tex": "32217543"
+  },
+  "lessons/textbook_toc.qmd": {
+    "textbook_toc.html": "d72398a2"
+  },
+  "lessons/lsn_3_intro_to_R_II.qmd": {
+    "lsn_3_intro_to_R_II.html": "6124b9b0"
   }
 }

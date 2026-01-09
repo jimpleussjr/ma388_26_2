@@ -1,10 +1,16 @@
 ---
 title: "MA388 Sabermetrics: Lesson 3"
 subtitle: "Introduction to R - Part II"
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
+format:
+  html:
+    theme: cosmo
+    toc: true
+  pdf:
+    documentclass: article
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r setup, include=FALSE}

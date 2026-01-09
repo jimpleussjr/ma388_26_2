@@ -53,7 +53,7 @@
     "href": "lessons/lsn_2_intro_to_R.html#compiling-an-.qmd-file",
     "title": "MA388 Sabermetrics: Lesson 2",
     "section": "Compiling an .qmd file",
-    "text": "Compiling an .qmd file\nYou’ll submit most assignments in this course as PDFs via Canvas. Let’s make sure you can produce a PDF from Quarto Markdown. If you already know how to do this, sit tight for a minute…\nIf this is new for you, you’ll need to install a TeX distribution. This is easy with TinyTeX.\n\ninstall.packages(\"tinytex\")\n\nWith that package loaded, you’re ready to install TeX.\n\ntinytex::install_tinytex()\n\nNow you should be able to download the source file for these class notes (see “lsn_2_intro_to_R.qmd”) and “Knit to PDF.” Make sure this works before the end of class today."
+    "text": "Compiling an .qmd file\nYou’ll submit most assignments in this course as PDFs via Canvas. Let’s make sure you can produce a PDF from Quarto Markdown. If you already know how to do this, sit tight for a minute…\nIf this is new for you, you’ll need to install a TeX distribution. This is easy with TinyTeX.\n\ninstall.packages(\"tinytex\")\n\nWith that package loaded, you’re ready to install TeX.\n\ntinytex::install_tinytex()\n\nNow you should be able to download the source file for these class notes (see “lsn_2_intro_to_R.qmd”) and “Render to PDF.” Make sure this works before the end of class today."
   },
   {
     "objectID": "lessons/lsn_2_intro_to_R.html#r-syntax-best-practices",

@@ -47,7 +47,7 @@ A lot of folks like to use the `=` sign to assign variable names. While it gener
 
 ### Piping
 
-The pipe passes the output of the previous argument to the first argument of the following function. It's incredibly useful for data munging. You are probably most familiar with the pipe that looks like `|>`. However, that pipe is specific to the `dplyr` package. There is now a pipe that is native to base R that is probably better to use `|>`.
+The pipe passes the output of the previous argument to the first argument of the following function. It's incredibly useful for data munging. You are probably most familiar with the pipe that looks like `%>%`. However, that pipe is specific to the `dplyr` package. There is now a pipe that is native to base R that is probably better to use `|>`.
 
 ## Review
 

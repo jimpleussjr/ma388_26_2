@@ -144,6 +144,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../calendar/calendar.html"> 
+<span class="menu-text">Calendar</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -686,9 +690,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>group_by() and summarize() functions</p></li>
 <li><p>split() and map_df() functions</p></li>
 </ul>
-<p>In general, these coding tasks involve three steps:</p>
+<p>In general, these coding tasks involve four steps:</p>
 <ol type="1">
 <li><p>Write a function to perform the task on one split of the data.</p></li>
+<li><p>Pull the individual values of the variable you are splitting on.</p></li>
 <li><p>Split the data on a variable.</p></li>
 <li><p>Apply the function to each split of the data.</p></li>
 </ol>
@@ -696,7 +701,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example" class="level3">
 <h3 class="anchored" data-anchor-id="example">Example</h3>
 <p></p>
-<p>Three steps:</p>
+<p>Four steps:</p>
 <ol type="1">
 <li><p>Write a function that takes a data frame and returns the team with the most wins and whether they won the World Series.</p></li>
 <li><p>Pull the <code>yearID</code>s you will split on.</p></li>

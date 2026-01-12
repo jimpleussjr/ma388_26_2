@@ -77,19 +77,21 @@ Ways to "split, apply, and combine"...
 
 -   split() and map_df() functions
 
-In general, these coding tasks involve three steps:
+In general, these coding tasks involve four steps:
 
 1.  Write a function to perform the task on one split of the data.
 
-2.  Split the data on a variable.
+2.  Pull the individual values of the variable you are splitting on.
 
-3.  Apply the function to each split of the data.
+3.  Split the data on a variable.
+
+4.  Apply the function to each split of the data.
 
 ### Example
 
 \textit{Find the team with the most wins for each season and determine whether the team won the World Series.}
 
-Three steps:
+Four steps:
 
 1.  Write a function that takes a data frame and returns the team with the most wins and whether they won the World Series.
 

@@ -25,5 +25,12 @@
   "lessons/lsn_3_intro_to_R_II.qmd": {
     "lsn_3_intro_to_R_II.html": "6124b9b0",
     "lsn_3_intro_to_R_II.tex": "a9975169"
+  },
+  "lessons/class_notes.qmd": {
+    "class_notes.tex": "e9607377"
+  },
+  "calendar/calendar.qmd": {
+    "calendar.html": "847ff55c",
+    "calendar.tex": "0ca0a146"
   }
 }

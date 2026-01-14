@@ -32,5 +32,9 @@
   "calendar/calendar.qmd": {
     "calendar.html": "847ff55c",
     "calendar.tex": "0ca0a146"
+  },
+  "lessons/lsn_4_r_graphics_I.qmd": {
+    "lsn_4_r_graphics_I.html": "0f84d491",
+    "lsn_4_r_graphics_I.tex": "438d247a"
   }
 }

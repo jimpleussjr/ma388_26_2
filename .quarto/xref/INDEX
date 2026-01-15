@@ -36,5 +36,13 @@
   "lessons/lsn_4_r_graphics_I.qmd": {
     "lsn_4_r_graphics_I.html": "0f84d491",
     "lsn_4_r_graphics_I.tex": "438d247a"
+  },
+  "lessons/lsn_4_r_graphics_II.qmd": {
+    "lsn_4_r_graphics_II.html": "a06a4f19",
+    "lsn_4_r_graphics_II.tex": "fdb8d41d"
+  },
+  "lessons/lsn_5_r_graphics_II.qmd": {
+    "lsn_5_r_graphics_II.html": "5c8370eb",
+    "lsn_5_r_graphics_II.tex": "3c953302"
   }
 }

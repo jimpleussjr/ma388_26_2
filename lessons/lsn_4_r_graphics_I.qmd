@@ -71,7 +71,7 @@ careerLeader <- function(data, year){
 }
 
 # Map function over each year.
-leaders <- 1900:2022 |> 
+leaders <- 1900:2025 |> 
   map_df(~careerLeader(data = homeruns, year = .x))
   # map_df(function(x) careerLeader(data = homeruns, year = x))
 

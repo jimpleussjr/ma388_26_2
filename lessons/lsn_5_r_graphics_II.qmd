@@ -47,18 +47,18 @@ It will help you to know the dates that correspond to the beginning of different
 First, obtain the top-10 HR hitters for each year from 1900 to the present.
 
 ```{r, echo = FALSE}
-batting_df <- Batting %>% 
-  filter(yearID >= 1900) %>% 
-  select(yearID, HR) %>% 
-  group_by(yearID) %>% 
-  top_n(10, HR) %>% # alternative to arrange(-HR) %>% slice_head(10)
+batting_df <- Batting |> 
+  filter(yearID >= 1900) |> 
+  select(yearID, HR) |> 
+  group_by(yearID) |> 
+  top_n(10, HR) |> # alternative to arrange(-HR) |> slice_head(10)
   ungroup()
 ```
 
 Let's plot what we have to far.
 
 ```{r, echo = FALSE}
-batting_df %>% 
+batting_df |> 
   ggplot(aes(x = yearID, y = HR)) + 
   geom_point()
 ```
@@ -66,7 +66,7 @@ batting_df %>%
 Not let's figure out how to color the points by era.  We'll need to introduce a factor variable that represents dates according to their corresponding eras.  See the example in ABDWR section 3.2.1 for an example of the `cut()` function.
 
 ```{r}
-batting_df <- batting_df %>% 
+batting_df <- batting_df |> 
   mutate(era = cut(yearID,
                    breaks = c(1899, 1919, 1941, 1960, 1976, 
                               1993, 2003, 2050),
@@ -80,14 +80,14 @@ batting_df <- batting_df %>%
 Let's see a sample of what our data frame looks like now:
 
 ```{r}
-batting_df %>% 
+batting_df |> 
   slice_sample(n = 10)
 ```
 
 Ready to add the color?
 
 ```{r, echo = FALSE}
-batting_df %>% 
+batting_df |> 
   ggplot(aes(x = yearID, y = HR, color = era)) + 
   geom_point() + 
   labs(title = "Top-10 Homerun Hitter Totals Every Year Since 1900",
@@ -111,14 +111,14 @@ Here, the ``factor" is really the factor representation of a numeric variable: `
 Let's create a decade variable.
 
 ```{r}
-Salaries %>% 
-  mutate(decade = floor(yearID / 10) * 10) %>% 
+Salaries |> 
+  mutate(decade = floor(yearID / 10) * 10) |> 
   head()
 ```
 
 ```{r}
-Salaries %>% 
-  mutate(decade = floor(yearID / 10) * 10) %>% 
+Salaries |> 
+  mutate(decade = floor(yearID / 10) * 10) |> 
   ggplot(aes(x = as.factor(decade), y = salary)) + 
   geom_boxplot() + 
   scale_y_continuous(labels = scales::comma) +
@@ -133,17 +133,17 @@ Salaries %>%
 **Determine the average runs scored per game (average team score, not two-team total score) by teams in Major League Baseball since 1950.  Note any differences in American League and National League teams.**
 
 ```{r}
-lg_rpg_df <- Teams %>% 
-  select(yearID, lgID, R, G) %>%
-  filter(yearID >= 1950) %>% 
-  group_by(yearID, lgID) %>% 
+lg_rpg_df <- Teams |> 
+  select(yearID, lgID, R, G) |>
+  filter(yearID >= 1950) |> 
+  group_by(yearID, lgID) |> 
   summarize(RPG = sum(R) / sum(G))
 
 head(lg_rpg_df)
 ```
 
 ```{r}
-lg_rpg_df %>% 
+lg_rpg_df |> 
   ggplot(aes(x = yearID, y = RPG, color = lgID)) +
   geom_line() + 
   geom_smooth() + 
@@ -171,23 +171,23 @@ Suggested steps:
 
 ```{r}
 # Number of inductees by year.
-yearlyHF <- HallOfFame %>% 
+yearlyHF <- HallOfFame |> 
   filter(inducted == "Y",
          category == "Player",
-         votedBy == "BBWAA") %>%
+         votedBy == "BBWAA") |>
   count(yearID)
   
 # Unfortunately, yearlyHF data frame does not contain years with no inductees.
 # We can join it with another data frame containing all the years and replace 
 # NAs with 0s.
-yearlyHF <- yearlyHF %>% 
-  full_join(data.frame(yearID = 1940:2022)) %>% 
+yearlyHF <- yearlyHF |> 
+  full_join(data.frame(yearID = 1940:2022)) |> 
   mutate(n = replace_na(n,0))
 ```
 
 ```{r, echo = FALSE, fig.height= 3.5}
 # Plot the results.
-yearlyHF %>% 
+yearlyHF |> 
   ggplot(aes(x = yearID,
              y = n)) +
   geom_line() +
@@ -209,28 +209,28 @@ First, let's create a data set containing all pitchers with an indicator of whet
 
 ```{r}
 # Get career wins, earned run average, and strikeouts.
-careers <- Pitching %>% 
-  group_by(playerID) %>% 
+careers <- Pitching |> 
+  group_by(playerID) |> 
   summarize(W = sum(W),
             ER = sum(ER),
             IPouts = sum(IPouts),
-            SO = sum(SO)) %>% 
-  mutate(ERA = 9*ER/(IPouts/3)) %>% 
+            SO = sum(SO)) |> 
+  mutate(ERA = 9*ER/(IPouts/3)) |> 
   filter(IPouts/3 > 500)
 
 # Add whether they were inducted in the Hall of Fame.
-careers <- HallOfFame %>% 
+careers <- HallOfFame |> 
   filter(inducted == "Y",
-         category == "Player") %>% 
-  select(playerID, inducted) %>% 
-  right_join(careers) %>% 
+         category == "Player") |> 
+  select(playerID, inducted) |> 
+  right_join(careers) |> 
   mutate(inducted = replace_na(inducted,"N"))
 ```
 
 Let's look at career strikeouts by whether or not they were inducted.
 
 ```{r}
-careers %>% 
+careers |> 
   ggplot(aes(x = SO, y = ERA, color = inducted)) +
   geom_point(size = 1)
 ```
@@ -239,10 +239,10 @@ Let's figure out where Clemens and Schilling are.
 
 ```{r, fig.cap = "ERA vs. SO by Hall of Fame status for pitchers with at least 500 innings pitched."}
 library(ggrepel)
-clemschil <- careers %>% 
+clemschil <- careers |> 
   filter(playerID %in% c("clemero02", "schilcu01")) 
 
-careers %>% 
+careers |> 
   ggplot(aes(x = SO, y = ERA, color = inducted)) +
   geom_point() +
   geom_text_repel(data = clemschil, 
@@ -255,14 +255,14 @@ careers %>%
 In the last figure, there is an uninducted player with about 2500 strikeouts and a 2.5 ERA.  Determine who that player is and add his `playerID` to the plot above.
 
 ```{r, echo = FALSE}
-kersh <- careers %>% 
+kersh <- careers |> 
   filter(SO > 2000,
          ERA < 2.7, 
          inducted == "N")
 
 # careers |> filter(SO>2900,inducted=='N')
 
-careers %>% 
+careers |> 
   ggplot(aes(x = SO, y = ERA, color = inducted)) +
   geom_point() +
   geom_text_repel(data = kersh, 

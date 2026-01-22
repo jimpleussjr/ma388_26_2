@@ -50,9 +50,10 @@ First, obtain the top-10 HR hitters for each year from 1900 to the present.
 batting_df <- Batting |> 
   filter(yearID >= 1900) |> 
   select(yearID, HR) |> 
-  group_by(yearID) |> 
-  top_n(10, HR) |> # alternative to arrange(-HR) |> slice_head(10)
-  ungroup()
+  slice_max(HR,n=10,by=yearID)
+  # group_by(yearID) |> 
+  # top_n(10, HR) |> # alternative to arrange(-HR) |> slice_head(10)
+  # ungroup()
 ```
 
 Let's plot what we have to far.

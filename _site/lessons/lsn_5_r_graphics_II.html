@@ -180,6 +180,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lessons/lsn_5_r_graphics_II.html">
  <span class="dropdown-text">Lesson 5: R Graphics II</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_6_runs_and_wins_I.html">
+ <span class="dropdown-text">Lesson 6: Runs and Wins I</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -288,19 +292,17 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>batting_df <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 3
-   yearID    HR era        
-    &lt;int&gt; &lt;int&gt; &lt;fct&gt;      
- 1   2006    49 Long Ball  
- 2   1931    19 Lively Ball
- 3   1951    29 Integration
- 4   2020    16 Long Ball  
- 5   2008    34 Long Ball  
- 6   1909     5 Dead Ball  
- 7   2017    39 Long Ball  
- 8   2013    44 Long Ball  
- 9   1986    31 Free Agency
-10   1933    16 Lively Ball</code></pre>
+<pre><code>   yearID HR         era
+1    1967 44   Expansion
+2    2001 49     Steroid
+3    1934 26 Lively Ball
+4    1920 11 Lively Ball
+5    1927 17 Lively Ball
+6    1935 25 Lively Ball
+7    1983 39 Free Agency
+8    1922 17 Lively Ball
+9    2024 39   Long Ball
+10   2020 17   Long Ball</code></pre>
 </div>
 </div>
 <p>Ready to add the color?</p>

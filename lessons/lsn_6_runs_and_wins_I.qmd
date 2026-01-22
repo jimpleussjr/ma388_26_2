@@ -79,7 +79,7 @@ Put yourself in the position of Billy Beane. How would you approach this problem
 :::
 
 
-*In Figure 1, how many wins are associated with a 100-run increase in run differential?*
+*In Figure 1, how many wins are associated with a 100 run differential?*
 
 \vspace{.75in}
 

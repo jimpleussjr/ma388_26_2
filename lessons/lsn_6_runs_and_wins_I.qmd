@@ -1,6 +1,6 @@
 ---
-title: "MA388 Sabermetrics: Lesson 5"
-subtitle: "Introduction to R Graphics - Part II"
+title: "MA388 Sabermetrics: Lesson 6"
+subtitle: "How many runs is a win? - Part I"
 author: "LTC Jim Pleuss"
 format:
   html:
@@ -89,7 +89,7 @@ Put yourself in the position of Billy Beane. How would you approach this problem
 :::
 
 
-A common rule of thumb in baseball is 10 additional runs over the course of a season equals one additional win. This gives us a convenient way to evaluate the impact of different players and plays.
+A common rule of thumb in baseball is 10 additional net runs over the course of a season equals one additional win. This gives us a convenient way to evaluate the impact of different players and plays.
 
 To be more formal, we could use linear regression.
 
@@ -137,7 +137,7 @@ Based on the regression model, do you feel confident in your recommended run dif
 
 Let's look at the residuals for this regression. The `broom` package helps get model results for model diagnostic plots.
 
-```{r, fig.height=3.25, message = FALSE, warning = FALSE, fig.cap = "Residuals vs. Fitted Values of the Linear Model for Wins"}
+```{r, fig.height=3.25, message = FALSE, warning = FALSE, fig.cap = "Figure 2: Residuals vs. Fitted Values of the Linear Model for Wins"}
 # Look at the teams2001 column names before and after running the next line.
 teams2001 = augment(wins_lm, data = teams2001)
 

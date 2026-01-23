@@ -27,7 +27,8 @@
     "lsn_3_intro_to_R_II.tex": "a9975169"
   },
   "lessons/class_notes.qmd": {
-    "class_notes.tex": "e9607377"
+    "class_notes.tex": "e9607377",
+    "class_notes.html": "d8763466"
   },
   "calendar/calendar.qmd": {
     "calendar.html": "847ff55c",
@@ -48,5 +49,9 @@
   "lessons/lsn_6_runs_and_wins_I.qmd": {
     "lsn_6_runs_and_wins_I.html": "f2c15605",
     "lsn_6_runs_and_wins_I.tex": "07be3b4e"
+  },
+  "lessons/lsn_7_runs_and_wins_II.qmd": {
+    "lsn_7_runs_and_wins_II.html": "765d7867",
+    "lsn_7_runs_and_wins_II.tex": "175a57bf"
   }
 }

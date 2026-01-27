@@ -21,7 +21,9 @@ website:
           - href: lessons/lsn_6_runs_and_wins_I.qmd
             text: "Lesson 6: Runs and Wins I"
           - href: lessons/lsn_7_runs_and_wins_II.qmd
-            text: "Lesson 7: Runs and Wins I"
+            text: "Lesson 7: Runs and Wins II"
+          - href: lessons/lsn_8_runs_expectancy_matrix.qmd
+            text: "Lesson 8: Run Expectancy Matrix"
       - href: calendar/calendar.qmd
         text: Calendar
 

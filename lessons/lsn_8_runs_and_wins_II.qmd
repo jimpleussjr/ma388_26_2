@@ -1,5 +1,5 @@
 ---
-title: "MA388 Sabermetrics: Lesson 7"
+title: "MA388 Sabermetrics: Lesson 8"
 subtitle: "How many runs is a win? - Part II"
 author: "LTC Jim Pleuss"
 format:
@@ -114,10 +114,13 @@ my_teams <- augment(lin_fit, data = my_teams)
 my_teams |>
   ggplot(aes(x = RD, y = .fitted)) + 
   geom_point(col = "red") +
+  # geom_point(aes(x = RD, y = Wpct)) +
   geom_point(aes(x = RD, y = Wpct_pyth2)) +
   labs(x = "Run Differential",
        y = "Win Percentage",
        title = "Predicted Win Percentage - Models 1 and 2 (1997-2001)")
+
+summary(lin_fit)
 ```
 
 Briefly discuss how the models differ. \vspace{0.5in}

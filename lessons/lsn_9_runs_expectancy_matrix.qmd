@@ -1,5 +1,5 @@
 ---
-title: "MA388 Sabermetrics: Lesson 8"
+title: "MA388 Sabermetrics: Lesson 9"
 subtitle: "Value of Plays - Run Expectancy Matrix"
 author: "LTC Jim Pleuss"
 format:
@@ -42,7 +42,7 @@ Wpct &= \frac{R^k}{R^k + RA^k} + \epsilon
 
 -   Calculate the predicted wins for each team in 2018 and plot the residuals vs. the predicted values.
 
-```{r, echo = FALSE, fig.height = 2.5, fig.cap = "Pythagorean predictions, k = 1.75 (2018)"}
+```{r, echo = FALSE, fig.height = 2.5, fig.cap = "Pythagorean predictions (2018)"}
 teams2018 <- Teams |> 
   filter(yearID == 2018) |> 
   mutate(Wpct = W/(W+L),
@@ -92,11 +92,25 @@ Examples:
 
 \vspace{1in}
 
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
 *Do you see any trends over time?*
 
-\vspace{1in}We are looking at run expectancy matrices. There is another type of matrix called a [run probability matrix](http://tangotiger.net/re24.html). *Explain how they differ.*
+\vspace{1in}
+
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
+We are looking at run expectancy matrices. There is another type of matrix called a [run probability matrix](http://tangotiger.net/re24.html). *Explain how they differ.*
 
 \vspace{1in}
+
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
 
 ### Run Expectancy Matrix from Retrosheet Data
 
@@ -123,7 +137,7 @@ retro2011 |>
   kable()
 ```
 
-To understand what happened in this game, we'll need to know what all the [event codes](https://www.retrosheet.org/eventfile.htm%5D) are for various baseball outcomes described by the `event_cd` field.
+To understand what happened in this game, we'll need to know what all the [event codes](https://www.retrosheet.org/eventfile.htm) are for various baseball outcomes described by the `event_cd` field.
 
 ![Event codes](eventcodes.png){width="50%"}
 
@@ -235,4 +249,51 @@ retro2011 |>
         new_state, rv_end, runs_scored, run_value) |>
   head(10) |> 
   kable(digits = 3)
+```
+
+```{r}
+library(baseballr) #the appendix does not tell you that you need this. 
+
+retro_data<-retrosheet_data(years=2022)
+retro2022 <- retro_data |>
+pluck("2022") |>
+pluck("events")
+roster2022 <- retro_data |>
+pluck("2022") |>
+pluck("rosters")
+roster2022_clean<-roster2022 |>
+select(player_id,last_name,first_name) |>
+rename(bat_id=player_id) |> 
+  distinct()
+
+stats<-retro2022 |> #I split the code chunk so I don't have to do the slow step every time I run it
+select(bat_id,event_cd,bat_home_id) |> #grab only the columns I want
+filter(event_cd>=20|event_cd==2|event_cd==3) |> #events >= 20 are hits, 2+3 are out/strikeout
+group_by(bat_id,bat_home_id) |>
+mutate(
+hit=if_else(event_cd>=20,1,0), #if play event was hit make it 1 if not 0
+ab=1, #all of these are ABs, making them 1 to sum later
+home_away=if_else(bat_home_id==1,"Home","Away"))
+
+player_stats<-stats |>
+group_by(bat_id,home_away) |>
+summarize(AB=sum(ab),H=sum(hit),AVG=H/AB) |>
+filter(AB>=100) #filter out players with <100 ABs
+
+player_home_v_away<-player_stats |>
+select(bat_id,home_away,AVG) |>
+pivot_wider(id_cols = bat_id,
+names_from = home_away,
+values_from=AVG,
+)
+
+roster2022 |> count(player_id) |> arrange(-n)
+
+player_home_v_away<-player_home_v_away |>
+left_join(roster2022_clean,by="bat_id")
+player_home_v_away |>
+mutate(Difference=abs(Home-Away)) |>
+arrange(Difference) |>
+head(10) |>
+select(last_name,first_name,Difference)
 ```

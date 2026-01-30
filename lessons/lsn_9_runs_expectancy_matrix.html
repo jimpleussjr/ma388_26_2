@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 8 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 9 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -185,12 +185,12 @@ window.Quarto = {
  <span class="dropdown-text">Lesson 6: Runs and Wins I</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lessons/lsn_7_runs_and_wins_II.html">
- <span class="dropdown-text">Lesson 7: Runs and Wins II</span></a>
+    <a class="dropdown-item" href="../lessons/lsn_8_runs_and_wins_II.html">
+ <span class="dropdown-text">Lesson 8: Runs and Wins II</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lessons/lsn_8_runs_expectancy_matrix.html">
- <span class="dropdown-text">Lesson 8: Run Expectancy Matrix</span></a>
+    <a class="dropdown-item" href="../lessons/lsn_9_runs_expectancy_matrix.html">
+ <span class="dropdown-text">Lesson 9: Run Expectancy Matrix</span></a>
   </li>  
     </ul>
   </li>
@@ -222,14 +222,14 @@ window.Quarto = {
   <li><a href="#calculate-the-run-expectancy-matrix" id="toc-calculate-the-run-expectancy-matrix" class="nav-link" data-scroll-target="#calculate-the-run-expectancy-matrix">Calculate the Run Expectancy Matrix</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_8_runs_expectancy_matrix.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_9_runs_expectancy_matrix.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 8</h1>
+<h1 class="title">MA388 Sabermetrics: Lesson 9</h1>
 <p class="subtitle lead">Value of Plays - Run Expectancy Matrix</p>
 </div>
 
@@ -276,8 +276,8 @@ Wpct &amp;= \frac{R^k}{R^k + RA^k} + \epsilon
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="lsn_8_runs_expectancy_matrix_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Pythagorean predictions, k = 1.75 (2018)</figcaption>
+<p><img src="lsn_9_runs_expectancy_matrix_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Pythagorean predictions (2018)</figcaption>
 </figure>
 </div>
 </div>
@@ -304,8 +304,23 @@ Wpct &amp;= \frac{R^k}{R^k + RA^k} + \epsilon
 </figure>
 </div>
 <p><em>How do we interpret the values in the matrix?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 <p><em>Do you see any trends over time?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 <p>We are looking at run expectancy matrices. There is another type of matrix called a <a href="http://tangotiger.net/re24.html">run probability matrix</a>. <em>Explain how they differ.</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 </section>
 <section id="run-expectancy-matrix-from-retrosheet-data" class="level3">
 <h3 class="anchored" data-anchor-id="run-expectancy-matrix-from-retrosheet-data">Run Expectancy Matrix from Retrosheet Data</h3>
@@ -444,7 +459,7 @@ Wpct &amp;= \frac{R^k}{R^k + RA^k} + \epsilon
 </table>
 </div>
 </div>
-<p>To understand what happened in this game, we’ll need to know what all the <a href="https://www.retrosheet.org/eventfile.htm%5D">event codes</a> are for various baseball outcomes described by the <code>event_cd</code> field.</p>
+<p>To understand what happened in this game, we’ll need to know what all the <a href="https://www.retrosheet.org/eventfile.htm">event codes</a> are for various baseball outcomes described by the <code>event_cd</code> field.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="eventcodes.png" class="img-fluid figure-img" style="width:50.0%"></p>
@@ -846,6 +861,83 @@ Wpct &amp;= \frac{R^k}{R^k + RA^k} + \epsilon
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baseballr) <span class="co">#the appendix does not tell you that you need this. </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>retro_data<span class="ot">&lt;-</span><span class="fu">retrosheet_data</span>(<span class="at">years=</span><span class="dv">2022</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>retro2022 <span class="ot">&lt;-</span> retro_data <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(<span class="st">"2022"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(<span class="st">"events"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>roster2022 <span class="ot">&lt;-</span> retro_data <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(<span class="st">"2022"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(<span class="st">"rosters"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>roster2022_clean<span class="ot">&lt;-</span>roster2022 <span class="sc">|&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(player_id,last_name,first_name) <span class="sc">|&gt;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(<span class="at">bat_id=</span>player_id) <span class="sc">|&gt;</span> </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>stats<span class="ot">&lt;-</span>retro2022 <span class="sc">|&gt;</span> <span class="co">#I split the code chunk so I don't have to do the slow step every time I run it</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(bat_id,event_cd,bat_home_id) <span class="sc">|&gt;</span> <span class="co">#grab only the columns I want</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(event_cd<span class="sc">&gt;=</span><span class="dv">20</span><span class="sc">|</span>event_cd<span class="sc">==</span><span class="dv">2</span><span class="sc">|</span>event_cd<span class="sc">==</span><span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="co">#events &gt;= 20 are hits, 2+3 are out/strikeout</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(bat_id,bat_home_id) <span class="sc">|&gt;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="at">hit=</span><span class="fu">if_else</span>(event_cd<span class="sc">&gt;=</span><span class="dv">20</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="co">#if play event was hit make it 1 if not 0</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="at">ab=</span><span class="dv">1</span>, <span class="co">#all of these are ABs, making them 1 to sum later</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="at">home_away=</span><span class="fu">if_else</span>(bat_home_id<span class="sc">==</span><span class="dv">1</span>,<span class="st">"Home"</span>,<span class="st">"Away"</span>))</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>player_stats<span class="ot">&lt;-</span>stats <span class="sc">|&gt;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(bat_id,home_away) <span class="sc">|&gt;</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">AB=</span><span class="fu">sum</span>(ab),<span class="at">H=</span><span class="fu">sum</span>(hit),<span class="at">AVG=</span>H<span class="sc">/</span>AB) <span class="sc">|&gt;</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(AB<span class="sc">&gt;=</span><span class="dv">100</span>) <span class="co">#filter out players with &lt;100 ABs</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>player_home_v_away<span class="ot">&lt;-</span>player_stats <span class="sc">|&gt;</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(bat_id,home_away,AVG) <span class="sc">|&gt;</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> bat_id,</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="at">names_from =</span> home_away,</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="at">values_from=</span>AVG,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>roster2022 <span class="sc">|&gt;</span> <span class="fu">count</span>(player_id) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="sc">-</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,495 × 2
+   player_id     n
+   &lt;chr&gt;     &lt;int&gt;
+ 1 chany001      4
+ 2 fordm002      4
+ 3 abrea001      3
+ 4 banda001      3
+ 5 canor001      3
+ 6 chavj001      3
+ 7 duggs001      3
+ 8 fairs001      3
+ 9 gonzc002      3
+10 keucd001      3
+# ℹ 1,485 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>player_home_v_away<span class="ot">&lt;-</span>player_home_v_away <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(roster2022_clean,<span class="at">by=</span><span class="st">"bat_id"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>player_home_v_away <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">Difference=</span><span class="fu">abs</span>(Home<span class="sc">-</span>Away)) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(Difference) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(last_name,first_name,Difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+# Groups:   bat_id [10]
+   bat_id   last_name  first_name Difference
+   &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;
+ 1 darnt001 d'Arnaud   Travis       0       
+ 2 vierm001 Vierling   Matt         0.000149
+ 3 andre001 Andrus     Elvis        0.000569
+ 4 wendj002 Wendle     Joey         0.000605
+ 5 santc002 Santana    Carlos       0.00110 
+ 6 merrw001 Merrifield Whit         0.00151 
+ 7 heimj001 Heim       Jonah        0.00156 
+ 8 smitp002 Smith      Pavin        0.00192 
+ 9 estrt001 Estrada    Thairo       0.00196 
+10 rizza001 Rizzo      Anthony      0.00208 </code></pre>
 </div>
 </div>
 

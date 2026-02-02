@@ -56,7 +56,7 @@ kable(erm_2011_wide)
 
 We can estimate the value of a plate appearance as the difference in run expectancy between the new and old states plus the number of runs scored on the play. 
 
-\[\text{RUN VALUE} = \text{E[RUNS]}_\text{new state} -  \text{E[RUNS]}_\text{old state} + \text{RUNS}_\text{scored on play}\]
+$\text{RUN VALUE} = \text{E[RUNS]}_\text{new state} -  \text{E[RUNS]}_\text{old state} + \text{RUNS}_\text{scored on play}$
 
 Calculate the RUN VALUE of the following plays:
 
@@ -154,7 +154,7 @@ Your book dedicates roughly three pages to evaluating base stealing.  We're goin
 
 Let's start with the same approach to valuing an individual event.
 
-\[\text{RUN VALUE} = \text{RUNS}_\text{new state} -  \text{RUNS}_\text{old state} + \text{RUNS}_\text{scored on play}\]
+$\text{RUN VALUE} = \text{RUNS}_\text{new state} -  \text{RUNS}_\text{old state} + \text{RUNS}_\text{scored on play}$
 
 where $\text{RUNS}_\text{new state}$ and  $\text{RUNS}_\text{old state}$ are their respective entries in the run expectancy matrix and $\text{RUNS}_\text{scored on play}$ is the number of runs that scored on the play.
 

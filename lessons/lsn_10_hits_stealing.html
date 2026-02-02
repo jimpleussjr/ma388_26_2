@@ -338,7 +338,7 @@ window.Quarto = {
 <section id="measuring-the-success-of-a-batting-play" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-the-success-of-a-batting-play">Measuring the Success of a Batting Play</h2>
 <p>We can estimate the value of a plate appearance as the difference in run expectancy between the new and old states plus the number of runs scored on the play.</p>
-<p>[ = <em> - </em> + _]</p>
+<p><span class="math inline">\(\text{RUN VALUE} = \text{E[RUNS]}_\text{new state} -  \text{E[RUNS]}_\text{old state} + \text{RUNS}_\text{scored on play}\)</span></p>
 <p>Calculate the RUN VALUE of the following plays:</p>
 <ol type="1">
 <li>There are runners on first and second with no outs. The batter successfully sacrifice bunts, resulting in runners on second and third with one out.</li>
@@ -564,7 +564,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="part-ii---measuring-the-success-of-a-stolen-base-attempt">Part II - Measuring the Success of a Stolen Base Attempt</h2>
 <p>Your book dedicates roughly three pages to evaluating base stealing. We’re going to discuss it briefly and return to our evaluation of batting performance. Your task: Develop an RE24-inspired measure to rank MLB’s top base stealers.</p>
 <p>Let’s start with the same approach to valuing an individual event.</p>
-<p>[ = <em> - </em> + _]</p>
+<p><span class="math inline">\(\text{RUN VALUE} = \text{RUNS}_\text{new state} -  \text{RUNS}_\text{old state} + \text{RUNS}_\text{scored on play}\)</span></p>
 <p>where <span class="math inline">\(\text{RUNS}_\text{new state}\)</span> and <span class="math inline">\(\text{RUNS}_\text{old state}\)</span> are their respective entries in the run expectancy matrix and <span class="math inline">\(\text{RUNS}_\text{scored on play}\)</span> is the number of runs that scored on the play.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(erm_2011_wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

@@ -65,5 +65,9 @@
   "lessons/lsn_8_runs_and_wins_II.qmd": {
     "lsn_8_runs_and_wins_II.html": "d70e8adb",
     "lsn_8_runs_and_wins_II.tex": "ce049891"
+  },
+  "lessons/lsn_10_hits_stealing.qmd": {
+    "lsn_10_hits_stealing.html": "7d98ed27",
+    "lsn_10_hits_stealing.tex": "d99fcc16"
   }
 }

@@ -8,6 +8,7 @@ editor: visual
 library(Lahman)
 library(tidyverse)
 library(knitr)
+library(broom)
 ```
 
 ## Create top 10 Yankee career batting average
@@ -228,4 +229,38 @@ careers %>%
   geom_text_repel(data = clemschil, 
                   aes(x = SO, y = ERA, label = playerID),
                   show.legend = FALSE)
+```
+
+### Lesson 9
+
+```{r}
+library(Lahman)
+
+teams2018 <- Teams |> 
+  filter(yearID == 2018) |> 
+  mutate(Wpct = W/(W+L),
+         logWL = log(W/L),
+         logRRA = log(R/RA))
+
+k <- teams2018 |> 
+  lm(logWL ~ 0 + logRRA, data = _) |> 
+  tidy() |> 
+  pull(estimate)
+
+teams2018 |> 
+  mutate(pred_Wpct = R^k/(R^k+RA^k),
+         residual = Wpct - pred_Wpct) |> 
+  ggplot(aes(x=pred_Wpct,y=residual,label=teamID)) +
+  geom_point()+
+  geom_text_repel()+
+  labs(x="Predicted Win Percentage",y='Residuals')
+  
+
+```
+
+```{r}
+library(baseballr)
+
+baseballr::retrosheet_data(years_to_acquire = 2018) |> 
+  pluck('events') 
 ```

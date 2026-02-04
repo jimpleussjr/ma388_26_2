@@ -230,8 +230,24 @@ careers %>%
                   aes(x = SO, y = ERA, label = playerID),
                   show.legend = FALSE)
 ```
+### Lesson 8
+
+#### AY26-2 Notes
+
+Went through the way we get to *k* from the pythagoreon model on the board which was good.
+
+Also did the partial derivative with respect to Runs to find the incremental number of wins per net runs scored. 
+
+Ran out of time a little at the end to get to the incremental runs model.
+
+
+
 
 ### Lesson 9
+
+#### AY26-2 Notes
+
+Went well. Good to emphasize the retrosheet and statcast at the end.
 
 ```{r}
 library(Lahman)
@@ -264,3 +280,18 @@ library(baseballr)
 baseballr::retrosheet_data(years_to_acquire = 2018) |> 
   pluck('events') 
 ```
+### Lesson 10
+
+#### AY26-2 Notes
+
+Make sure the RunExpectancyMatrix.R is in the files for cadets to download. 
+
+Making them re-run the data from last class was a little clunky.
+
+Didn't have enough time to really dive into the run value by `hit_type` much. Need more on the motivation of each.
+
+Should explain how those values aren't perfectly linear and aren't direct multiples of each other like slugging percentage. 
+
+### Lesson 11
+
+

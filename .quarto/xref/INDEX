@@ -69,5 +69,13 @@
   "lessons/lsn_10_hits_stealing.qmd": {
     "lsn_10_hits_stealing.html": "7d98ed27",
     "lsn_10_hits_stealing.tex": "d99fcc16"
+  },
+  "lessons/lsn_11_swinging_tendencies.qmd": {
+    "lsn_11_swinging_tendencies.html": "ed9dda42",
+    "lsn_11_swinging_tendencies.tex": "e4eb8357"
+  },
+  "lessons/lsn_12_umpire_tendencies.qmd": {
+    "lsn_12_umpire_tendencies.html": "7891fa14",
+    "lsn_12_umpire_tendencies.tex": "1801ffb8"
   }
 }

@@ -125,21 +125,13 @@ ump_count_fits <- umpires |>
   
   mutate(count = paste(balls, strikes, sep = "-")) |> 
   split(~count) |> 
-  # (\(df) split(df, df$count)) |>
-
-  # map(sample_n,3000) |>  
-  
   map(\(df) loess(called_strike ~ plate_x + plate_z, 
              data = df, 
              # span=.55,
              control = loess.control(surface = "direct"))) |> 
-  
   map(predict, newdata = pred_area) |> 
-  
   map(\(df) data.frame(fit = as.numeric(df))) |> 
-  
   map_df(bind_cols, pred_area, .id = "count")
-# ump_count_fits
 ```
 
 ```{r, fig.height=3.5}

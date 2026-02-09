@@ -51,6 +51,11 @@ Teams |>
 
 names(Teams)
 ```
+### Lesson 2
+
+#### AY26-2 Notes
+
+Need to change group_keys portion because if there are different numbers of rows for players or teams, the split won't match up appropriately.
 
 ```{r}
 # Step 1 - Write a function.
@@ -284,7 +289,7 @@ baseballr::retrosheet_data(years_to_acquire = 2018) |>
 
 #### AY26-2 Notes
 
-Make sure the RunExpectancyMatrix.R is in the files for cadets to download. 
+Make sure the RunExpectancyMatrix.R is in the files for cadets to download. Maybe use the RunExpectancyMatrixFunctions.R file instead.
 
 Making them re-run the data from last class was a little clunky.
 
@@ -293,5 +298,23 @@ Didn't have enough time to really dive into the run value by `hit_type` much. Ne
 Should explain how those values aren't perfectly linear and aren't direct multiples of each other like slugging percentage. 
 
 ### Lesson 11
+
+#### AY26-2 Notes
+
+Talked about the RunExpectancyMatrixFunctions.R script and Problem Set 3, but still had some extra time at the end.
+
+Add in some Regular expression from AI prompts for the end of class
+
+```{r}
+library(baseballr)
+retro2024 <-
+retrosheet_data(years_to_acquire = '2024') |>
+pluck('2024') |>
+pluck('events')
+# Add states and run values, output as retro_event_run_value
+# Also gives the run expectancy matrix as erm_wide
+source("./RunExpectancyMatrixFunctions.R")
+get_run_expectancy_retro(retro2024)
+```
 
 

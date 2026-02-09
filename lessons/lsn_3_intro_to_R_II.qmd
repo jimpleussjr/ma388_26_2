@@ -113,8 +113,6 @@ mostWins <- function(data){
 # Step 2 - Pull the years you will split on.
 year <- Teams |> 
   filter(yearID >= 2000) |> 
-  group_by(yearID) |> 
-  group_keys() |> 
   pull(yearID)
 
 # Steps 3 and 4 - Split and apply.

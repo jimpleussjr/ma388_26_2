@@ -51,11 +51,11 @@ Teams |>
 
 names(Teams)
 ```
-### Lesson 2
+### Lesson 3
 
 #### AY26-2 Notes
 
-Need to change group_keys portion because if there are different numbers of rows for players or teams, the split won't match up appropriately.
+Need to change group_keys portion because if there are different numbers of rows for players or teams, the split won't match up appropriately. **Complete**
 
 ```{r}
 # Step 1 - Write a function.
@@ -317,4 +317,10 @@ source("./RunExpectancyMatrixFunctions.R")
 get_run_expectancy_retro(retro2024)
 ```
 
+### Lesson 12
 
+#### AY26-2 Notes
+
+Went through Statcast data in more detail, got to talk about LOESS smoothing which is fun. Would love to dedicate more time to that.
+
+Not a ton of cadet interaction. Could improve upon that and leave out the last chunk of the data.

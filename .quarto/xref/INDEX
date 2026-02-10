@@ -77,5 +77,16 @@
   "lessons/lsn_12_umpire_tendencies.qmd": {
     "lsn_12_umpire_tendencies.html": "7891fa14",
     "lsn_12_umpire_tendencies.tex": "1801ffb8"
+  },
+  "lessons/lsn_13_catcher_framing_visualization.qmd": {
+    "lsn_13_catcher_framing_visualization.html": "e00a6100",
+    "lsn_13_catcher_framing_visualization.tex": "d929603c"
+  },
+  "lessons/lsn_12_umpire_tendencies.knit.md": {
+    "lsn_12_umpire_tendencies.knit.html": "b8719f44"
+  },
+  "lessons/lsn_14_logistic_regression.qmd": {
+    "lsn_14_logistic_regression.html": "a947246a",
+    "lsn_14_logistic_regression.tex": "babedf58"
   }
 }

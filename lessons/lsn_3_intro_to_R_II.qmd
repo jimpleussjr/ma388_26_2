@@ -77,29 +77,25 @@ Ways to "split, apply, and combine"...
 
 -   split() and map_df() functions
 
-In general, these coding tasks involve four steps:
+In general, these coding tasks involve three steps:
 
 1.  Write a function to perform the task on one split of the data.
 
-2.  Pull the individual values of the variable you are splitting on.
+2.  Split the data on a variable.
 
-3.  Split the data on a variable.
-
-4.  Apply the function to each split of the data.
+3.  Apply the function to each split of the data.
 
 ### Example
 
 \textit{Find the team with the most wins for each season and determine whether the team won the World Series.}
 
-Four steps:
+Three steps:
 
 1.  Write a function that takes a data frame and returns the team with the most wins and whether they won the World Series.
 
-2.  Pull the `yearID`s you will split on.
+2.  Split the data frame on `yearID`.
 
-3.  Split the data frame on `year`.
-
-4.  Apply the function to each split.
+3.  Apply the function to each split.
 
 ```{r}
 # Step 1 - Write a function.
@@ -110,15 +106,10 @@ mostWins <- function(data){
     head(1)
 }
 
-# Step 2 - Pull the years you will split on.
-year <- Teams |> 
-  filter(yearID >= 2000) |> 
-  pull(yearID)
-
-# Steps 3 and 4 - Split and apply.
+# Steps 2 and 3 - Split and apply.
 winLeaders <- Teams |> 
   filter(yearID >= 2000) |> 
-  split(year) |>
+  split(~yearID) |>
   map_df(mostWins, .id = "yearID")
 
 winLeaders |> 
@@ -140,17 +131,10 @@ mostHRs <- function(data){
     head(1)
 }
 
-# years <- 
-# Teams |> 
-#   filter(yearID >= 2000) |> 
-#   group_by(yearID) |> 
-#   group_keys() |> 
-#   pull(yearID)
-
 # Steps 2 and 3 - Split and apply.
 HRLeaders <- Teams |> 
   filter(yearID >= 2000) |> 
-  split(year) |>
+  split(~yearID) |>
   map_df(mostHRs, .id = "yearID")
 
 # HRLeaders <-

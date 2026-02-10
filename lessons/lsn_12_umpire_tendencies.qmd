@@ -42,19 +42,10 @@ get_statcast_pitches <- function(start_day, end_day, chunk_size = 5) {
   pitch_data <- map_dfr(chunk_starts, function(chunk_start) {
 
     chunk_end <- min(chunk_start + days(chunk_size - 1), end_day)
-    message("Pulling Statcast data: ",
-            chunk_start, " to ", chunk_end)
-
-    tryCatch(
-      statcast_search(
+       statcast_search(
         start_date = chunk_start,
         end_date   = chunk_end
-      ),
-      error = function(e) {
-        message("  ⚠️  Failed for ", chunk_start, "–", chunk_end)
-        NULL
-      }
-    )
+      )
   })
   return(pitch_data)
 }
@@ -63,22 +54,8 @@ get_statcast_pitches <- function(start_day, end_day, chunk_size = 5) {
 sc <- 
 get_statcast_pitches('2024-08-02','2024-08-13')
 
-# load("./balls_strikes_count.Rdata")
 ```
 
-Here's a glimpse of the data frame we'll use.
-
-```{r}
-umpires <- 
-  sc |> 
-  filter(description %in% c('ball','called_strike')) |> 
-  mutate(called_strike = description=='called_strike')
-
-# umpires |> 
-#   head() |> 
-#   kable()
-
-```
 
 Do umpires adjust their strike zone based on the count?  How might we go about gathering evidence?
 
@@ -89,6 +66,18 @@ Do umpires adjust their strike zone based on the count?  How might we go about g
 \newpage
 
 We'll want to look at strike vs. ball calls throughout the strike zone and surrounding area, so let's build a data frame consisting of combinations of horizontal locations from -2 (two feet to the left of the middle of home plate) to +2 (two feet to the right of home plate) and vertical locations from the ground (value of 0) to five feet above the ground.
+
+Here's a glimpse of the data frame we'll use.
+
+```{r}
+umpires <- 
+  sc |> 
+  filter(description %in% c('ball','called_strike')) |> 
+  mutate(called_strike = description=='called_strike')
+
+```
+
+
 
 ```{r}
 pred_area <- expand.grid(plate_x = seq(-2, 2, by = 0.1),
@@ -115,11 +104,11 @@ k_zone_plot +
 What's happening here?  Annotate the code.
 
 ```{r}
-set.seed(123)
+
 ump_count_fits <- umpires |>
   filter(
-    stand == "R",
-    (balls == 0 & strikes == 0) |
+    stand == "R", 
+    (balls == 0 & strikes == 0) | 
     (balls == 3 & strikes == 0) |
     (balls == 0 & strikes == 2)) |> 
   
@@ -132,6 +121,7 @@ ump_count_fits <- umpires |>
   map(predict, newdata = pred_area) |> 
   map(\(df) data.frame(fit = as.numeric(df))) |> 
   map_df(bind_cols, pred_area, .id = "count")
+
 ```
 
 ```{r, fig.height=3.5}

@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 6 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 14 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -234,20 +234,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review">Review</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#run-differential-and-wins" id="toc-run-differential-and-wins" class="nav-link" data-scroll-target="#run-differential-and-wins">Run Differential and Wins</a></li>
-  <li><a href="#how-many-wins-to-make-the-playoffs" id="toc-how-many-wins-to-make-the-playoffs" class="nav-link" data-scroll-target="#how-many-wins-to-make-the-playoffs">How many wins to make the playoffs?</a></li>
+  <li><a href="#measures-of-association-for-binary-responses" id="toc-measures-of-association-for-binary-responses" class="nav-link active" data-scroll-target="#measures-of-association-for-binary-responses">Measures of Association for Binary Responses</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_6_runs_and_wins_I.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_14_logistic_regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 6</h1>
-<p class="subtitle lead">How many runs is a win? - Part I</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 14</h1>
+<p class="subtitle lead">Intro to Logistic Regression</p>
 </div>
 
 
@@ -270,104 +268,124 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="review" class="level2">
-<h2 class="anchored" data-anchor-id="review">Review</h2>
-<p>We finished our intro to R! I hope you feel more confident in your ability to work with databases and large data sets.</p>
-<p>Major concepts:</p>
 <ul>
-<li><p>five tidyverse verbs</p></li>
-<li><p>relational databases</p></li>
-<li><p>split, apply, combine data</p></li>
-<li><p>plotting in R (ggplot)</p></li>
+<li>Where is a pitch with location <em>plate_x</em> = -1 and <em>plate_z</em> = 2.5?</li>
 </ul>
-<p>Today we begin our formal study of sabermetrics by answering a super important question: <u><strong>how many runs is a win?</strong></u></p>
-<p>Using the <code>Teams</code> data frame, plot the number of wins versus run differential (runs scored <span class="math inline">\(R\)</span> - runs allowed <span class="math inline">\(RA\)</span>) for all teams in the 2001 MLB season. Label the teams using the <code>ggrepel</code> package, color the points by <code>lgID</code>, and add a linear model using <code>geom_smooth()</code>.</p>
+<section id="measures-of-association-for-binary-responses" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-association-for-binary-responses">Measures of Association for Binary Responses</h2>
+<p>The goal of our analysis is to assess the effect of the catcher on a called strike. For today’s example, let’s compare Yadier Molina and Buster Posey.</p>
+<p><img src="molina.jpg" class="img-fluid" style="width:45.0%" alt="Yadier Molina"> <img src="posey.jpg" class="img-fluid" style="width:45.0%" alt="Buster Posey"></p>
+<ol type="1">
+<li>Name the response variable. Classify it as categorical or quantitative.</li>
+</ol>
+<ol start="2" type="1">
+<li>Name the explanatory variable. Classify it as categorical or quantitative.</li>
+</ol>
+<div style="page-break-after: always;"></div>
+<p>Here is summary data from May 2019 for Molina and Posey.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">==</span> <span class="dv">2001</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RD =</span> R <span class="sc">-</span> RA,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wpct =</span> W <span class="sc">/</span> G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Wins vs.&nbsp;Run Differential (2001 MLB season)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>At the end of 2001, the Oakland Athletics were losing three star players (Johnny Damon, Jason Giambi, and Jason Isringhausen) to free agency. Their general manager, Billy Beane, had a limited budget to work with as he looked for their replacements. He wanted to find players who were effective at producing runs but were undervalued in the market. At the time, teams used mostly traditional statistics like batting average (BA), home runs (HR), and runs batted in (RBI) to value players. However, evidence from sabermetrics suggested there were better statistics for determining players’ contributions to run scoring. The book <em>Moneyball</em> by Michael Lewis and the film by the same name follow the 2002 Oakland A’s.</p>
-<p>Put yourself in the position of Billy Beane. How would you approach this problem?</p>
-</section>
-<section id="run-differential-and-wins" class="level2">
-<h2 class="anchored" data-anchor-id="run-differential-and-wins">Run Differential and Wins</h2>
-<p><em>In Figure 1, is a linear model appropriate?</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p><em>In Figure 1, how many wins are associated with a 100 run differential?</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p>A common rule of thumb in baseball is 10 additional net runs over the course of a season equals one additional win. This gives us a convenient way to evaluate the impact of different players and plays.</p>
-<p>To be more formal, we could use linear regression.</p>
-<p><span class="math inline">\(Wins_i = \beta_0 + \beta_1 RD_i + \epsilon_i \quad \epsilon_i \sim \text{Normal}(0,\sigma^2)\)</span></p>
-<p>where <span class="math inline">\(Wins_i\)</span> and <span class="math inline">\(RD_i\)</span> are the wins and run differential for team <span class="math inline">\(i\)</span>.</p>
-<p>Interpret the coefficients in this model.</p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model.</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="ot">=</span> <span class="fu">lm</span>(W <span class="sc">~</span> RD, <span class="at">data =</span> teams2001)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of linear model.</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = W ~ RD, data = teams2001)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--9.6914 -2.5399  0.2891  3.0442  8.4091 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 80.93333    0.70715  114.45   &lt;2e-16 ***
-RD           0.10341    0.00598   17.29   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.873 on 28 degrees of freedom
-Multiple R-squared:  0.9144,    Adjusted R-squared:  0.9113 
-F-statistic:   299 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a clean table of results.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve pitch level data from May 2019. (See previous lesson.)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"statcast_may_2019.rds"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add catcher's name to the pitch data from the MLB master list.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This CSV file is available at https://www.smartfantasybaseball.com/tools/.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>mlbIDs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./PLAYERIDMAP.csv"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(mlbIDs, PLAYERNAME, MLBID),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"fielder_2"</span> <span class="ot">=</span> <span class="st">"MLBID"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">catcher_name =</span> PLAYERNAME)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Look only at pitches taken when Molina or Posey are catching.</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(catcher_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buster Posey"</span>, <span class="st">"Yadier Molina"</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>         description <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ball"</span>, <span class="st">"called_strike"</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Form a 2x2 table.</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(catcher_name, description) <span class="sc">|&gt;</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> description, </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> catcher_name,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Results of taken pitches (May 2019)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Results of taken pitches (May 2019)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">description</th>
+<th style="text-align: right;">Buster Posey</th>
+<th style="text-align: right;">Yadier Molina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ball</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">1007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">called_strike</td>
+<td style="text-align: right;">364</td>
+<td style="text-align: right;">533</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Calculate the proportion of called strikes for each catcher.</li>
+</ol>
+<ol start="4" type="1">
+<li>Calculate the odds of a called strike for each catcher.</li>
+</ol>
+<ol start="5" type="1">
+<li>Calculate the log odds of a called strike for each catcher.</li>
+</ol>
+<ol start="6" type="1">
+<li>Calculate the odds ratio for a called strike comparing Yadier Molina to Buster Posey.</li>
+</ol>
+<ol start="7" type="1">
+<li>What are the limitations of this analysis in assessing the effect of catcher on called strikes? What are we failing to consider, and how might a model-based approach improve our analysis?</li>
+</ol>
+</section>
+<section id="logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
+<p>Consider the results in Table 1 again. We can apply the following logistic regression model to our data. Let <span class="math inline">\(Y_i\)</span> be a random variable for whether pitch <span class="math inline">\(i\)</span> was a called strike such that <span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span> and</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i\]</span> where <span class="math inline">\(\text{Molina}_i = 1\)</span> if Yadier Molina was the catcher and <span class="math inline">\(\text{Molina}_i = 0\)</span> if Buster Posey was the catcher.</p>
+<p>Discuss each component of the model above.</p>
+<ul>
+<li><span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span></li>
+</ul>
+<ul>
+<li><span class="math inline">\(\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i\)</span></li>
+</ul>
+<ul>
+<li>Interpret <span class="math inline">\(\beta_0\)</span>.</li>
+</ul>
+<ul>
+<li>Interpret <span class="math inline">\(\beta_1\)</span>.</li>
+</ul>
+<p>Let’s fit the model above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> catcher_name, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> _,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"binomial"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">term</th>
@@ -380,144 +398,330 @@ F-statistic:   299 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">80.93</td>
-<td style="text-align: right;">0.71</td>
-<td style="text-align: right;">114.45</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">-0.7557092</td>
+<td style="text-align: right;">0.0635419</td>
+<td style="text-align: right;">-11.89308</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">RD</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">17.29</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">catcher_nameYadier Molina</td>
+<td style="text-align: right;">0.1194997</td>
+<td style="text-align: right;">0.0831071</td>
+<td style="text-align: right;">1.43790</td>
+<td style="text-align: right;">0.1504626</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Calculate the run differential that would typically result in <u>one</u> additional win.</p>
+<p>Based on this model, is there evidence Molina has more called strikes in the long term?</p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
 </div>
 </div>
-<p>Based on the regression model, do you feel confident in your recommended run differential? Explain how you decided.</p>
+<p>Based on this model, is there evidence Molina caused the increase in called strikes (for example, by framing pitches)?</p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
 </div>
 </div>
-<p>Let’s look at the residuals for this regression. The <code>broom</code> package helps get model results for model diagnostic plots.</p>
+<p>Name other variables to control for to provide stronger evidence Molina caused the increase.</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Explain why count might be a confounder of the relationship between catcher and called strikes.</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Let’s investigate how strong these relationships are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the teams2001 column names before and after running the next line.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="ot">=</span> <span class="fu">augment</span>(wins_lm, <span class="at">data =</span> teams2001)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> <span class="fu">filter</span>(teams2001, <span class="fu">abs</span>(.resid) <span class="sc">&gt;</span> <span class="fl">7.5</span>),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(teamID,yearID))) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predicted Wins"</span>, </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="ot">&lt;-</span> pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">paste</span>(balls,strikes, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(catcher_name, count) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(catcher_name) <span class="sc">|&gt;</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> count, <span class="at">names_from =</span> catcher_name, <span class="at">values_from =</span> prop) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Figure 2: Residuals vs.&nbsp;Fitted Values of the Linear Model for Wins</figcaption>
-</figure>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">Buster Posey</th>
+<th style="text-align: right;">Yadier Molina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0-0</td>
+<td style="text-align: right;">0.330</td>
+<td style="text-align: right;">0.347</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0-1</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0-2</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.060</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1-0</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: right;">0.111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1-1</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1-2</td>
+<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0.066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2-0</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.039</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2-1</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">0.051</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2-2</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.059</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3-0</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3-1</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.023</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3-2</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.022</td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-</div>
-<p><em>What units are the residuals in?</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p><em>In Figure 2, there are two labeled teams with large residuals. Briefly explain why these teams might have large residuals.</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p><em>Above, we used run differential to predict number of wins. Typically, we use win percentage instead of wins. Does it matter?</em></p>
-<p>Repeat the above analysis using win percentage instead of wins. Report the run differential that typically results in one additional win.</p>
-</section>
-<section id="how-many-wins-to-make-the-playoffs" class="level2">
-<h2 class="anchored" data-anchor-id="how-many-wins-to-make-the-playoffs">How many wins to make the playoffs?</h2>
-<p>Let’s see historically how many wins it takes to make the playoffs. Below, we will look at the five seasons (1997-2001) preceding the 2002 season. First, we need to add a variable <code>playoff</code> to the <code>Teams</code> table, which is an indicator of whether the team made the playoffs (1) or did not make the playoffs (2).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get teams in the 1997-2001 seasons.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1997</span>, yearID <span class="sc">&lt;=</span> <span class="dv">2001</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain a list of teams who made the playoffs by year.</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>playoff_teams <span class="ot">&lt;-</span> SeriesPost <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1997</span>, yearID <span class="sc">&lt;=</span> <span class="dv">2001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(yearID, teamIDwinner, teamIDloser) <span class="sc">|&gt;</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>yearID, </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"result"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"teamID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>result) <span class="sc">|&gt;</span> </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">playoffs =</span> <span class="st">"yes"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add playoff information to my teams.</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span> </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(playoff_teams, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"yearID"</span>, <span class="st">"teamID"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">playoffs =</span> <span class="fu">replace_na</span>(playoffs, <span class="st">"no"</span>)) </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check whether we did this correctly.  </span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># There should be eight playoff teams each year.</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(yearID, playoffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   yearID playoffs  n
-1    1997       no 20
-2    1997      yes  8
-3    1998       no 22
-4    1998      yes  8
-5    1999       no 22
-6    1999      yes  8
-7    2000       no 22
-8    2000      yes  8
-9    2001       no 22
-10   2001      yes  8</code></pre>
-</div>
-</div>
-<p>Next, let’s look at the data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> W, <span class="at">y =</span> R, <span class="at">color =</span> <span class="fu">factor</span>(playoffs))) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Wins"</span>, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Runs Scored"</span>, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Made Playoffs"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Wins and Making the Playoffs"</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> <span class="fu">filter</span>(my_teams, teamID <span class="sc">==</span> <span class="st">"OAK"</span>),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">x =</span> W, <span class="at">y =</span> R, <span class="at">label =</span> <span class="fu">paste</span>(teamID,yearID)),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(description, count) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(count) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> description, <span class="at">names_from =</span> count, <span class="at">values_from =</span> prop) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">description</th>
+<th style="text-align: right;">0-0</th>
+<th style="text-align: right;">0-1</th>
+<th style="text-align: right;">0-2</th>
+<th style="text-align: right;">1-0</th>
+<th style="text-align: right;">1-1</th>
+<th style="text-align: right;">1-2</th>
+<th style="text-align: right;">2-0</th>
+<th style="text-align: right;">2-1</th>
+<th style="text-align: right;">2-2</th>
+<th style="text-align: right;">3-0</th>
+<th style="text-align: right;">3-1</th>
+<th style="text-align: right;">3-2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ball</td>
+<td style="text-align: right;">0.528</td>
+<td style="text-align: right;">0.748</td>
+<td style="text-align: right;">0.922</td>
+<td style="text-align: right;">0.604</td>
+<td style="text-align: right;">0.766</td>
+<td style="text-align: right;">0.882</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.701</td>
+<td style="text-align: right;">0.855</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.652</td>
+<td style="text-align: right;">0.865</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">called_strike</td>
+<td style="text-align: right;">0.472</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">0.396</td>
+<td style="text-align: right;">0.234</td>
+<td style="text-align: right;">0.118</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.299</td>
+<td style="text-align: right;">0.145</td>
+<td style="text-align: right;">0.795</td>
+<td style="text-align: right;">0.348</td>
+<td style="text-align: right;">0.135</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<p>Next, let’s adjust for count in our model for called strikes. Here is the updated model.</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i + \beta_2\text{count0-1}_i + \ldots + \beta_{12}\text{count3-2}_i\]</span></p>
+<p>where <span class="math inline">\(\text{countX-Y}\)</span> is an indicator of whether the pitch had X balls and Y strikes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> catcher_name <span class="sc">+</span> count, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> _,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"binomial"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.1429731</td>
+<td style="text-align: right;">0.0843064</td>
+<td style="text-align: right;">-1.6958749</td>
+<td style="text-align: right;">0.0899096</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">catcher_nameYadier Molina</td>
+<td style="text-align: right;">0.0525685</td>
+<td style="text-align: right;">0.0884053</td>
+<td style="text-align: right;">0.5946308</td>
+<td style="text-align: right;">0.5520903</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count0-1</td>
+<td style="text-align: right;">-0.9728490</td>
+<td style="text-align: right;">0.1400530</td>
+<td style="text-align: right;">-6.9462937</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">count0-2</td>
+<td style="text-align: right;">-2.3582783</td>
+<td style="text-align: right;">0.2963634</td>
+<td style="text-align: right;">-7.9573883</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count1-0</td>
+<td style="text-align: right;">-0.3111663</td>
+<td style="text-align: right;">0.1375763</td>
+<td style="text-align: right;">-2.2617723</td>
+<td style="text-align: right;">0.0237115</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">count1-1</td>
+<td style="text-align: right;">-1.0737305</td>
+<td style="text-align: right;">0.1690577</td>
+<td style="text-align: right;">-6.3512664</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count1-2</td>
+<td style="text-align: right;">-1.8946577</td>
+<td style="text-align: right;">0.2365813</td>
+<td style="text-align: right;">-8.0084856</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">count2-0</td>
+<td style="text-align: right;">0.5153006</td>
+<td style="text-align: right;">0.2197385</td>
+<td style="text-align: right;">2.3450634</td>
+<td style="text-align: right;">0.0190238</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count2-1</td>
+<td style="text-align: right;">-0.7404951</td>
+<td style="text-align: right;">0.2048653</td>
+<td style="text-align: right;">-3.6145463</td>
+<td style="text-align: right;">0.0003009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">count2-2</td>
+<td style="text-align: right;">-1.6638610</td>
+<td style="text-align: right;">0.2304900</td>
+<td style="text-align: right;">-7.2187982</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count3-0</td>
+<td style="text-align: right;">1.4640085</td>
+<td style="text-align: right;">0.4021148</td>
+<td style="text-align: right;">3.6407728</td>
+<td style="text-align: right;">0.0002718</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">count3-1</td>
+<td style="text-align: right;">-0.5257107</td>
+<td style="text-align: right;">0.3170033</td>
+<td style="text-align: right;">-1.6583763</td>
+<td style="text-align: right;">0.0972415</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">count3-2</td>
+<td style="text-align: right;">-1.7377286</td>
+<td style="text-align: right;">0.3466271</td>
+<td style="text-align: right;">-5.0132513</td>
+<td style="text-align: right;">0.0000005</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p><em>Based on the figure above, if you were Billy Beane, how many wins should you shoot for in order to have a good chance of making the playoffs?</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
 </div>
-</div>
-<p><em>Besides visual inspection, list methods you could use to assess whether a team will make the playoffs based on number of wins.</em></p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
+<p>Based on this count-adjusted model, is there evidence Molina has more called strikes in the long term?</p>
 
 
 </section>

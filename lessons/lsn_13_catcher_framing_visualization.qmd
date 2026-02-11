@@ -24,13 +24,13 @@ knitr::opts_chunk$set(echo = TRUE,
 
 In this chapter, we investigate whether catchers have the ability to consistently frame close pitches, which some believe makes it more likely the umpire will call a strike.
 
-\textit{Do you think some catchers are better than others at framing pitches, and how important is this skill?}
+*Do you think some catchers are better than others at framing pitches, and how important is this skill?*
 
 * [Video 1](https://www.youtube.com/watch?v=tkjCx56nFlQ)
 
 * [Video 2](https://www.youtube.com/watch?v=kQdkeYXHh6Y) 
 
-\textit{How could we investigate whether some catchers are better than others? List some challenges with answering this question with data.}
+*How could we investigate whether some catchers are better than others? List some challenges with answering this question with data.*
 
 
 \vspace{2in}
@@ -121,6 +121,10 @@ top10catchers
 ```
 \newpage
 
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
 Okay, let's see if we can see anything by looking at called strikes versus balls.
 
 ```{r, out.width="100%"}
@@ -159,6 +163,10 @@ How can we make some sense of the different panels in this figure?  Look closely
 
 \newpage
 
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
 Okay, this is admittedly pretty subjective, and we can't stop here.  We need a quantitative assessment of how different catchers may or may not be contributing to different proportions of called strikes on pitches where batters didn't swing.
 
 ```{r}
@@ -172,15 +180,34 @@ pitches_taken %>%
         caption = "Proportion of taken pitches that were called strikes by catcher.")
 ```
 
-\textit{Does it appear catchers make a difference?}
+*Does it appear catchers make a difference?*
 
 \vspace{1in}
 
-\textit{Now that we've been talking about this for a while, what new considerations come to mind?}
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
+*Now that we've been talking about this for a while, what new considerations come to mind?*
 
 \vspace{1in}
 
-\textit{How could a model-based approach improve upon this analysis?}
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
+*How could a model-based approach improve upon this analysis?*
 
 \vspace{1in}
+
+
+::: {.html}
+<div style="margin-top: 0.5in;"></div>
+:::
+
+**Exercise**
+
+Calculate that same called strike proportion for pitches that are within 2 inches of the edge of the strike zone?
+
+*Hint: Use `case_when()` to establish a new variable that signifies whether a ball is `sz_edge` based on `plate_x`, `plate_z`, `sz_top`, `sz_bottom` and -.95 to .95 for plate edge.*
 

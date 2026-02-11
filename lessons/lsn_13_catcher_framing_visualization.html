@@ -241,12 +241,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="chapter-7" class="level2">
 <h2 class="anchored" data-anchor-id="chapter-7">Chapter 7</h2>
 <p>In this chapter, we investigate whether catchers have the ability to consistently frame close pitches, which some believe makes it more likely the umpire will call a strike.</p>
-<p></p>
+<p><em>Do you think some catchers are better than others at framing pitches, and how important is this skill?</em></p>
 <ul>
 <li><p><a href="https://www.youtube.com/watch?v=tkjCx56nFlQ">Video 1</a></p></li>
 <li><p><a href="https://www.youtube.com/watch?v=kQdkeYXHh6Y">Video 2</a></p></li>
 </ul>
-<p></p>
+<p><em>How could we investigate whether some catchers are better than others? List some challenges with answering this question with data.</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
@@ -455,6 +455,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div style="page-break-after: always;"></div>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 <p>Okay, let’s see if we can see anything by looking at called strikes versus balls.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's plot the strike zone.</span></span>
@@ -496,6 +501,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>How can we make some sense of the different panels in this figure? Look closely – does anything jump out at you?</p>
 <div style="page-break-after: always;"></div>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 <p>Okay, this is admittedly pretty subjective, and we can’t stop here. We need a quantitative assessment of how different catchers may or may not be contributing to different proportions of called strikes on pitches where batters didn’t swing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pitches_taken <span class="sc">%&gt;%</span> </span>
@@ -582,9 +592,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p></p>
-<p></p>
-<p></p>
+<p><em>Does it appear catchers make a difference?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><em>Now that we’ve been talking about this for a while, what new considerations come to mind?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><em>How could a model-based approach improve upon this analysis?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><strong>Exercise</strong></p>
+<p>Calculate that same called strike proportion for pitches that are within 2 inches of the edge of the strike zone?</p>
+<p><em>Hint: Use <code>case_when()</code> to establish a new variable that signifies whether a ball is <code>sz_edge</code> based on <code>plate_x</code>, <code>plate_z</code>, <code>sz_top</code>, <code>sz_bottom</code> and -.95 to .95 for plate edge.</em></p>
 
 
 </section>

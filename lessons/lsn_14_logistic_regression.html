@@ -375,7 +375,16 @@ window.Quarto = {
 <section id="why-log-odds" class="level3">
 <h3 class="anchored" data-anchor-id="why-log-odds">Why Log Odds?</h3>
 <p><span class="math inline">\(z=\beta_0 + \beta_1 \text{Molina}_i\)</span> Maps the output to a continuous value from <span class="math inline">\([-\infty,\infty]\)</span>. What would a coefficient even mean here?</p>
-<p>We can use the sigmoid function, <span class="math inline">\(\sigma(z)=p=\frac{1}{1+e(-z)}\)</span> to map any continuous value to a number between <span class="math inline">\([0,1]\)</span> (i.e.&nbsp;a probability).</p>
+<p>We can use the sigmoid function, <span class="math inline">\(\sigma(z)=p=\frac{1}{1+e^{-z}}\)</span> to map any continuous value to a number between <span class="math inline">\([0,1]\)</span> (i.e.&nbsp;a probability).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_14_logistic_regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Ok, but now we have an even more complicated function with <span class="math inline">\(z\)</span> buried in the denominator. Let’s get <span class="math inline">\(z\)</span> by itself.</p>
 <p><span class="math display">\[\frac{1}{p}=1+e^{-z}\]</span> <span class="math display">\[\frac{1}{p}-1=e^{-z}\]</span> <span class="math display">\[\frac{1-p}{p}=e^{-z}\]</span> Take the recipricals of both sides and we get: <span class="math display">\[\text{odds}(p)=\frac{p}{1-p}=e^{z}\]</span> How do we get <span class="math inline">\(z\)</span> by itself? <span class="math display">\[\text{log}(\frac{p}{1-p})=\text{log}(e^{z})=z\]</span> So, in logistic regression, the linear predictor is</p>
 <p><span class="math display">\[

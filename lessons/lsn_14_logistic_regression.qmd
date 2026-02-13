@@ -144,9 +144,9 @@ Discuss each component of the model above.
 
 $z=\beta_0 + \beta_1 \text{Molina}_i$ Maps the output to a continuous value from $[-\infty,\infty]$. What would a coefficient even mean here?
 
-We can use the sigmoid function, $\sigma(z)=p=\frac{1}{1+e(-z)}$ to map any continuous value to a number between $[0,1]$ (i.e. a probability). 
+We can use the sigmoid function, $\sigma(z)=p=\frac{1}{1+e^{-z}}$ to map any continuous value to a number between $[0,1]$ (i.e. a probability). 
 
-```{r, include=FALSE}
+```{r, echo=FALSE}
 tibble(x=seq(-8,8,by=.1),y=1/(1+exp(-x))) |> 
   ggplot(aes(x=x,y=y)) +
            geom_line()+

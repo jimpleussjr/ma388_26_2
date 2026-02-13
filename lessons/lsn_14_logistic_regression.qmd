@@ -139,13 +139,58 @@ Discuss each component of the model above.
 
 \vspace{0.5in}
 
+
+### Why Log Odds?
+
+$z=\beta_0 + \beta_1 \text{Molina}_i$ Maps the output to a continuous value from $[-\infty,\infty]$. What would a coefficient even mean here?
+
+We can use the sigmoid function, $\sigma(z)=p=\frac{1}{1+e(-z)}$ to map any continuous value to a number between $[0,1]$ (i.e. a probability). 
+
+```{r, include=FALSE}
+tibble(x=seq(-8,8,by=.1),y=1/(1+exp(-x))) |> 
+  ggplot(aes(x=x,y=y)) +
+           geom_line()+
+  theme_classic()
+```
+
+Ok, but now we have an even more complicated function with $z$ buried in the denominator. Let's get $z$ by itself.
+
+$$\frac{1}{p}=1+e^{-z}$$
+$$\frac{1}{p}-1=e^{-z}$$
+$$\frac{1-p}{p}=e^{-z}$$
+Take the recipricals of both sides and we get:
+$$\text{odds}(p)=\frac{p}{1-p}=e^{z}$$
+How do we get $z$ by itself?
+$$\text{log}(\frac{p}{1-p})=\text{log}(e^{z})=z$$
+So, in logistic regression, the linear predictor is
+
+$$
+z = \beta_0 + \beta_1 x.
+$$
+
+On the probability scale, the model is
+
+$$
+p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}}.
+$$
+
+On the log-odds (logit) scale, the model is
+
+$$
+\log\!\left( \frac{p(x)}{1 - p(x)} \right)
+  = \beta_0 + \beta_1 x.
+$$
+
 Let's fit the model above.
 
 ```{r}
-pitches_taken_subset |> 
+catcher_model <- 
+  pitches_taken_subset |> 
   glm(description == "called_strike" ~ catcher_name, 
       data = _,
-      family = "binomial") |> 
+      family = "binomial") 
+
+catcher_model |> 
   tidy() |> 
   kable()
 ```
@@ -157,6 +202,7 @@ Based on this model, is there evidence Molina has more called strikes in the lon
 ::: {.html}
 <div style="margin-top: 0.5in;"></div>
 :::
+
 
 Based on this model, is there evidence Molina caused the increase in called strikes (for example, by framing pitches)?
 

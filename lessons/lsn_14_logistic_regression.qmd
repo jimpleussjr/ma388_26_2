@@ -52,12 +52,17 @@ library(broom)
 pitches <- readRDS("statcast_may_2019.rds")
 
 # Add catcher's name to the pitch data from the MLB master list.
-# This CSV file is available at https://www.smartfantasybaseball.com/tools/.
-mlbIDs <- read_csv("./PLAYERIDMAP.csv")
+mlbIDs <- baseballr::chadwick_player_lu() |> 
+  mutate(
+    mlb_name = paste(name_first, name_last),
+    mlb_id = key_mlbam
+  )
+
+
 pitches <- pitches |> 
-  left_join(select(mlbIDs, PLAYERNAME, MLBID),
-            by = c("fielder_2" = "MLBID")) |> 
-  rename(catcher_name = PLAYERNAME)
+  left_join(select(mlbIDs, mlb_name, mlb_id),
+            by = c("fielder_2" = "mlb_id")) |> 
+  rename(catcher_name = mlb_name)
 
 # Look only at pitches taken when Molina or Posey are catching.
 pitches_taken_subset <- pitches |> 

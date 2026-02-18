@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 14 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 15 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -238,21 +238,17 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#measures-of-association-for-binary-responses" id="toc-measures-of-association-for-binary-responses" class="nav-link active" data-scroll-target="#measures-of-association-for-binary-responses">Measures of Association for Binary Responses</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a>
-  <ul class="collapse">
-  <li><a href="#why-log-odds" id="toc-why-log-odds" class="nav-link" data-scroll-target="#why-log-odds">Why Log Odds?</a></li>
-  </ul></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link active" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_14_logistic_regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_15_catcher_framing_modeling.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 14</h1>
-<p class="subtitle lead">Intro to Logistic Regression</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 15</h1>
+<p class="subtitle lead">Catcher Framing Ability Modeling</p>
 </div>
 
 
@@ -275,57 +271,85 @@ window.Quarto = {
 </header>
 
 
-<ul>
-<li>Where is a pitch with location <em>plate_x</em> = -1 and <em>plate_z</em> = 2.5?</li>
-</ul>
-<section id="measures-of-association-for-binary-responses" class="level2">
-<h2 class="anchored" data-anchor-id="measures-of-association-for-binary-responses">Measures of Association for Binary Responses</h2>
-<p>The goal of our analysis is to assess the effect of the catcher on a called strike. For today’s example, let’s compare Yadier Molina and Buster Posey.</p>
-<p><img src="molina.jpg" class="img-fluid" style="width:45.0%" alt="Yadier Molina"> <img src="posey.jpg" class="img-fluid" style="width:45.0%" alt="Buster Posey"></p>
-<ol type="1">
-<li>Name the response variable. Classify it as categorical or quantitative.</li>
-</ol>
-<ol start="2" type="1">
-<li>Name the explanatory variable. Classify it as categorical or quantitative.</li>
-</ol>
-<div style="page-break-after: always;"></div>
-<p>Here is summary data from May 2019 for Molina and Posey.</p>
+<p>Last class, we began comparing called strikes for Buster Posey and Yadier Molina. Today let’s look at their results from June 2019.</p>
+<p><img src="molina.jpg" class="img-fluid" alt="Yadier Molina"> <img src="posey.jpg" class="img-fluid" alt="Buster Posey"></p>
+<p>Let’s grab the data first. This should look familiar (see lesson 13).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve pitch level data from May 2019. (See previous lesson.)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"statcast_may_2019.rds"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add catcher's name to the pitch data from the MLB master list.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mlbIDs <span class="ot">&lt;-</span> baseballr<span class="sc">::</span><span class="fu">chadwick_player_lu</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">mlb_name =</span> <span class="fu">paste</span>(name_first, name_last),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">mlb_id =</span> key_mlbam</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(mlbIDs, mlb_name, mlb_id),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"fielder_2"</span> <span class="ot">=</span> <span class="st">"mlb_id"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">catcher_name =</span> mlb_name)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Look only at pitches taken when Molina or Posey are catching.</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(catcher_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buster Posey"</span>, <span class="st">"Yadier Molina"</span>),</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>         description <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ball"</span>, <span class="st">"called_strike"</span>))</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Form a 2x2 table.</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(catcher_name, description) <span class="sc">|&gt;</span> </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> description, </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> catcher_name,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span> </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Results of taken pitches (May 2019)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve pitch level data from June 2019. (See previous lesson.)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If you've already collected the pitch data below, just load it.  Otherwise,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># collect it from scratch.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="st">"statcast_may_2019.rds"</span> <span class="sc">%in%</span> <span class="fu">dir</span>(<span class="fu">getwd</span>())){</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  pitches <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"statcast_june_2019.rds"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retrieve pitch-level data from June 2019.  </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>get_statcast_pitches <span class="ot">&lt;-</span> <span class="cf">function</span>(start_day, end_day, <span class="at">chunk_size =</span> <span class="dv">5</span>) {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Coerce to Date</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  start_day <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(start_day)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  end_day   <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(end_day)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create sequence of chunk start dates</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  chunk_starts <span class="ot">&lt;-</span> <span class="fu">seq</span>(start_day, end_day, <span class="at">by =</span> <span class="fu">paste</span>(chunk_size, <span class="st">"days"</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build data</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  pitch_data <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(chunk_starts, <span class="cf">function</span>(chunk_start) {</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    chunk_end <span class="ot">&lt;-</span> <span class="fu">min</span>(chunk_start <span class="sc">+</span> <span class="fu">days</span>(chunk_size <span class="sc">-</span> <span class="dv">1</span>), end_day)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>       <span class="fu">statcast_search</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">start_date =</span> chunk_start,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">end_date   =</span> chunk_end</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pitch_data)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If we want to limit to a certain number of pitches, we might take the head()</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or sample_n() to get the number we want.</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  pitches <span class="ot">&lt;-</span> <span class="fu">get_statcast_pitches</span>(<span class="st">'2019-06-01'</span>,<span class="st">'2019-06-30'</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(pitches, <span class="st">"statcast_june_2019.rds"</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"statcast_june_2019.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can pull in the catcher name and display the strike and ball counts for both catchers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add catcher's name to the pitch data from the MLB master list.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mlbIDs <span class="ot">&lt;-</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  baseballr<span class="sc">::</span><span class="fu">chadwick_player_lu</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mlb_name =</span> <span class="fu">paste</span>(name_first, name_last),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mlb_id =</span> key_mlbam)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(mlbIDs, mlb_name, mlb_id),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"fielder_2"</span> <span class="ot">=</span> <span class="st">"mlb_id"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">catcher_name =</span> mlb_name)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Look only at pitches taken when Molina or Posey are catching.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(catcher_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buster Posey"</span>, <span class="st">"Yadier Molina"</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         description <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ball"</span>, <span class="st">"called_strike"</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Form a 2x2 table.</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(catcher_name, description) <span class="sc">|&gt;</span> </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> description, </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> catcher_name,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span> </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Results of taken pitches (June 2019)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Results of taken pitches (May 2019)</caption>
+<caption>Results of taken pitches (June 2019)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">description</th>
@@ -336,124 +360,27 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">ball</td>
-<td style="text-align: right;">775</td>
-<td style="text-align: right;">1007</td>
+<td style="text-align: right;">608</td>
+<td style="text-align: right;">764</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">called_strike</td>
-<td style="text-align: right;">364</td>
-<td style="text-align: right;">533</td>
+<td style="text-align: right;">295</td>
+<td style="text-align: right;">391</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<ol start="3" type="1">
-<li>Calculate the proportion of called strikes for each catcher.</li>
-</ol>
-<ol start="4" type="1">
-<li>Calculate the odds of a called strike for each catcher.</li>
-</ol>
-<ol start="5" type="1">
-<li>Calculate the log odds of a called strike for each catcher.</li>
-</ol>
-<ol start="6" type="1">
-<li>Calculate the odds ratio for a called strike comparing Yadier Molina to Buster Posey.</li>
-</ol>
-<ol start="7" type="1">
-<li>What are the limitations of this analysis in assessing the effect of catcher on called strikes? What are we failing to consider, and how might a model-based approach improve our analysis?</li>
-</ol>
-</section>
 <section id="logistic-regression" class="level2">
 <h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
-<p>Consider the results in Table 1 again. We can apply the following logistic regression model to our data. Let <span class="math inline">\(Y_i\)</span> be a random variable for whether pitch <span class="math inline">\(i\)</span> was a called strike such that <span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span> and</p>
-<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i\]</span> where <span class="math inline">\(\text{Molina}_i = 1\)</span> if Yadier Molina was the catcher and <span class="math inline">\(\text{Molina}_i = 0\)</span> if Buster Posey was the catcher.</p>
-<p>Discuss each component of the model above.</p>
-<ul>
-<li><span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span></li>
-</ul>
-<ul>
-<li><span class="math inline">\(\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i\)</span></li>
-</ul>
-<ul>
-<li>Interpret <span class="math inline">\(\beta_0\)</span>.</li>
-</ul>
-<ul>
-<li>Interpret <span class="math inline">\(\beta_1\)</span>.</li>
-</ul>
-<section id="why-log-odds" class="level3">
-<h3 class="anchored" data-anchor-id="why-log-odds">Why Log Odds?</h3>
-<p><span class="math inline">\(z=\beta_0 + \beta_1 \text{Molina}_i\)</span> Maps the output to a continuous value from <span class="math inline">\([-\infty,\infty]\)</span>. What would a coefficient even mean here?</p>
-<p>We can use the sigmoid function, <span class="math inline">\(\sigma(z)=p=\frac{1}{1+e^{-z}}\)</span> to map any continuous value to a number between <span class="math inline">\([0,1]\)</span> (i.e.&nbsp;a probability).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lsn_14_logistic_regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Ok, but now we have an even more complicated function with <span class="math inline">\(z\)</span> buried in the denominator. Let’s get <span class="math inline">\(z\)</span> by itself.</p>
-<p><span class="math display">\[\frac{1}{p}=1+e^{-z}\]</span> <span class="math display">\[\frac{1}{p}-1=e^{-z}\]</span> <span class="math display">\[\frac{1-p}{p}=e^{-z}\]</span> Take the recipricals of both sides and we get: <span class="math display">\[\text{odds}(p)=\frac{p}{1-p}=e^{z}\]</span> How do we get <span class="math inline">\(z\)</span> by itself? <span class="math display">\[\text{log}(\frac{p}{1-p})=\text{log}(e^{z})=z\]</span> So, in logistic regression, the linear predictor is</p>
-<p><span class="math display">\[
-z = \beta_0 + \beta_1 x.
-\]</span></p>
-<p>On the probability scale, the model is</p>
-<p><span class="math display">\[
-p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}}.
-\]</span></p>
-<p>On the log-odds (logit) scale, the model is</p>
-<p><span class="math display">\[
-\log\!\left( \frac{p(x)}{1 - p(x)} \right)
-  = \beta_0 + \beta_1 x.
-\]</span></p>
-<p>Let’s fit the model above.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>catcher_model <span class="ot">&lt;-</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> catcher_name, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> _,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"binomial"</span>) </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>catcher_model <span class="sc">|&gt;</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 16%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">-0.7557092</td>
-<td style="text-align: right;">0.0635419</td>
-<td style="text-align: right;">-11.89308</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">catcher_nameYadier Molina</td>
-<td style="text-align: right;">0.1194997</td>
-<td style="text-align: right;">0.0831071</td>
-<td style="text-align: right;">1.43790</td>
-<td style="text-align: right;">0.1504626</td>
-</tr>
-</tbody>
-</table>
+<p>We can use logistic regression to adjust for confounding variables. Consider the results in Table 1 and the following logistic regression model for the data. Let <span class="math inline">\(Y_i\)</span> be a random variable for whether pitch <span class="math inline">\(i\)</span> was a called strike such that <span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span> and</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i\]</span></p>
+<p>where <span class="math inline">\(\text{Molina}_i = 1\)</span> if Yadier Molina was catcher and <span class="math inline">\(\text{Molina}_i = 0\)</span> if Buster Posey was catcher.</p>
+<p><strong>Fit the model above and report the final model equation.</strong></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
 </div>
 </div>
 <p>Based on this model, is there evidence Molina has more called strikes in the long term?</p>
@@ -462,311 +389,136 @@ p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}}.
 
 </div>
 </div>
-<p>Based on this model, is there evidence Molina caused the increase in called strikes (for example, by framing pitches)?</p>
+<p>A better analysis would also adjust for the location of the pitch. We need a model for called strikes based on location. You might be tempted to consider the following model:</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{plate\_x}_i + \beta_2  \text{plate\_z}_i\]</span></p>
+<p>Is this an effective model for adjusting for location? Explain.</p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
 </div>
 </div>
-<p>Name other variables to control for to provide stronger evidence Molina caused the increase.</p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p>Explain why count might be a confounder of the relationship between catcher and called strikes.</p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p>Let’s investigate how strong these relationships are:</p>
+<p>Let’s consider an alternative, specifically a smooth function of the location. We can write the model like this:</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + f(\text{plate\_x}_i,\text{plate\_z}_i)\]</span></p>
+<p>Fit the model in R using the <code>mgcv</code> package (Section 7.4).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="ot">&lt;-</span> pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">paste</span>(balls,strikes, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(catcher_name, count) <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(catcher_name) <span class="sc">|&gt;</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> count, <span class="at">names_from =</span> catcher_name, <span class="at">values_from =</span> prop) <span class="sc">|&gt;</span> </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">count</th>
-<th style="text-align: right;">Buster Posey</th>
-<th style="text-align: right;">Yadier Molina</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">0-0</td>
-<td style="text-align: right;">0.330</td>
-<td style="text-align: right;">0.347</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">0-1</td>
-<td style="text-align: right;">0.140</td>
-<td style="text-align: right;">0.123</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">0-2</td>
-<td style="text-align: right;">0.066</td>
-<td style="text-align: right;">0.060</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1-0</td>
-<td style="text-align: right;">0.103</td>
-<td style="text-align: right;">0.111</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1-1</td>
-<td style="text-align: right;">0.090</td>
-<td style="text-align: right;">0.084</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1-2</td>
-<td style="text-align: right;">0.075</td>
-<td style="text-align: right;">0.066</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2-0</td>
-<td style="text-align: right;">0.031</td>
-<td style="text-align: right;">0.039</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2-1</td>
-<td style="text-align: right;">0.043</td>
-<td style="text-align: right;">0.051</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2-2</td>
-<td style="text-align: right;">0.066</td>
-<td style="text-align: right;">0.059</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3-0</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">0.016</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3-1</td>
-<td style="text-align: right;">0.010</td>
-<td style="text-align: right;">0.023</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3-2</td>
-<td style="text-align: right;">0.035</td>
-<td style="text-align: right;">0.022</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>strike_mod <span class="ot">&lt;-</span> <span class="fu">gam</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> <span class="fu">s</span>(plate_x, plate_z), <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> pitches_taken_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(description, count) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(count) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> description, <span class="at">names_from =</span> count, <span class="at">values_from =</span> prop) <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 4%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">description</th>
-<th style="text-align: right;">0-0</th>
-<th style="text-align: right;">0-1</th>
-<th style="text-align: right;">0-2</th>
-<th style="text-align: right;">1-0</th>
-<th style="text-align: right;">1-1</th>
-<th style="text-align: right;">1-2</th>
-<th style="text-align: right;">2-0</th>
-<th style="text-align: right;">2-1</th>
-<th style="text-align: right;">2-2</th>
-<th style="text-align: right;">3-0</th>
-<th style="text-align: right;">3-1</th>
-<th style="text-align: right;">3-2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">ball</td>
-<td style="text-align: right;">0.528</td>
-<td style="text-align: right;">0.748</td>
-<td style="text-align: right;">0.922</td>
-<td style="text-align: right;">0.604</td>
-<td style="text-align: right;">0.766</td>
-<td style="text-align: right;">0.882</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.701</td>
-<td style="text-align: right;">0.855</td>
-<td style="text-align: right;">0.205</td>
-<td style="text-align: right;">0.652</td>
-<td style="text-align: right;">0.865</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">called_strike</td>
-<td style="text-align: right;">0.472</td>
-<td style="text-align: right;">0.252</td>
-<td style="text-align: right;">0.078</td>
-<td style="text-align: right;">0.396</td>
-<td style="text-align: right;">0.234</td>
-<td style="text-align: right;">0.118</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">0.299</td>
-<td style="text-align: right;">0.145</td>
-<td style="text-align: right;">0.795</td>
-<td style="text-align: right;">0.348</td>
-<td style="text-align: right;">0.135</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Next, let’s adjust for count in our model for called strikes. Here is the updated model.</p>
-<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i + \beta_2\text{count0-1}_i + \ldots + \beta_{12}\text{count3-2}_i\]</span></p>
-<p>where <span class="math inline">\(\text{countX-Y}\)</span> is an indicator of whether the pitch had X balls and Y strikes.</p>
+<p>We want this model to produce strike predictions based on location. Let’s look at the predicted strike probability for a pitch at <code>plate_x = -1</code> and <code>plate_z = 2.5</code> (Section 7.4.1). This would place the pitch just outside the left edge of home plate (from the pitcher’s perspective) in the vertical middle of the strike zone.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pitches_taken_subset <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> catcher_name <span class="sc">+</span> count, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> _,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"binomial"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>strike_mod <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">plate_x =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plate_z =</span> <span class="fl">2.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  plate_x plate_z .fitted .se.fit
+    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1      -1     2.5   0.405  0.0875</code></pre>
+</div>
+</div>
+<p>Now, let’s look at the prediction surface. First, we create a grid of points and then calculate the predictions at those points (Section 7.4.2 ).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr) <span class="co">#data_grid function</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> pitches_taken_subset <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_grid</span>(<span class="at">plate_x =</span> <span class="fu">seq_range</span>(plate_x, <span class="at">n =</span> <span class="dv">100</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">plate_z =</span> <span class="fu">seq_range</span>(plate_z, <span class="at">n =</span> <span class="dv">100</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>grid <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  plate_x plate_z
+    &lt;dbl&gt;   &lt;dbl&gt;
+1   -3.16   -1.56
+2   -3.16   -1.46
+3   -3.16   -1.36
+4   -3.16   -1.26
+5   -3.16   -1.16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate predicted probabilities for strikes on the grid.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> strike_mod <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">newdata =</span> grid)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>grid <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  plate_x plate_z .fitted .se.fit
+    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1   -3.16   -1.56 0.00275   0.761
+2   -3.16   -1.46 0.00260   0.703
+3   -3.16   -1.36 0.00240   0.632
+4   -3.16   -1.26 0.00215   0.552
+5   -3.16   -1.16 0.00187   0.468</code></pre>
+</div>
+</div>
+<p>Plot the results on the strike zone.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plate_width <span class="ot">&lt;-</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">9</span><span class="sc">/</span>pi)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>k_zone_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> plate_x, <span class="at">y =</span> plate_z)) <span class="sc">+</span>  </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">xmin =</span> <span class="sc">-</span>(plate_width<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">xmax =</span> (plate_width<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">ymin =</span> <span class="fl">1.5</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">ymax =</span> <span class="fl">3.6</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"blue"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Horizontal location (ft.)"</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Vertical location (ft.)"</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>k_zone_plot <span class="sc">%+%</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  grid <span class="sc">+</span> </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> .fitted), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"gray92"</span>, <span class="at">high =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Called Strike Prob"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 16%">
-<col style="width: 14%">
-<col style="width: 16%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">-0.1429731</td>
-<td style="text-align: right;">0.0843064</td>
-<td style="text-align: right;">-1.6958749</td>
-<td style="text-align: right;">0.0899096</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">catcher_nameYadier Molina</td>
-<td style="text-align: right;">0.0525685</td>
-<td style="text-align: right;">0.0884053</td>
-<td style="text-align: right;">0.5946308</td>
-<td style="text-align: right;">0.5520903</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count0-1</td>
-<td style="text-align: right;">-0.9728490</td>
-<td style="text-align: right;">0.1400530</td>
-<td style="text-align: right;">-6.9462937</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">count0-2</td>
-<td style="text-align: right;">-2.3582783</td>
-<td style="text-align: right;">0.2963634</td>
-<td style="text-align: right;">-7.9573883</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count1-0</td>
-<td style="text-align: right;">-0.3111663</td>
-<td style="text-align: right;">0.1375763</td>
-<td style="text-align: right;">-2.2617723</td>
-<td style="text-align: right;">0.0237115</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">count1-1</td>
-<td style="text-align: right;">-1.0737305</td>
-<td style="text-align: right;">0.1690577</td>
-<td style="text-align: right;">-6.3512664</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count1-2</td>
-<td style="text-align: right;">-1.8946577</td>
-<td style="text-align: right;">0.2365813</td>
-<td style="text-align: right;">-8.0084856</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">count2-0</td>
-<td style="text-align: right;">0.5153006</td>
-<td style="text-align: right;">0.2197385</td>
-<td style="text-align: right;">2.3450634</td>
-<td style="text-align: right;">0.0190238</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count2-1</td>
-<td style="text-align: right;">-0.7404951</td>
-<td style="text-align: right;">0.2048653</td>
-<td style="text-align: right;">-3.6145463</td>
-<td style="text-align: right;">0.0003009</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">count2-2</td>
-<td style="text-align: right;">-1.6638610</td>
-<td style="text-align: right;">0.2304900</td>
-<td style="text-align: right;">-7.2187982</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count3-0</td>
-<td style="text-align: right;">1.4640085</td>
-<td style="text-align: right;">0.4021148</td>
-<td style="text-align: right;">3.6407728</td>
-<td style="text-align: right;">0.0002718</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">count3-1</td>
-<td style="text-align: right;">-0.5257107</td>
-<td style="text-align: right;">0.3170033</td>
-<td style="text-align: right;">-1.6583763</td>
-<td style="text-align: right;">0.0972415</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">count3-2</td>
-<td style="text-align: right;">-1.7377286</td>
-<td style="text-align: right;">0.3466271</td>
-<td style="text-align: right;">-5.0132513</td>
-<td style="text-align: right;">0.0000005</td>
-</tr>
-</tbody>
-</table>
+<div>
+<figure class="figure">
+<p><img src="lsn_15_catcher_framing_modeling_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Based on this count-adjusted model, is there evidence Molina has more called strikes in the long term?</p>
+</div>
+<p>Now, we have a model for called strikes and pitch location. We can use this model adjust for pitch location in our catcher model:</p>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{Molina}_i +  f(\text{plate\_x}_i,\text{plate\_z}_i)\]</span></p>
+<p>Interpret <span class="math inline">\(\beta_1\)</span> in this model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>strike_mod_molina <span class="ot">&lt;-</span> <span class="fu">gam</span>(description <span class="sc">==</span> <span class="st">"called_strike"</span> <span class="sc">~</span> <span class="fu">s</span>(plate_x, plate_z) <span class="sc">+</span> catcher_name,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> pitches_taken_subset)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>strike_mod_molina <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Family: binomial 
+Link function: logit 
+
+Formula:
+description == "called_strike" ~ s(plate_x, plate_z) + catcher_name
+
+Parametric coefficients:
+                          Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)               -13.5836     5.1579  -2.634  0.00845 **
+catcher_nameYadier Molina   0.2329     0.1981   1.175  0.23986   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Approximate significance of smooth terms:
+                     edf Ref.df Chi.sq p-value    
+s(plate_x,plate_z) 25.04  26.13  276.2  &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+R-sq.(adj) =  0.757   Deviance explained = 73.6%
+UBRE = -0.63719  Scale est. = 1         n = 2057</code></pre>
+</div>
+</div>
+<p>Based on this analysis, is there evidence that Molina has a higher called strike probability after adjusting for pitch location? Explain.</p>
+<p>Right now we’re looking at just two catchers in a binary categorical sense. How might we extend this to many catchers at the same time?</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

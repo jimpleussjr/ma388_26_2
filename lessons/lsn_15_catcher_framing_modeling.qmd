@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 Last class, we began comparing called strikes for Buster Posey and Yadier Molina. Today let's look at their results from June 2019.
 
-![Yadier Molina](molina.jpg){width=0.45\linewidth} \hspace{.5in} ![Buster Posey](posey.jpg){width=0.45\linewidth}
+![Yadier Molina](molina.jpg){width=45%} \hspace{.5in} ![Buster Posey](posey.jpg){width=45%}
 
 Let's grab the data first. This should look familiar (see lesson 13).
 
@@ -96,7 +96,8 @@ pitches <- pitches |>
 # Look only at pitches taken when Molina or Posey are catching.
 pitches_taken_subset <- pitches |> 
   filter(catcher_name %in% c("Buster Posey", "Yadier Molina"),
-         description %in% c("ball", "called_strike"))
+         description %in% c("ball", "called_strike")) |> 
+  mutate(called_strike=description =='called_strike')
 
 # Form a 2x2 table.
 pitches_taken_subset |> 
@@ -125,7 +126,7 @@ where $\text{Molina}_i = 1$ if Yadier Molina was catcher and $\text{Molina}_i = 
 
 ```{r, include = FALSE}
 pitches_taken_subset |> 
-  glm(description == "called_strike" ~ catcher_name, 
+  glm(called_strike ~ catcher_name, 
       data = _,
       family = "binomial") |> 
   tidy() |> 
@@ -152,6 +153,42 @@ Is this an effective model for adjusting for location? Explain.
 ::: {.html}
 <div style="margin-top: 0.5in;"></div>
 :::
+
+```{r}
+
+# Fit simple linear logistic model
+linear_fit <- pitches_taken_subset |> 
+  glm(called_strike ~ plate_x + plate_z, 
+      data = _,
+      family = "binomial") 
+
+# Create grid over strike zone region
+grid <- expand.grid(
+  plate_x = seq(-2, 2, length.out = 200),
+  plate_z = seq(0, 5, length.out = 200)
+)
+
+# Predicted probabilities
+grid$prob <- predict(linear_fit, newdata = grid, type = "response")
+
+
+
+# Plot
+ggplot() +
+  geom_point(
+    data = pitches_taken_subset,
+    aes(x = plate_x, y = plate_z, color = factor(called_strike)),
+    alpha = 0.3
+  ) +
+  coord_equal() +
+  labs(
+    title = "Linear Logistic Regression Decision Boundary",
+    color = "Called Strike"
+  ) +
+  theme_minimal()
+
+```
+
 
 Let's consider an alternative, specifically a smooth function of the location. We can write the model like this:
 

@@ -36,6 +36,8 @@ website:
             text: "Lesson 14: Introduction to Logistic Regression"
           - href: lessons/lsn_15_catcher_framing_modeling.qmd
             text: "Lesson 15: Catcher Framing Ability: Modeling"
+          - href: lessons/lsn_16_catcher_framing_random_effects.qmd
+            text: "Lesson 15: Catcher Framing Ability: Random Effects"
       - href: calendar/calendar.qmd
         text: Calendar
 

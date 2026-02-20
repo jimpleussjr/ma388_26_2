@@ -92,5 +92,9 @@
   "lessons/lsn_15_catcher_framing_modeling.qmd": {
     "lsn_15_catcher_framing_modeling.html": "88746c4c",
     "lsn_15_catcher_framing_modeling.tex": "26da4495"
+  },
+  "lessons/lsn_16_catcher_framing_random_effects.qmd": {
+    "lsn_16_catcher_framing_random_effects.html": "16bc2979",
+    "lsn_16_catcher_framing_random_effects.tex": "7e03b787"
   }
 }

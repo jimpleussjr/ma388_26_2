@@ -39,7 +39,7 @@ library(baseballr)
 # If you've already collected the pitch data below, just load it.  Otherwise,
 # collect it from scratch.
 
-if("statcast_may_2019.rds" %in% dir(getwd())){
+if("statcast_june_2019.rds" %in% dir(getwd())){
   pitches <- readRDS("statcast_june_2019.rds")
 }else{
   
@@ -200,6 +200,7 @@ Fit the model in R using the `mgcv` package (Section 7.4).
 library(mgcv)
 
 strike_mod <- gam(description == "called_strike" ~ s(plate_x, plate_z), family = "binomial", data = pitches_taken_subset)
+strike_mod |> summary()
 ```
 
 We want this model to produce strike predictions based on location. Let's look at the predicted strike probability for a pitch at `plate_x = -1` and `plate_z = 2.5` (Section 7.4.1). This would place the pitch just outside the left edge of home plate (from the pitcher's perspective) in the vertical middle of the strike zone.

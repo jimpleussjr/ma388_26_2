@@ -37,7 +37,9 @@ website:
           - href: lessons/lsn_15_catcher_framing_modeling.qmd
             text: "Lesson 15: Catcher Framing Ability: Modeling"
           - href: lessons/lsn_16_catcher_framing_random_effects.qmd
-            text: "Lesson 15: Catcher Framing Ability: Random Effects"
+            text: "Lesson 16: Catcher Framing Ability: Random Effects"
+          - href: lessons/lsn_17_peak_trajectories_I.qmd
+            text: "Lesson 18: Comparing Peak Trajectories I"
       - href: calendar/calendar.qmd
         text: Calendar
 

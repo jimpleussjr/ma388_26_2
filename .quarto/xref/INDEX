@@ -96,5 +96,13 @@
   "lessons/lsn_16_catcher_framing_random_effects.qmd": {
     "lsn_16_catcher_framing_random_effects.html": "16bc2979",
     "lsn_16_catcher_framing_random_effects.tex": "7e03b787"
+  },
+  "lessons/lsn_17_peak_trajectories_I.qmd": {
+    "lsn_17_peak_trajectories_I.html": "3c422b04",
+    "lsn_17_peak_trajectories_I.tex": "1135c2f4"
+  },
+  "lessons/lsn_18_peak_trajectories_I.qmd": {
+    "lsn_18_peak_trajectories_I.html": "82a35d94",
+    "lsn_18_peak_trajectories_I.tex": "d03856ba"
   }
 }

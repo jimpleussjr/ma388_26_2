@@ -42,7 +42,8 @@ website:
             text: "Lesson 18: Comparing Peak Trajectories I"
       - href: calendar/calendar.qmd
         text: Calendar
-
+      - href: grab_bag/grab_bag.qmd
+        text: 'Grab Bag Topics'
 format:
   html:
     theme: cosmo

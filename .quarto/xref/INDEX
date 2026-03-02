@@ -104,5 +104,19 @@
   "lessons/lsn_18_peak_trajectories_I.qmd": {
     "lsn_18_peak_trajectories_I.html": "82a35d94",
     "lsn_18_peak_trajectories_I.tex": "d03856ba"
+  },
+  "grab_bag/grab_bag.qmd": {
+    "grab_bag.html": "bb4a4c40",
+    "grab_bag.tex": "23da18a5"
+  },
+  "lessons/lsn_19_peak_trajectories_II.qmd": {
+    "lsn_19_peak_trajectories_II.html": "62994b1a",
+    "lsn_19_peak_trajectories_II.tex": "c24859cf"
+  },
+  "lessons/lsn_19_peak_trajectories_II.Rmd": {
+    "lsn_19_peak_trajectories_II.html": "9366c4a6"
+  },
+  "lessons/lsn_19_peak_trajectories_II_cadets.Rmd": {
+    "lsn_19_peak_trajectories_II_cadets.html": "3525c242"
   }
 }

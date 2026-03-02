@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your Name Here">
 
-<title>MA388 Sabermetrics AY26-2 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 18 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,9 +115,9 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">MA388 Sabermetrics</span>
     </a>
   </div>
@@ -92,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -101,77 +137,77 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons">    
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_1_course_intro.html">
+    <a class="dropdown-item" href="../lessons/lsn_1_course_intro.html">
  <span class="dropdown-text">Lesson 1: Course Introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_2_intro_to_R.html">
+    <a class="dropdown-item" href="../lessons/lsn_2_intro_to_R.html">
  <span class="dropdown-text">Lesson 2: Introduction to R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_3_intro_to_R_II.html">
+    <a class="dropdown-item" href="../lessons/lsn_3_intro_to_R_II.html">
  <span class="dropdown-text">Lesson 3: Introduction to R II</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_4_r_graphics_I.html">
+    <a class="dropdown-item" href="../lessons/lsn_4_r_graphics_I.html">
  <span class="dropdown-text">Lesson 4: R Graphics I</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_5_r_graphics_II.html">
+    <a class="dropdown-item" href="../lessons/lsn_5_r_graphics_II.html">
  <span class="dropdown-text">Lesson 5: R Graphics II</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_6_runs_and_wins_I.html">
+    <a class="dropdown-item" href="../lessons/lsn_6_runs_and_wins_I.html">
  <span class="dropdown-text">Lesson 6: Runs and Wins I</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_8_runs_and_wins_II.html">
+    <a class="dropdown-item" href="../lessons/lsn_8_runs_and_wins_II.html">
  <span class="dropdown-text">Lesson 8: Runs and Wins II</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_9_runs_expectancy_matrix.html">
+    <a class="dropdown-item" href="../lessons/lsn_9_runs_expectancy_matrix.html">
  <span class="dropdown-text">Lesson 9: Value of Plays: Run Expectancy Matrix</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_10_hits_stealing.html">
+    <a class="dropdown-item" href="../lessons/lsn_10_hits_stealing.html">
  <span class="dropdown-text">Lesson 10: Value of Plays: Base Hits and Stealing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_11_swinging_tendencies.html">
+    <a class="dropdown-item" href="../lessons/lsn_11_swinging_tendencies.html">
  <span class="dropdown-text">Lesson 11: Behaviors by Count: Swinging Tendencies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_12_umpire_tendencies.html">
+    <a class="dropdown-item" href="../lessons/lsn_12_umpire_tendencies.html">
  <span class="dropdown-text">Lesson 12: Behaviors by Count: Umpire Tendencies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_13_catcher_framing_visualization.html">
+    <a class="dropdown-item" href="../lessons/lsn_13_catcher_framing_visualization.html">
  <span class="dropdown-text">Lesson 13: Catcher Framing Ability - Visualizations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_14_logistic_regression.html">
+    <a class="dropdown-item" href="../lessons/lsn_14_logistic_regression.html">
  <span class="dropdown-text">Lesson 14: Introduction to Logistic Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_15_catcher_framing_modeling.html">
+    <a class="dropdown-item" href="../lessons/lsn_15_catcher_framing_modeling.html">
  <span class="dropdown-text">Lesson 15: Catcher Framing Ability: Modeling</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_16_catcher_framing_random_effects.html">
+    <a class="dropdown-item" href="../lessons/lsn_16_catcher_framing_random_effects.html">
  <span class="dropdown-text">Lesson 16: Catcher Framing Ability: Random Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./lessons/lsn_18_peak_trajectories_I.html">
+    <a class="dropdown-item" href="../lessons/lsn_18_peak_trajectories_I.html">
  <span class="dropdown-text">Lesson 18: Comparing Peak Trajectories I</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./calendar/calendar.html"> 
+    <a class="nav-link" href="../calendar/calendar.html"> 
 <span class="menu-text">Calendar</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./grab_bag/grab_bag.html"> 
+    <a class="nav-link" href="../grab_bag/grab_bag.html"> 
 <span class="menu-text">Grab Bag Topics</span></a>
   </li>  
 </ul>
@@ -185,21 +221,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#comparing-trajectories-of-home-run-hitters" id="toc-comparing-trajectories-of-home-run-hitters" class="nav-link active" data-scroll-target="#comparing-trajectories-of-home-run-hitters">Comparing Trajectories of Home Run Hitters</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics AY26-2</h1>
+<h1 class="title">MA388 Sabermetrics: Lesson 18</h1>
+<p class="subtitle lead">Comparing Peak Trajectories - Part II</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name Here </p>
+          </div>
+  </div>
     
   
     
@@ -210,29 +259,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome-to-ma388-sabermetrics-for-ay26-2." class="level4">
-<h4 class="anchored" data-anchor-id="welcome-to-ma388-sabermetrics-for-ay26-2.">Welcome to MA388 Sabermetrics for AY26-2.</h4>
-<p>Use the navigation menu above to access lesson materials.</p>
-</section>
-<section id="course-objectives.-by-the-end-of-the-semester-you-should-be-able-to" class="level4">
-<h4 class="anchored" data-anchor-id="course-objectives.-by-the-end-of-the-semester-you-should-be-able-to">Course Objectives. By the end of the semester, you should be able to:</h4>
-<ul>
-<li><p>Use the investigative process in statistics to answer research questions of interest in sabermetrics.</p></li>
-<li><p>Use statistical software to obtain, prepare, summarize, visualize, and model complex data.</p></li>
-<li><p>Identify and employ advanced statistical methods for estimation and prediction to answer questions in sabermetrics.</p></li>
-<li><p>Draw appropriate conclusions from statistical analyses and communicate them to general audiences.</p></li>
-<li><p>Appreciate the importance and limitations of statistical inquiry to answer questions of interest.</p></li>
-<li><p>Be critical consumers of statistically based results and recognize whether reported results reasonably follow from the study and analysis conducted. Course Materials.</p></li>
-</ul>
-</section>
-<section id="textbooks" class="level4">
-<h4 class="anchored" data-anchor-id="textbooks"><strong>Textbooks</strong>:</h4>
-<ul>
-<li><p>Analyzing Baseball Data with R (Third Edition) by Marchi, Albert, and Baumer<br>
-The textbook authors have made this book available for free online at this <a href="https://beanumber.github.io/abdwr3e/">link</a>.</p></li>
-<li><p>Understanding Sabermetrics (2nd Edition) by Costa, Huber, and Saccoman<br>
-This textbook will be provided to cadets by the instructor.</p></li>
-</ul>
+<section id="comparing-trajectories-of-home-run-hitters" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-trajectories-of-home-run-hitters">Comparing Trajectories of Home Run Hitters</h2>
+<ol type="1">
+<li>Find the ten players in baseball history who have hit the most career home runs.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ***Your code here.***</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li>Fit quadratic functions to the home run rates of the ten players, where HR.RATE = HR / AB. Display the fitted trajectories in a single figure.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ***Your code here.***</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="3" type="1">
+<li>On the basis of your work, which player had the highest estimated home run rate at his peak? Which player among the ten had the smallest peak home run rate?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ***Your code here.***</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Your answer here.</em></p>
+<ol start="4" type="1">
+<li>Do any of the players have unusual career trajectory shapes? Is there any possible explanation for these unusual shapes?</li>
+</ol>
+<p><em>Your answer here.</em></p>
 
 
 </section>

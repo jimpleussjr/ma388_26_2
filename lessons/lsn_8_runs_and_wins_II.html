@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 16 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 8 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -263,18 +263,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#random-effects-models" id="toc-random-effects-models" class="nav-link active" data-scroll-target="#random-effects-models">Random Effects Models</a></li>
-  <li><a href="#lets-talk-course-project" id="toc-lets-talk-course-project" class="nav-link" data-scroll-target="#lets-talk-course-project">Let’s talk course project!</a></li>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review">Review</a></li>
+  <li><a href="#pythagorean-models" id="toc-pythagorean-models" class="nav-link" data-scroll-target="#pythagorean-models">Pythagorean Models</a></li>
+  <li><a href="#model-2-pythagorean-formula-bill-james" id="toc-model-2-pythagorean-formula-bill-james" class="nav-link" data-scroll-target="#model-2-pythagorean-formula-bill-james">Model 2: Pythagorean Formula (Bill James)</a></li>
+  <li><a href="#how-many-runs-for-a-win-pg.-106" id="toc-how-many-runs-for-a-win-pg.-106" class="nav-link" data-scroll-target="#how-many-runs-for-a-win-pg.-106">How many runs for a win? (pg. 106)</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_16_catcher_framing_random_effects.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_8_runs_and_wins_II.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 16</h1>
-<p class="subtitle lead">Catcher Framing Ability Random Effects</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 8</h1>
+<p class="subtitle lead">How many runs is a win? - Part II</p>
 </div>
 
 
@@ -297,323 +299,301 @@ window.Quarto = {
 </header>
 
 
-<p>Last class, we were primarily comparing called strikes for Buster Posey and Yadier Molina. Today we’ll look at more catchers from June 2019.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve pitch level data from June 2019. (See previous lesson.)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"statcast_june_2019.rds"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add catcher's name to the pitch data from the MLB master list.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>mlbIDs <span class="ot">&lt;-</span> baseballr<span class="sc">::</span><span class="fu">chadwick_player_lu</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">mlb_name =</span> <span class="fu">paste</span>(name_first, name_last),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mlb_id =</span> key_mlbam</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>pitches <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(mlbIDs, mlb_name, mlb_id),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"fielder_2"</span> <span class="ot">=</span> <span class="st">"mlb_id"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">catcher_name =</span> mlb_name)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># pitches_taken_subset &lt;- pitches |&gt; </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(description %in% c("ball", "called_strike"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="random-effects-models" class="level3">
-<h3 class="anchored" data-anchor-id="random-effects-models">Random Effects Models</h3>
-<p>Thus far, we investigated the difference between Molina and Posey on called strikes. In doing so, we did the following:</p>
-<ol type="1">
-<li><p>Compared their called strike proportions (<em>why isn’t this that useful?</em>)</p></li>
-<li><p>Estimated the log odds ratio for a called strike after adjusting for pitch location (<em>why is this better?</em>)</p></li>
-</ol>
-<p><strong>But, what we really want to know is not if Molina is better than Posey, but if catchers, in general, have a meaningful effect on called strikes.</strong></p>
-<p>Based on what you’ve learned so what far, you would probably fit a <em>fixed effects</em> model like this:</p>
-<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \beta_1 \text{catcher}_{1,i} + \ldots + \beta_{m-1}\text{catcher}_{m-1,i} + f(\text{plate\_x}_i,\text{plate\_z}_i)\]</span> where <span class="math inline">\(\text{catcher}_{j,i}\)</span> is an indicator of whether the catcher for pitch <span class="math inline">\(i\)</span> is <span class="math inline">\(\text{catcher}_j\)</span>.</p>
-<p>How many parameters are there in the model above?</p>
+<section id="review" class="level2">
+<h2 class="anchored" data-anchor-id="review">Review</h2>
+<p>In our last lesson, we discussed the following model:</p>
+<p><span class="math inline">\(Wins_i = \beta_0 + \beta_1 RD_i + \epsilon_i \quad \epsilon_i \sim \text{Normal}\left(0,\sigma^2\right)\)</span></p>
+<p>where <span class="math inline">\(Wins_i\)</span> and <span class="math inline">\(RD_i\)</span> are the wins and run differential for team <span class="math inline">\(i\)</span>.</p>
+<p>Interpret the coefficients in this model.</p>
+</section>
+<section id="pythagorean-models" class="level2">
+<h2 class="anchored" data-anchor-id="pythagorean-models">Pythagorean Models</h2>
+<p><em>Discuss limitations for the regression model above.</em></p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
 </div>
 </div>
-<p>Let’s fit the model for all catchers who caught at least 1000 pitches:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>catcher_list <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(catcher_name) <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(catcher_name)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pitches_taken <span class="ot">&lt;-</span> pitches <span class="sc">|&gt;</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(catcher_name <span class="sc">%in%</span> catcher_list,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         description <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"called_strike"</span>, <span class="st">"ball"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">called_strike=</span>description<span class="sc">==</span><span class="st">'called_strike'</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>strike_mod_all <span class="ot">&lt;-</span> <span class="fu">gam</span>(called_strike <span class="sc">~</span> <span class="fu">s</span>(plate_x, plate_z) <span class="sc">+</span> catcher_name,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> pitches_taken)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(strike_mod_all)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Family: binomial 
-Link function: logit 
-
-Formula:
-called_strike ~ s(plate_x, plate_z) + catcher_name
-
-Parametric coefficients:
-                               Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                   -6.622732   1.142689  -5.796  6.8e-09 ***
-catcher_nameAustin Hedges      0.504288   0.202702   2.488  0.01285 *  
-catcher_nameBobby Wilson       0.029825   0.245906   0.121  0.90346    
-catcher_nameBrian McCann       0.056919   0.213540   0.267  0.78982    
-catcher_nameBryan Holaday     -0.256764   0.220585  -1.164  0.24442    
-catcher_nameBuster Posey      -0.257745   0.215861  -1.194  0.23247    
-catcher_nameCam Gallagher      0.056798   0.241117   0.236  0.81377    
-catcher_nameCarson Kelly       0.144979   0.199848   0.725  0.46818    
-catcher_nameChance Sisco      -0.473557   0.208069  -2.276  0.02285 *  
-catcher_nameChris Iannetta    -0.390696   0.218313  -1.790  0.07352 .  
-catcher_nameChristian Vázquez  0.443846   0.196247   2.262  0.02372 *  
-catcher_nameCurt Casali       -0.190821   0.205608  -0.928  0.35337    
-catcher_nameDanny Jansen       0.016908   0.198817   0.085  0.93223    
-catcher_nameDustin Garneau    -0.037663   0.242865  -0.155  0.87676    
-catcher_nameElías Díaz        -0.571133   0.191465  -2.983  0.00285 ** 
-catcher_nameGary Sánchez       0.085060   0.192510   0.442  0.65860    
-catcher_nameGrayson Greiner   -0.337244   0.259916  -1.298  0.19446    
-catcher_nameJ. T. Realmuto    -0.052478   0.192935  -0.272  0.78562    
-catcher_nameJames McCann      -0.548860   0.200074  -2.743  0.00608 ** 
-catcher_nameJason Castro      -0.059725   0.208673  -0.286  0.77471    
-catcher_nameJeff Mathis       -0.209227   0.204925  -1.021  0.30726    
-catcher_nameJohn Hicks        -0.360805   0.218333  -1.653  0.09842 .  
-catcher_nameJonathan Lucroy   -0.434742   0.197432  -2.202  0.02767 *  
-catcher_nameJorge Alfaro       0.302585   0.214719   1.409  0.15877    
-catcher_nameJosh Phegley      -0.418253   0.191059  -2.189  0.02859 *  
-catcher_nameKevin Plawecki     0.555562   0.250585   2.217  0.02662 *  
-catcher_nameKurt Suzuki       -0.230635   0.212513  -1.085  0.27780    
-catcher_nameLuke Maile        -0.340531   0.219758  -1.550  0.12124    
-catcher_nameManny Piña         0.532831   0.242093   2.201  0.02774 *  
-catcher_nameMartín Maldonado  -0.099924   0.196022  -0.510  0.61022    
-catcher_nameMatt Wieters      -0.330689   0.229847  -1.439  0.15023    
-catcher_nameMike Zunino       -0.040333   0.206641  -0.195  0.84525    
-catcher_nameMitch Garver      -0.025173   0.214782  -0.117  0.90670    
-catcher_nameOmar Narváez      -0.390007   0.195070  -1.999  0.04557 *  
-catcher_namePedro Severino    -0.519941   0.201742  -2.577  0.00996 ** 
-catcher_nameRoberto Pérez      0.101593   0.198618   0.512  0.60900    
-catcher_nameRobinson Chirinos -0.317570   0.191141  -1.661  0.09662 .  
-catcher_nameRussell Martin     0.224721   0.218288   1.029  0.30326    
-catcher_nameSandy León         0.090762   0.222809   0.407  0.68375    
-catcher_nameStephen Vogt      -0.200628   0.217149  -0.924  0.35553    
-catcher_nameTim Federowicz     0.055533   0.220292   0.252  0.80097    
-catcher_nameTom Murphy         0.251783   0.211580   1.190  0.23404    
-catcher_nameTomás Nido         0.084321   0.228749   0.369  0.71241    
-catcher_nameTony Wolters      -0.300176   0.196645  -1.526  0.12689    
-catcher_nameTravis d'Arnaud   -0.117914   0.214300  -0.550  0.58216    
-catcher_nameTucker Barnhart   -0.002438   0.222311  -0.011  0.99125    
-catcher_nameTyler Flowers      0.436709   0.213844   2.042  0.04113 *  
-catcher_nameVíctor Caratini    0.111638   0.251220   0.444  0.65676    
-catcher_nameWillson Contreras -0.077984   0.191878  -0.406  0.68443    
-catcher_nameWilson Ramos      -0.055399   0.196864  -0.281  0.77840    
-catcher_nameYadier Molina     -0.106296   0.199854  -0.532  0.59482    
-catcher_nameYan Gomes         -0.126179   0.209642  -0.602  0.54725    
-catcher_nameYasmani Grandal    0.156120   0.193919   0.805  0.42077    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Approximate significance of smooth terms:
-                     edf Ref.df Chi.sq p-value    
-s(plate_x,plate_z) 27.26  28.01   8062  &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-R-sq.(adj) =  0.757   Deviance explained = 72.9%
-UBRE = -0.65503  Scale est. = 1         n = 54411</code></pre>
-</div>
-</div>
-<p>What should we conclude from this model?</p>
-<p>What are some limitations of a <em>fixed effects</em> approach for this question?</p>
+<p>Here are three models:</p>
+<p><span class="math display">\[\begin{align}
+Wpct &amp;= \beta_0 + \beta_1 RD + \epsilon \\
+Wpct &amp;= \frac{R^2}{R^2 + RA^2} + \epsilon \\
+Wpct &amp;= \frac{R^k}{R^k + RA^k} + \epsilon
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(Wpct\)</span> is Win Percentage, <span class="math inline">\(R\)</span> is Runs Scored, <span class="math inline">\(RA\)</span> is Runs Allowed, and <span class="math inline">\(\epsilon\)</span> is the random error. Recall that we fit Model 1 to the 1997-2001 seasons.</p>
+<p><em>Briefly discuss the strengths/limitations of each model.</em></p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
 </div>
 </div>
-<p><em>Random effects</em> model the individual catcher effects as normally distributed with mean 0 and variance <span class="math inline">\(\sigma^2\)</span>. There is only one parameter to fit. As a bonus, it has a nice interpretation…the larger the variance, the larger the effect of the catcher (<em>why?</em>). Here is the model:</p>
-<p><span class="math display">\[\log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0 + \text{catcher}_j + f(\text{plate\_x}_i,\text{plate\_z}_i)\]</span> where <span class="math inline">\(\text{catcher}_j\)</span> is normally distributed with mean 0 and variance <span class="math inline">\(\sigma^2\)</span>.</p>
-<p>How many parameters are in this model?</p>
-<p>Why is this an improvement?</p>
+<p><em>How would you assess which model is the best? Please be specific.</em> </p>
 <div class="html">
 <div style="margin-top: 0.5in;">
 
-</div>
-</div>
-<p>We can incorporate this using the <code>lme4</code> package. Note, we’ll do this slightly differently by first fitting the location model and then using the predictions from that model in a second model with the random effect.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_location <span class="ot">&lt;-</span><span class="fu">gam</span>(called_strike <span class="sc">~</span> <span class="fu">s</span>(plate_x, plate_z),</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> pitches_taken)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pitches_taken <span class="ot">&lt;-</span> model_location <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">newdata =</span> pitches_taken) <span class="sc">|&gt;</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">strike_prob =</span> .fitted)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now fit a random effects model adjusting for pitch location.</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>model_random_effects_catcher <span class="ot">&lt;-</span> <span class="fu">glmer</span>(called_strike <span class="sc">~</span> strike_prob <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>catcher_name),</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                             <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> pitches_taken)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_random_effects_catcher)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
-  Approximation) [glmerMod]
- Family: binomial  ( logit )
-Formula: called_strike ~ strike_prob + (1 | catcher_name)
-   Data: pitches_taken
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  20889.2   20916.0  -10441.6   20883.2     54408 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--6.9648 -0.1583 -0.1373  0.1717  8.1197 
-
-Random effects:
- Groups       Name        Variance Std.Dev.
- catcher_name (Intercept) 0.05715  0.2391  
-Number of obs: 54411, groups:  catcher_name, 53
-
-Fixed effects:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -3.89584    0.04674  -83.36   &lt;2e-16 ***
-strike_prob  7.48119    0.05805  128.88   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr)
-strike_prob -0.572</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get random effects for catchers.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>catcher_effects_adj <span class="ot">&lt;-</span> model_random_effects_catcher <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ranef</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">id =</span> <span class="fu">levels</span>(grp), <span class="at">effect =</span> condval) <span class="sc">|&gt;</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(effect)) </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>catcher_effects_adj <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  id           effect
-  &lt;chr&gt;         &lt;dbl&gt;
-1 James McCann  0.432
-2 Tony Wolters  0.366
-3 Wilson Ramos  0.364
-4 Jason Castro  0.359
-5 Jorge Alfaro  0.343</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>catcher_effects_adj <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> effect)) <span class="sc">+</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lsn_16_catcher_framing_random_effects_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Interesting - I guess? We’re now faced with the same question we always have in statistics: I see a statistic, a non-zero difference, a non-zero variance, etc., but is it significant? What are some ways we can go about determining significance?</p>
-<div class="html">
-<div style="margin-top: 0.5in;">
-
-</div>
-</div>
-<p>Let’s use a nested model approach and add a couple more explanatory variables. Right now we’ve only let the catcher and the pitch location try to explain called strike determinations. If we introduce other variables that provide the same or complementary information, we might find the importance of catcher in the model to decrease. Sounds like ANOVA, right?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model_random_effects_trio <span class="ot">&lt;-</span> <span class="fu">glmer</span>(called_strike <span class="sc">~</span> strike_prob <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                     (<span class="dv">1</span><span class="sc">|</span>pitcher) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>batter) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>catcher_name),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> pitches_taken)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_random_effects_trio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
-  Approximation) [glmerMod]
- Family: binomial  ( logit )
-Formula: called_strike ~ strike_prob + (1 | pitcher) + (1 | batter) +  
-    (1 | catcher_name)
-   Data: pitches_taken
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  20829.2   20873.7  -10409.6   20819.2     54406 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--8.0613 -0.1588 -0.1307  0.1659  8.8208 
-
-Random effects:
- Groups       Name        Variance Std.Dev.
- batter       (Intercept) 0.05828  0.2414  
- pitcher      (Intercept) 0.07996  0.2828  
- catcher_name (Intercept) 0.04701  0.2168  
-Number of obs: 54411, groups:  batter, 600; pitcher, 531; catcher_name, 53
-
-Fixed effects:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -3.98030    0.04928  -80.77   &lt;2e-16 ***
-strike_prob  7.63002    0.05965  127.92   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr)
-strike_prob -0.560</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get random effects for pitchers, catchers, and batters.</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>player_effects_adj <span class="ot">&lt;-</span> model_random_effects_trio <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ranef</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> grp, <span class="at">effect =</span> condval) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(effect)) </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>player_effects_adj <span class="sc">|&gt;</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> effect)) <span class="sc">+</span> </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>grpvar, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lsn_16_catcher_framing_random_effects_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_random_effects_trio_no_catch <span class="ot">&lt;-</span> <span class="fu">glmer</span>(called_strike <span class="sc">~</span> strike_prob <span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>pitcher) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>batter),</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> pitches_taken)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_random_effects_trio_no_catch, model_random_effects_trio, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Data: pitches_taken
-Models:
-model_random_effects_trio_no_catch: called_strike ~ strike_prob + (1 | pitcher) + (1 | batter)
-model_random_effects_trio: called_strike ~ strike_prob + (1 | pitcher) + (1 | batter) + (1 | catcher_name)
-                                   npar   AIC   BIC logLik -2*log(L)  Chisq Df
-model_random_effects_trio_no_catch    4 20860 20895 -10426     20852          
-model_random_effects_trio             5 20829 20874 -10410     20819 32.362  1
-                                   Pr(&gt;Chisq)    
-model_random_effects_trio_no_catch               
-model_random_effects_trio            1.28e-08 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="lets-talk-course-project" class="level3">
-<h3 class="anchored" data-anchor-id="lets-talk-course-project">Let’s talk course project!</h3>
+<section id="model-2-pythagorean-formula-bill-james" class="level2">
+<h2 class="anchored" data-anchor-id="model-2-pythagorean-formula-bill-james">Model 2: Pythagorean Formula (Bill James)</h2>
+<p>First, let’s create a function to calculate the expected wins under a Pythagorean Formula.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate expected wins using Pythagorean formula.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R - runs scored</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RA - runs allowed</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># k - exponent</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Value Returned:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># expected win percentage</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pyth_wins <span class="ot">&lt;-</span> <span class="cf">function</span>(R, RA, <span class="at">k =</span> <span class="dv">2</span>){</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(R<span class="sc">^</span>k<span class="sc">/</span>(R<span class="sc">^</span>k <span class="sc">+</span> RA<span class="sc">^</span>k))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Using Model 2, let’s calculate the expected number of wins for each team (1997-2001).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> Teams <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1997</span>, yearID <span class="sc">&lt;=</span> <span class="dv">2001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RD =</span> R <span class="sc">-</span> RA,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wpct =</span> W<span class="sc">/</span>(W<span class="sc">+</span>L),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wpct_pyth2 =</span> <span class="fu">pyth_wins</span>(R,RA,<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Next, let’s compare graphically the predictions from Model 1 and 2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predicted win percentages from Model 1.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lin_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Wpct <span class="sc">~</span> RD, <span class="at">data =</span> my_teams)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">&lt;-</span> <span class="fu">augment</span>(lin_fit, <span class="at">data =</span> my_teams)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Model 1 and Model 2 predictions.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RD, <span class="at">y =</span> .fitted)) <span class="sc">+</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_point(aes(x = RD, y = Wpct)) +</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> RD, <span class="at">y =</span> Wpct_pyth2)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Run Differential"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Win Percentage"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Predicted Win Percentage - Models 1 and 2 (1997-2001)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_8_runs_and_wins_II_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Wpct ~ RD, data = my_teams)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.063492 -0.014889  0.001682  0.014852  0.060984 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 5.000e-01  1.888e-03  264.85   &lt;2e-16 ***
+RD          5.994e-04  1.662e-05   36.06   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02297 on 146 degrees of freedom
+Multiple R-squared:  0.8991,    Adjusted R-squared:  0.8984 
+F-statistic:  1301 on 1 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Briefly discuss how the models differ. </p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Next, let’s compare the root mean square error (RMSE). Write an equation for the RMSE. </p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1 RMSE</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(my_teams<span class="sc">$</span>.resid<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0228099</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note this is very close to the Residual Standard Error you could obtain from the model.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin_fit)<span class="sc">$</span>sigma</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02296561</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2 RMSE</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid_pyth2 =</span> Wpct <span class="sc">-</span> Wpct_pyth2)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate RMSE for Model 2</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(my_teams<span class="sc">$</span>.resid_pyth2<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.023058</code></pre>
+</div>
+</div>
+<p>Next, let’s take a look at the residuals from Model 2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's look at a summary of the residuals (min, max, mean, and quartiles).</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.resid_pyth2) <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.0659548 -0.0153919  0.0014263 -0.0001182  0.0158258  0.0612624 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Wpct,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .resid_pyth2)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Win Percentage"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Residuals vs. Win Percentage (Model 2)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_8_runs_and_wins_II_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Next, let’s try Model 3.</p>
+<p>How do we find an estimate of <span class="math inline">\(k\)</span> in Model 3? </p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logWratio =</span> <span class="fu">log</span>(W<span class="sc">/</span>L),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">logRratio =</span> <span class="fu">log</span>(R<span class="sc">/</span>RA))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Including 0 in formula means we don't include an intercept.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>pythFit <span class="ot">&lt;-</span> <span class="fu">lm</span>(logWratio <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> logRratio, <span class="at">data =</span> my_teams)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>pythFit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = logWratio ~ 0 + logRratio, data = my_teams)
+
+Coefficients:
+logRratio  
+    1.904  </code></pre>
+</div>
+</div>
+<p>Why don’t we want an intercept in this model? (Warning: this is very unusual!) </p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> pythFit<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predictions.</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wpct_pyth_k =</span> <span class="fu">pyth_wins</span>(R,RA,<span class="at">k =</span> k))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get residuals.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid_pyth_k =</span> Wpct <span class="sc">-</span> Wpct_pyth_k)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate RMSE.</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(my_teams<span class="sc">$</span>.resid_pyth_k<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02279093</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.resid_pyth_k) <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.0677086 -0.0162629  0.0011648 -0.0001293  0.0139919  0.0609875 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Wpct,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .resid_pyth_k)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Win Percentage"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Residuals vs. Win Percentage (Model 3)"</span>) <span class="sc">+</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_8_runs_and_wins_II_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(.resid_pyth_k <span class="sc">~</span> Wpct, <span class="at">data =</span> _) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = .resid_pyth_k ~ Wpct, data = my_teams)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.060232 -0.013571  0.001806  0.013704  0.060461 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.04941    0.01261  -3.917 0.000137 ***
+Wpct         0.09857    0.02497   3.947 0.000122 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02181 on 146 degrees of freedom
+Multiple R-squared:  0.09643,   Adjusted R-squared:  0.09024 
+F-statistic: 15.58 on 1 and 146 DF,  p-value: 0.0001225</code></pre>
+</div>
+</div>
+</section>
+<section id="how-many-runs-for-a-win-pg.-106" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-runs-for-a-win-pg.-106">How many runs for a win? (pg. 106)</h2>
+<p>Previously, we learned about the “10-for-1” rule of thumb (number of required runs scored for one additional win) using Model 1. Using Model 2, this quantity changes based on runs allowed. How can we find an expression for the number of required runs scored for one additional win?</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Let’s explore this for various combinations of runs scored and runs allowed. (<em>Note <span class="math inline">\(R\)</span> and <span class="math inline">\(RA\)</span> below are runs scored per game and runs allowed per game.</em>)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute incremental runs per win.</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IR <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">R =</span> <span class="dv">5</span>, <span class="at">RA =</span> <span class="dv">5</span>){</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  (R<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> RA<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>R<span class="sc">*</span>RA<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ir_table <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">R =</span> <span class="fu">seq</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="fl">0.5</span>),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">RA =</span> <span class="fu">seq</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="fl">0.5</span>))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>ir_table <span class="sc">|&gt;</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IRW =</span> <span class="fu">IR</span>(R,RA)) <span class="sc">|&gt;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(<span class="at">key =</span> RA, <span class="at">value =</span> IRW, <span class="at">sep =</span> <span class="st">"="</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    R RA=3 RA=3.5 RA=4 RA=4.5 RA=5 RA=5.5 RA=6
+1 3.0  6.0    6.1  6.5    7.0  7.7    8.5  9.4
+2 3.5  7.2    7.0  7.1    7.5  7.9    8.5  9.2
+3 4.0  8.7    8.1  8.0    8.1  8.4    8.8  9.4
+4 4.5 10.6    9.6  9.1    9.0  9.1    9.4  9.8
+5 5.0 12.8   11.3 10.5   10.1 10.0   10.1 10.3
+6 5.5 15.6   13.4 12.2   11.4 11.1   11.0 11.1
+7 6.0 18.8   15.8 14.1   13.0 12.4   12.1 12.0</code></pre>
+</div>
+</div>
+<p>How do the results of Model 2 compare to Model 1 (the “10-for-1” model) in terms of incremental runs per win?</p>
 
 
 </section>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 18 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 6 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -264,19 +264,19 @@ window.Quarto = {
    
   <ul>
   <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review">Review</a></li>
-  <li><a href="#career-trajectories" id="toc-career-trajectories" class="nav-link" data-scroll-target="#career-trajectories">Career Trajectories</a></li>
-  <li><a href="#henry-aaron" id="toc-henry-aaron" class="nav-link" data-scroll-target="#henry-aaron">Henry Aaron</a></li>
-  <li><a href="#fitting-the-quadratic-model" id="toc-fitting-the-quadratic-model" class="nav-link" data-scroll-target="#fitting-the-quadratic-model">Fitting the Quadratic Model</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#run-differential-and-wins" id="toc-run-differential-and-wins" class="nav-link" data-scroll-target="#run-differential-and-wins">Run Differential and Wins</a></li>
+  <li><a href="#how-many-wins-to-make-the-playoffs" id="toc-how-many-wins-to-make-the-playoffs" class="nav-link" data-scroll-target="#how-many-wins-to-make-the-playoffs">How many wins to make the playoffs?</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_18_peak_trajectories_I.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_6_runs_and_wins_I.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 18</h1>
-<p class="subtitle lead">Comparing Peak Trajectories - Part I</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 6</h1>
+<p class="subtitle lead">How many runs is a win? - Part I</p>
 </div>
 
 
@@ -299,309 +299,254 @@ window.Quarto = {
 </header>
 
 
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <section id="review" class="level2">
 <h2 class="anchored" data-anchor-id="review">Review</h2>
-<p>What is a <em>fixed effect</em>?</p>
-<p>What is a <em>random effect</em>?</p>
-<p>In general, when would you use each?</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="career-trajectories" class="level2">
-<h2 class="anchored" data-anchor-id="career-trajectories">Career Trajectories</h2>
-<p>What is a career trajectory?</p>
-<p>Why are people interested in them?</p>
-<p>We’ll start by looking at OPS (on base percentage plus slugging). Here are the relevant equations:</p>
-<p>On base percentage:</p>
-<p><span class="math inline">\(OBP = \frac{H + BB + HBP}{AB + BB + HBP + SF}\)</span></p>
-<p>(Note: Sacrifice flies (SF) were not recorded until the 1950s.)</p>
-<p>Slugging percentage:</p>
-<p><span class="math inline">\(SLG = \frac{(H - X2B - X3B - HR) + 2 \times X2B + 3 \times X3B + 4 \times HR}{AB}\)</span></p>
-<p>On base percentage plus slugging:</p>
-<p><span class="math inline">\(OPS = OBP + SLG\)</span></p>
-<p>Why do baseball analysts like OPS?</p>
-<p>A convenient model for OPS as a function of age is a quadratic function:</p>
-<p><span class="math inline">\(OPS = A + B(Age - 30) + C(Age - 30)^2\)</span></p>
-<p>Why use a model (instead of just the data)?</p>
-<div style="page-break-after: always;"></div>
-<p>What are some good reasons to use this quadratic model?</p>
-<p>What are some bad reasons to use the quadratic model?</p>
-<p>Why do we subtract 30 from <span class="math inline">\(Age\)</span> in the model?</p>
-<p>Based on this model, find an expression for the peak age (where OPS is the highest).</p>
-<p>Based on this model, find an expression for the peak OPS.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(A\)</span> tells us about a player’s trajectory.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(C\)</span> tells us about a player’s trajectory.</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="henry-aaron" class="level2">
-<h2 class="anchored" data-anchor-id="henry-aaron">Henry Aaron</h2>
+<p>We finished our intro to R! I hope you feel more confident in your ability to work with databases and large data sets.</p>
+<p>Major concepts:</p>
+<ul>
+<li><p>five tidyverse verbs</p></li>
+<li><p>relational databases</p></li>
+<li><p>split, apply, combine data</p></li>
+<li><p>plotting in R (ggplot)</p></li>
+</ul>
+<p>Today we begin our formal study of sabermetrics by answering a super important question: <u><strong>how many runs is a win?</strong></u></p>
+<p>Using the <code>Teams</code> data frame, plot the number of wins versus run differential (runs scored <span class="math inline">\(R\)</span> - runs allowed <span class="math inline">\(RA\)</span>) for all teams in the 2001 MLB season. Label the teams using the <code>ggrepel</code> package, color the points by <code>lgID</code>, and add a linear model using <code>geom_smooth()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">==</span> <span class="dv">2001</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RD =</span> R <span class="sc">-</span> RA,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wpct =</span> W <span class="sc">/</span> G)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="aaron.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Henry Aaron (Source: <em>New York Times</em>)</figcaption>
+<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Wins vs.&nbsp;Run Differential (2001 MLB season)</figcaption>
 </figure>
 </div>
-<p>Let’s fit Henry Aaron’s trajectory. The <code>get_stats()</code> function from the text (Section 8.2) is helpful.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find his playerID in the People table.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>aaronID <span class="ot">&lt;-</span> People <span class="sc">|&gt;</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nameLast <span class="sc">==</span> <span class="st">"Aaron"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         nameFirst <span class="sc">==</span> <span class="st">"Hank"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(playerID)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate age and OPS.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>get_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(player){</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Batting <span class="sc">|&gt;</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(playerID <span class="sc">==</span> player) <span class="sc">|&gt;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(People, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">birthyear =</span> <span class="fu">ifelse</span>(birthMonth <span class="sc">&gt;=</span> <span class="dv">7</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                              birthYear <span class="sc">+</span> <span class="dv">1</span>, birthYear),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">Age =</span> yearID <span class="sc">-</span> birthyear,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">SLG =</span> (H <span class="sc">-</span> X2B <span class="sc">-</span> X3B <span class="sc">-</span> HR <span class="sc">+</span> </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">2</span> <span class="sc">*</span> X2B <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X3B <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> HR) <span class="sc">/</span> AB,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">OBP =</span> (H <span class="sc">+</span> BB <span class="sc">+</span> HBP) <span class="sc">/</span> (AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">OPS =</span> SLG <span class="sc">+</span> OBP) <span class="sc">|&gt;</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(playerID, Age, SLG, OBP, OPS)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div style="page-break-after: always;"></div>
+</div>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>At the end of 2001, the Oakland Athletics were losing three star players (Johnny Damon, Jason Giambi, and Jason Isringhausen) to free agency. Their general manager, Billy Beane, had a limited budget to work with as he looked for their replacements. He wanted to find players who were effective at producing runs but were undervalued in the market. At the time, teams used mostly traditional statistics like batting average (BA), home runs (HR), and runs batted in (RBI) to value players. However, evidence from sabermetrics suggested there were better statistics for determining players’ contributions to run scoring. The book <em>Moneyball</em> by Michael Lewis and the film by the same name follow the 2002 Oakland A’s.</p>
+<p>Put yourself in the position of Billy Beane. How would you approach this problem?</p>
+</section>
+<section id="run-differential-and-wins" class="level2">
+<h2 class="anchored" data-anchor-id="run-differential-and-wins">Run Differential and Wins</h2>
+<p><em>In Figure 1, is a linear model appropriate?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><em>In Figure 1, how many wins are associated with a 100 run differential?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>A common rule of thumb in baseball is 10 additional net runs over the course of a season equals one additional win. This gives us a convenient way to evaluate the impact of different players and plays.</p>
+<p>To be more formal, we could use linear regression.</p>
+<p><span class="math inline">\(Wins_i = \beta_0 + \beta_1 RD_i + \epsilon_i \quad \epsilon_i \sim \text{Normal}(0,\sigma^2)\)</span></p>
+<p>where <span class="math inline">\(Wins_i\)</span> and <span class="math inline">\(RD_i\)</span> are the wins and run differential for team <span class="math inline">\(i\)</span>.</p>
+<p>Interpret the coefficients in this model.</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Aaron's stats.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aaron <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(aaronID)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Henry Aaron's statistics by age."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="ot">=</span> <span class="fu">lm</span>(W <span class="sc">~</span> RD, <span class="at">data =</span> teams2001)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of linear model.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = W ~ RD, data = teams2001)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.6914 -2.5399  0.2891  3.0442  8.4091 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 80.93333    0.70715  114.45   &lt;2e-16 ***
+RD           0.10341    0.00598   17.29   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.873 on 28 degrees of freedom
+Multiple R-squared:  0.9144,    Adjusted R-squared:  0.9113 
+F-statistic:   299 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a clean table of results.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>wins_lm <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Henry Aaron’s statistics by age.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">playerID</th>
-<th style="text-align: right;">Age</th>
-<th style="text-align: right;">SLG</th>
-<th style="text-align: right;">OBP</th>
-<th style="text-align: right;">OPS</th>
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">0.322</td>
-<td style="text-align: right;">0.769</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">80.93</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">114.45</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">0.540</td>
-<td style="text-align: right;">0.366</td>
-<td style="text-align: right;">0.906</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">0.558</td>
-<td style="text-align: right;">0.365</td>
-<td style="text-align: right;">0.923</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">0.600</td>
-<td style="text-align: right;">0.378</td>
-<td style="text-align: right;">0.978</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.546</td>
-<td style="text-align: right;">0.386</td>
-<td style="text-align: right;">0.931</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">0.636</td>
-<td style="text-align: right;">0.401</td>
-<td style="text-align: right;">1.037</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">0.566</td>
-<td style="text-align: right;">0.352</td>
-<td style="text-align: right;">0.919</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">0.594</td>
-<td style="text-align: right;">0.381</td>
-<td style="text-align: right;">0.974</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">0.618</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">1.008</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">0.586</td>
-<td style="text-align: right;">0.391</td>
-<td style="text-align: right;">0.977</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.393</td>
-<td style="text-align: right;">0.907</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">0.560</td>
-<td style="text-align: right;">0.379</td>
-<td style="text-align: right;">0.938</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">0.539</td>
-<td style="text-align: right;">0.356</td>
-<td style="text-align: right;">0.895</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">0.573</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.943</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">0.498</td>
-<td style="text-align: right;">0.354</td>
-<td style="text-align: right;">0.852</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">0.607</td>
-<td style="text-align: right;">0.396</td>
-<td style="text-align: right;">1.003</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">0.574</td>
-<td style="text-align: right;">0.385</td>
-<td style="text-align: right;">0.958</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">0.669</td>
-<td style="text-align: right;">0.410</td>
-<td style="text-align: right;">1.079</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">0.643</td>
-<td style="text-align: right;">0.402</td>
-<td style="text-align: right;">1.045</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">0.491</td>
-<td style="text-align: right;">0.341</td>
-<td style="text-align: right;">0.832</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">0.355</td>
-<td style="text-align: right;">0.332</td>
-<td style="text-align: right;">0.687</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">0.684</td>
+<td style="text-align: left;">RD</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">17.29</td>
+<td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
+<p>Calculate the run differential that would typically result in <u>one</u> additional win.</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Based on the regression model, do you feel confident in your recommended run differential? Explain how you decided.</p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p>Let’s look at the residuals for this regression. The <code>broom</code> package helps get model results for model diagnostic plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> OPS)) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span> , <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Henry Aaron Statistics by Age"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the teams2001 column names before and after running the next line.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="ot">=</span> <span class="fu">augment</span>(wins_lm, <span class="at">data =</span> teams2001)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>teams2001 <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> <span class="fu">filter</span>(teams2001, <span class="fu">abs</span>(.resid) <span class="sc">&gt;</span> <span class="fl">7.5</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(teamID,yearID))) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predicted Wins"</span>, </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Figure 2: Residuals vs.&nbsp;Fitted Values of the Linear Model for Wins</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><em>What units are the residuals in?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><em>In Figure 2, there are two labeled teams with large residuals. Briefly explain why these teams might have large residuals.</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
+<p><em>Above, we used run differential to predict number of wins. Typically, we use win percentage instead of wins. Does it matter?</em></p>
+<p>Repeat the above analysis using win percentage instead of wins. Report the run differential that typically results in one additional win.</p>
+</section>
+<section id="how-many-wins-to-make-the-playoffs" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-wins-to-make-the-playoffs">How many wins to make the playoffs?</h2>
+<p>Let’s see historically how many wins it takes to make the playoffs. Below, we will look at the five seasons (1997-2001) preceding the 2002 season. First, we need to add a variable <code>playoff</code> to the <code>Teams</code> table, which is an indicator of whether the team made the playoffs (1) or did not make the playoffs (2).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get teams in the 1997-2001 seasons.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1997</span>, yearID <span class="sc">&lt;=</span> <span class="dv">2001</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain a list of teams who made the playoffs by year.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>playoff_teams <span class="ot">&lt;-</span> SeriesPost <span class="sc">|&gt;</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1997</span>, yearID <span class="sc">&lt;=</span> <span class="dv">2001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(yearID, teamIDwinner, teamIDloser) <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>yearID, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"result"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"teamID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>result) <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">playoffs =</span> <span class="st">"yes"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add playoff information to my teams.</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>my_teams <span class="ot">=</span> my_teams <span class="sc">|&gt;</span> </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(playoff_teams, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"yearID"</span>, <span class="st">"teamID"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">playoffs =</span> <span class="fu">replace_na</span>(playoffs, <span class="st">"no"</span>)) </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check whether we did this correctly.  </span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># There should be eight playoff teams each year.</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(yearID, playoffs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   yearID playoffs  n
+1    1997       no 20
+2    1997      yes  8
+3    1998       no 22
+4    1998      yes  8
+5    1999       no 22
+6    1999      yes  8
+7    2000       no 22
+8    2000      yes  8
+9    2001       no 22
+10   2001      yes  8</code></pre>
+</div>
+</div>
+<p>Next, let’s look at the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>my_teams <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> W, <span class="at">y =</span> R, <span class="at">color =</span> <span class="fu">factor</span>(playoffs))) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Wins"</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Runs Scored"</span>, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Made Playoffs"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Wins and Making the Playoffs"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> <span class="fu">filter</span>(my_teams, teamID <span class="sc">==</span> <span class="st">"OAK"</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">x =</span> W, <span class="at">y =</span> R, <span class="at">label =</span> <span class="fu">paste</span>(teamID,yearID)),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lsn_18_peak_trajectories_I_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lsn_6_runs_and_wins_I_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="fitting-the-quadratic-model" class="level2">
-<h2 class="anchored" data-anchor-id="fitting-the-quadratic-model">Fitting the Quadratic Model</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(OPS <span class="sc">~</span> <span class="fu">I</span>(Age <span class="sc">-</span> <span class="dv">30</span>) <span class="sc">+</span> <span class="fu">I</span>((Age <span class="sc">-</span> <span class="dv">30</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> aaron)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">1</span>]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">2</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">3</span>]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">age.max =</span> <span class="dv">30</span> <span class="sc">-</span> B <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">2</span>, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">max =</span> A <span class="sc">-</span> B<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;">age.max</th>
-<th style="text-align: right;">max</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">29.817</td>
-<td style="text-align: right;">0.987</td>
-</tr>
-</tbody>
-</table>
+<p><em>Based on the figure above, if you were Billy Beane, how many wins should you shoot for in order to have a good chance of making the playoffs?</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
 </div>
 </div>
-<p>There are a lot of things that can go wrong with this. What do you think about the fit in this instance?</p>
+<p><em>Besides visual inspection, list methods you could use to assess whether a team will make the playoffs based on number of wins.</em></p>
+<div class="html">
+<div style="margin-top: 0.5in;">
+
+</div>
+</div>
 
 
 </section>

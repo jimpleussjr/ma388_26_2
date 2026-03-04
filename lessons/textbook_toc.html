@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 18 – MA388 Sabermetrics</title>
+<title>textbook summary – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -105,35 +69,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -258,37 +193,21 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review">Review</a></li>
-  <li><a href="#career-trajectories" id="toc-career-trajectories" class="nav-link" data-scroll-target="#career-trajectories">Career Trajectories</a></li>
-  <li><a href="#henry-aaron" id="toc-henry-aaron" class="nav-link" data-scroll-target="#henry-aaron">Henry Aaron</a></li>
-  <li><a href="#fitting-the-quadratic-model" id="toc-fitting-the-quadratic-model" class="nav-link" data-scroll-target="#fitting-the-quadratic-model">Fitting the Quadratic Model</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_18_peak_trajectories_I.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 18</h1>
-<p class="subtitle lead">Comparing Peak Trajectories - Part I</p>
+<h1 class="title">textbook summary</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>LTC Jim Pleuss </p>
-          </div>
-  </div>
     
   
     
@@ -299,312 +218,183 @@ window.Quarto = {
 </header>
 
 
-<section id="review" class="level2">
-<h2 class="anchored" data-anchor-id="review">Review</h2>
-<p>What is a <em>fixed effect</em>?</p>
-<p>What is a <em>random effect</em>?</p>
-<p>In general, when would you use each?</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="career-trajectories" class="level2">
-<h2 class="anchored" data-anchor-id="career-trajectories">Career Trajectories</h2>
-<p>What is a career trajectory?</p>
-<p>Why are people interested in them?</p>
-<p>We’ll start by looking at OPS (on base percentage plus slugging). Here are the relevant equations:</p>
-<p>On base percentage:</p>
-<p><span class="math inline">\(OBP = \frac{H + BB + HBP}{AB + BB + HBP + SF}\)</span></p>
-<p>(Note: Sacrifice flies (SF) were not recorded until the 1950s.)</p>
-<p>Slugging percentage:</p>
-<p><span class="math inline">\(SLG = \frac{(H - X2B - X3B - HR) + 2 \times X2B + 3 \times X3B + 4 \times HR}{AB}\)</span></p>
-<p>On base percentage plus slugging:</p>
-<p><span class="math inline">\(OPS = OBP + SLG\)</span></p>
-<p>Why do baseball analysts like OPS?</p>
-<p>A convenient model for OPS as a function of age is a quadratic function:</p>
-<p><span class="math inline">\(OPS = A + B(Age - 30) + C(Age - 30)^2\)</span></p>
-<p>Why use a model (instead of just the data)?</p>
-<div style="page-break-after: always;"></div>
-<p>What are some good reasons to use this quadratic model?</p>
-<p>What are some bad reasons to use the quadratic model?</p>
-<p>Why do we subtract 30 from <span class="math inline">\(Age\)</span> in the model?</p>
-<p>Based on this model, find an expression for the peak age (where OPS is the highest).</p>
-<p>Based on this model, find an expression for the peak OPS.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(A\)</span> tells us about a player’s trajectory.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(C\)</span> tells us about a player’s trajectory.</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="henry-aaron" class="level2">
-<h2 class="anchored" data-anchor-id="henry-aaron">Henry Aaron</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="aaron.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Henry Aaron (Source: <em>New York Times</em>)</figcaption>
-</figure>
-</div>
-<p>Let’s fit Henry Aaron’s trajectory. The <code>get_stats()</code> function from the text (Section 8.2) is helpful.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find his playerID in the People table.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>aaronID <span class="ot">&lt;-</span> People <span class="sc">|&gt;</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nameLast <span class="sc">==</span> <span class="st">"Aaron"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         nameFirst <span class="sc">==</span> <span class="st">"Hank"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(playerID)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate age and OPS.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>get_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(player){</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Batting <span class="sc">|&gt;</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(playerID <span class="sc">==</span> player) <span class="sc">|&gt;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(People, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">birthyear =</span> <span class="fu">ifelse</span>(birthMonth <span class="sc">&gt;=</span> <span class="dv">7</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                              birthYear <span class="sc">+</span> <span class="dv">1</span>, birthYear),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">Age =</span> yearID <span class="sc">-</span> birthyear,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">SLG =</span> (H <span class="sc">-</span> X2B <span class="sc">-</span> X3B <span class="sc">-</span> HR <span class="sc">+</span> </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">2</span> <span class="sc">*</span> X2B <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X3B <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> HR) <span class="sc">/</span> AB,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">OBP =</span> (H <span class="sc">+</span> BB <span class="sc">+</span> HBP) <span class="sc">/</span> (AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">OPS =</span> SLG <span class="sc">+</span> OBP) <span class="sc">|&gt;</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(playerID, Age, SLG, OBP, OPS)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div style="page-break-after: always;"></div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Aaron's stats.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aaron <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(aaronID)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Henry Aaron's statistics by age."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Henry Aaron’s statistics by age.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">playerID</th>
-<th style="text-align: right;">Age</th>
-<th style="text-align: right;">SLG</th>
-<th style="text-align: right;">OBP</th>
-<th style="text-align: right;">OPS</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">0.322</td>
-<td style="text-align: right;">0.769</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">0.540</td>
-<td style="text-align: right;">0.366</td>
-<td style="text-align: right;">0.906</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">0.558</td>
-<td style="text-align: right;">0.365</td>
-<td style="text-align: right;">0.923</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">0.600</td>
-<td style="text-align: right;">0.378</td>
-<td style="text-align: right;">0.978</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.546</td>
-<td style="text-align: right;">0.386</td>
-<td style="text-align: right;">0.931</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">0.636</td>
-<td style="text-align: right;">0.401</td>
-<td style="text-align: right;">1.037</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">0.566</td>
-<td style="text-align: right;">0.352</td>
-<td style="text-align: right;">0.919</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">0.594</td>
-<td style="text-align: right;">0.381</td>
-<td style="text-align: right;">0.974</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">0.618</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">1.008</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">0.586</td>
-<td style="text-align: right;">0.391</td>
-<td style="text-align: right;">0.977</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.393</td>
-<td style="text-align: right;">0.907</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">0.560</td>
-<td style="text-align: right;">0.379</td>
-<td style="text-align: right;">0.938</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">0.539</td>
-<td style="text-align: right;">0.356</td>
-<td style="text-align: right;">0.895</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">0.573</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.943</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">0.498</td>
-<td style="text-align: right;">0.354</td>
-<td style="text-align: right;">0.852</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">0.607</td>
-<td style="text-align: right;">0.396</td>
-<td style="text-align: right;">1.003</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">0.574</td>
-<td style="text-align: right;">0.385</td>
-<td style="text-align: right;">0.958</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">0.669</td>
-<td style="text-align: right;">0.410</td>
-<td style="text-align: right;">1.079</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">0.643</td>
-<td style="text-align: right;">0.402</td>
-<td style="text-align: right;">1.045</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">0.491</td>
-<td style="text-align: right;">0.341</td>
-<td style="text-align: right;">0.832</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">0.355</td>
-<td style="text-align: right;">0.332</td>
-<td style="text-align: right;">0.687</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">0.684</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div style="page-break-after: always;"></div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> OPS)) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span> , <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Henry Aaron Statistics by Age"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lsn_18_peak_trajectories_I_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="fitting-the-quadratic-model" class="level2">
-<h2 class="anchored" data-anchor-id="fitting-the-quadratic-model">Fitting the Quadratic Model</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(OPS <span class="sc">~</span> <span class="fu">I</span>(Age <span class="sc">-</span> <span class="dv">30</span>) <span class="sc">+</span> <span class="fu">I</span>((Age <span class="sc">-</span> <span class="dv">30</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> aaron)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">1</span>]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">2</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">3</span>]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">age.max =</span> <span class="dv">30</span> <span class="sc">-</span> B <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">2</span>, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">max =</span> A <span class="sc">-</span> B<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;">age.max</th>
-<th style="text-align: right;">max</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">29.817</td>
-<td style="text-align: right;">0.987</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>There are a lot of things that can go wrong with this. What do you think about the fit in this instance?</p>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html">1&nbsp; The Baseball Datasets</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#introduction">1.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-lahman">1.2 The Lahman Database: Season-by-Season Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-datasets_Retrosheet">1.3 Retrosheet Game-by-Game Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#sec-retro_pbp">1.4 Retrosheet Play-by-Play Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#pitch-by-pitch-data">1.5 Pitch-by-Pitch Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#player-movement-and-off-the-bat-data">1.6 Player Movement and Off-the-Bat Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#data-used-in-this-book">1.7 Data Used in this Book</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#summary">1.8 Summary</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#further-reading">1.9 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/01-datasets.html#exercises">1.10 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html">2&nbsp; Introduction to R</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#introduction">2.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#installing-r-and-rstudio">2.2 Installing R and RStudio</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#the-tidyverse">2.3 The Tidyverse</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-df">2.4 Data Frames</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-vectors">2.5 Vectors</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-objectscontainers">2.6 Objects and Containers in R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#collection-of-r-commands">2.7 Collection of R Commands</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-data_import">2.8 Reading and Writing Data in R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-pkg">2.9 Packages</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-split_apply">2.10 Splitting, Applying, and Combining Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#sec-gettinghelp">2.11 Getting Help</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#further-reading">2.12 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/02-intro.html#exercises">2.13 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html">3&nbsp; Graphics</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#introduction">3.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#character-variable">3.2 Character Variable</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#saving-graphs">3.3 Saving Graphs</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#numeric-variable-one-dimensional-scatterplot-and-histogram">3.4 Numeric Variable: One-Dimensional Scatterplot and Histogram</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#two-numeric-variables">3.5 Two Numeric Variables</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#a-numeric-variable-and-a-factor-variable">3.6 A Numeric Variable and a Factor Variable</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#sec-comparesluggers">3.7 Comparing Ruth, Aaron, Bonds, and A-Rod</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#sec-section5">3.8 The 1998 Home Run Race</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#further-reading">3.9 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/03-graphics2.html#exercises">3.10 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html">4&nbsp; The Relation Between Runs and Wins</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#introduction">4.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#the-teams-table-in-the-lahman-database">4.2 The Teams Table in the Lahman Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#sec-LinearRegression">4.3 Linear Regression</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#the-pythagorean-formula-for-winning-percentage">4.4 The Pythagorean Formula for Winning Percentage</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#sec-runswin">4.5 How Many Runs for a Win?</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#further-reading">4.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/04-pythagoras.html#exercises">4.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html">5&nbsp; Value of Plays Using Run Expectancy</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-matrix">5.1 The Run Expectancy Matrix</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#runs-scored-in-the-remainder-of-the-inning">5.2 Runs Scored in the Remainder of the Inning</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-runsexpectancy">5.3 Creating the Matrix</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-run-values">5.4 Measuring Success of a Batting Play</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#jos%C3%A9-altuve">5.5 José Altuve</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#opportunity-and-success-for-all-hitters">5.6 Opportunity and Success for All Hitters</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#position-in-the-batting-lineup">5.7 Position in the Batting Lineup</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#sec-runvaluebasehit">5.8 Run Values of Different Base Hits</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#value-of-base-stealing">5.9 Value of Base Stealing</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#further-reading-and-software">5.10 Further Reading and Software</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/05-runsexpectancy.html#exercises">5.11 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html">6&nbsp; Balls and Strikes Effects</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#introduction">6.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#sec-hit_pit_counts">6.2 Hitter’s Counts and Pitcher’s Counts</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#behaviors-by-count">6.3 Behaviors by Count</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#further-reading">6.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/06-pitchcount.html#exercises">6.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html">7&nbsp; Catcher Framing</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#introduction">7.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#acquiring-pitch-level-data">7.2 Acquiring Pitch-Level Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#where-is-the-strike-zone">7.3 Where Is the Strike Zone?</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#modeling-called-strike-percentage">7.4 Modeling Called Strike Percentage</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#sec-catcher-framing">7.5 Modeling Catcher Framing</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#further-reading">7.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/07-framing.html#exercises">7.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html">8&nbsp; Career Trajectories</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#introduction">8.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-mantle">8.2 Mickey Mantle’s Batting Trajectory</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-comparison">8.3 Comparing Trajectories</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-general">8.4 General Patterns of Peak Ages</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#sec-fielding">8.5 Trajectories and Fielding Position</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#further-reading">8.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/08-trajectories.html#exercises">8.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html">9&nbsp; Simulation</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#introduction">9.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#sec-markovchain">9.2 Simulating a Half Inning</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#sec-bradleyterry">9.3 Simulating a Baseball Season</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#further-reading">9.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/09-simulation.html#exercises">9.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html">10&nbsp; Exploring Streaky Performances</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#introduction">10.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-joed">10.2 The Great Streak</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-individual">10.3 Streaks in Individual At-Bats</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#sec-woba">10.4 Local Patterns of Statcast Launch Velocity</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#further-reading">10.5 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/10-streak.html#exercises">10.6 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html">11&nbsp; Using a Database to Compute Park Factors</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#introduction">11.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-startMySQL">11.2 Installing MySQL and Creating a Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#connecting-r-to-mysql">11.3 Connecting R to MySQL</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-gamelog">11.4 Filling a MySQL Game Log Database from R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#querying-data-from-r">11.5 Querying Data from R</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-owndb">11.6 Building Your Own Baseball Database</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#sec-parkfactors">11.7 Calculating Basic Park Factors</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#further-reading">11.8 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/11-sql.html#exercises">11.9 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html">12&nbsp; Working with Large Data</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#introduction">12.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-statcast-year">12.2 Acquiring a Year’s Worth of Statcast Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#storing-large-data-efficiently">12.3 Storing Large Data Efficiently</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-performance">12.4 Performance Comparison</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#sec-launch_angle">12.5 Launch Angles and Exit Velocities, Revisited</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#further-reading">12.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/12-large.html#exercises">12.7 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html">13&nbsp; Home Run Hitting</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#introduction">13.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#sec-hr_exploring">13.2 Exploring a Season of Home Run Hitting</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#sec-hr_changes">13.3 Comparing Home Run Hitting in the 2021 and 2023 Seasons</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#further-reading">13.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/13-homeruns.html#exercises">13.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html">14&nbsp; Making a Scientific Presentation using Quarto</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#introduction-to-slides-in-quarto">14.1 Introduction to Slides in Quarto</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#sec-slides">14.2 Example: Jim’s Presentation on Home Run Hitting</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#sec-beamer">14.3 Alternative Output Formats</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#further-reading">14.4 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/14-quarto.html#exercises">14.5 Exercises</a></li>
+</ul></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html">15&nbsp; Using Shiny for Baseball Applications</a>
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#introduction">15.1 Introduction</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-function">15.2 Comparing Two Pitcher Trajectories</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-creating_shiny">15.3 Creating the Shiny App</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-sharing_shiny">15.4 Sharing the App</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#sec-shiny_tips">15.5 Tips for Getting Started Making Apps</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#further-reading">15.6 Further Reading</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/15-shiny.html#exercises">15.7 Exercises</a></li>
+</ul></li>
+<li>Appendices
+<ul>
+<li><a href="https://beanumber.github.io/abdwr3e/A_retrosheet.html">A&nbsp; Retrosheet Files Reference</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/B_mlbam.html">B&nbsp; Historical Notes on PITCHf/x Data</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/C_statcast.html">C&nbsp; Statcast Data Reference</a></li>
+<li><a href="https://beanumber.github.io/abdwr3e/99-references.html">References</a></li>
+</ul></li>
+</ul>
+<p>Problem Set descriptions:</p>
+<ol type="1">
+<li><p>Data set exploration and dplyr functions</p></li>
+<li><p>Plotting career trajectories</p></li>
+<li><p>Regression of Win% vs run differential</p></li>
+<li><p>Sacrifice Bunt</p></li>
+</ol>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

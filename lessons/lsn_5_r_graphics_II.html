@@ -8,7 +8,7 @@
 
 <meta name="author" content="LTC Jim Pleuss">
 
-<title>MA388 Sabermetrics: Lesson 18 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 5 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -263,20 +263,23 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review">Review</a></li>
-  <li><a href="#career-trajectories" id="toc-career-trajectories" class="nav-link" data-scroll-target="#career-trajectories">Career Trajectories</a></li>
-  <li><a href="#henry-aaron" id="toc-henry-aaron" class="nav-link" data-scroll-target="#henry-aaron">Henry Aaron</a></li>
-  <li><a href="#fitting-the-quadratic-model" id="toc-fitting-the-quadratic-model" class="nav-link" data-scroll-target="#fitting-the-quadratic-model">Fitting the Quadratic Model</a></li>
+  <li><a href="#factor-variables" id="toc-factor-variables" class="nav-link active" data-scroll-target="#factor-variables">Factor Variables</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
+  <li><a href="#clemens-and-schilling" id="toc-clemens-and-schilling" class="nav-link" data-scroll-target="#clemens-and-schilling">Clemens and Schilling</a></li>
+  <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn">Your Turn</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_18_peak_trajectories_I.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lsn_5_r_graphics_II.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 18</h1>
-<p class="subtitle lead">Comparing Peak Trajectories - Part I</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 5</h1>
+<p class="subtitle lead">Introduction to R Graphics - Part II</p>
 </div>
 
 
@@ -299,311 +302,280 @@ window.Quarto = {
 </header>
 
 
-<section id="review" class="level2">
-<h2 class="anchored" data-anchor-id="review">Review</h2>
-<p>What is a <em>fixed effect</em>?</p>
-<p>What is a <em>random effect</em>?</p>
-<p>In general, when would you use each?</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="career-trajectories" class="level2">
-<h2 class="anchored" data-anchor-id="career-trajectories">Career Trajectories</h2>
-<p>What is a career trajectory?</p>
-<p>Why are people interested in them?</p>
-<p>We’ll start by looking at OPS (on base percentage plus slugging). Here are the relevant equations:</p>
-<p>On base percentage:</p>
-<p><span class="math inline">\(OBP = \frac{H + BB + HBP}{AB + BB + HBP + SF}\)</span></p>
-<p>(Note: Sacrifice flies (SF) were not recorded until the 1950s.)</p>
-<p>Slugging percentage:</p>
-<p><span class="math inline">\(SLG = \frac{(H - X2B - X3B - HR) + 2 \times X2B + 3 \times X3B + 4 \times HR}{AB}\)</span></p>
-<p>On base percentage plus slugging:</p>
-<p><span class="math inline">\(OPS = OBP + SLG\)</span></p>
-<p>Why do baseball analysts like OPS?</p>
-<p>A convenient model for OPS as a function of age is a quadratic function:</p>
-<p><span class="math inline">\(OPS = A + B(Age - 30) + C(Age - 30)^2\)</span></p>
-<p>Why use a model (instead of just the data)?</p>
-<div style="page-break-after: always;"></div>
-<p>What are some good reasons to use this quadratic model?</p>
-<p>What are some bad reasons to use the quadratic model?</p>
-<p>Why do we subtract 30 from <span class="math inline">\(Age\)</span> in the model?</p>
-<p>Based on this model, find an expression for the peak age (where OPS is the highest).</p>
-<p>Based on this model, find an expression for the peak OPS.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(A\)</span> tells us about a player’s trajectory.</p>
-<p>In the quadratic model, explain what <span class="math inline">\(C\)</span> tells us about a player’s trajectory.</p>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="henry-aaron" class="level2">
-<h2 class="anchored" data-anchor-id="henry-aaron">Henry Aaron</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="aaron.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Henry Aaron (Source: <em>New York Times</em>)</figcaption>
-</figure>
-</div>
-<p>Let’s fit Henry Aaron’s trajectory. The <code>get_stats()</code> function from the text (Section 8.2) is helpful.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find his playerID in the People table.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>aaronID <span class="ot">&lt;-</span> People <span class="sc">|&gt;</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nameLast <span class="sc">==</span> <span class="st">"Aaron"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         nameFirst <span class="sc">==</span> <span class="st">"Hank"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(playerID)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate age and OPS.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>get_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(player){</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Batting <span class="sc">|&gt;</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(playerID <span class="sc">==</span> player) <span class="sc">|&gt;</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(People, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">birthyear =</span> <span class="fu">ifelse</span>(birthMonth <span class="sc">&gt;=</span> <span class="dv">7</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                              birthYear <span class="sc">+</span> <span class="dv">1</span>, birthYear),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">Age =</span> yearID <span class="sc">-</span> birthyear,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">SLG =</span> (H <span class="sc">-</span> X2B <span class="sc">-</span> X3B <span class="sc">-</span> HR <span class="sc">+</span> </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">2</span> <span class="sc">*</span> X2B <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> X3B <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> HR) <span class="sc">/</span> AB,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">OBP =</span> (H <span class="sc">+</span> BB <span class="sc">+</span> HBP) <span class="sc">/</span> (AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">OPS =</span> SLG <span class="sc">+</span> OBP) <span class="sc">|&gt;</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(playerID, Age, SLG, OBP, OPS)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Review:</p>
+<p>I found the plot below <a href="https://studentwork.prattsi.org/infovis/visualization/visualizing-exploring-home-run-rates-baseball-history/">here</a>. Let’s recreate it! You can get part of the way there with what you already know.</p>
+<p><img src="homeruns-by-era.png" class="img-fluid"></p>
 <div style="page-break-after: always;"></div>
+<p>It will help you to know the dates that correspond to the beginning of different eras:</p>
+<ul>
+<li>1900: Dead Ball</li>
+<li>1920: Live Ball</li>
+<li>1942: Integration</li>
+<li>1961: Expansion</li>
+<li>1977: Free Agent</li>
+<li>1994: Steroid</li>
+<li>2004: Contemporary</li>
+</ul>
+<p>First, obtain the top-10 HR hitters for each year from 1900 to the present.</p>
+<p>Let’s plot what we have to far.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Aaron's stats.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aaron <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(aaronID)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Henry Aaron's statistics by age."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Henry Aaron’s statistics by age.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">playerID</th>
-<th style="text-align: right;">Age</th>
-<th style="text-align: right;">SLG</th>
-<th style="text-align: right;">OBP</th>
-<th style="text-align: right;">OPS</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">0.322</td>
-<td style="text-align: right;">0.769</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">0.540</td>
-<td style="text-align: right;">0.366</td>
-<td style="text-align: right;">0.906</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">0.558</td>
-<td style="text-align: right;">0.365</td>
-<td style="text-align: right;">0.923</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">0.600</td>
-<td style="text-align: right;">0.378</td>
-<td style="text-align: right;">0.978</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.546</td>
-<td style="text-align: right;">0.386</td>
-<td style="text-align: right;">0.931</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">0.636</td>
-<td style="text-align: right;">0.401</td>
-<td style="text-align: right;">1.037</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">0.566</td>
-<td style="text-align: right;">0.352</td>
-<td style="text-align: right;">0.919</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">0.594</td>
-<td style="text-align: right;">0.381</td>
-<td style="text-align: right;">0.974</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">0.618</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">1.008</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">0.586</td>
-<td style="text-align: right;">0.391</td>
-<td style="text-align: right;">0.977</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.393</td>
-<td style="text-align: right;">0.907</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">0.560</td>
-<td style="text-align: right;">0.379</td>
-<td style="text-align: right;">0.938</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">0.539</td>
-<td style="text-align: right;">0.356</td>
-<td style="text-align: right;">0.895</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">0.573</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.943</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">0.498</td>
-<td style="text-align: right;">0.354</td>
-<td style="text-align: right;">0.852</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">0.607</td>
-<td style="text-align: right;">0.396</td>
-<td style="text-align: right;">1.003</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">0.574</td>
-<td style="text-align: right;">0.385</td>
-<td style="text-align: right;">0.958</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">0.669</td>
-<td style="text-align: right;">0.410</td>
-<td style="text-align: right;">1.079</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">0.514</td>
-<td style="text-align: right;">0.390</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">0.643</td>
-<td style="text-align: right;">0.402</td>
-<td style="text-align: right;">1.045</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">0.491</td>
-<td style="text-align: right;">0.341</td>
-<td style="text-align: right;">0.832</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">0.355</td>
-<td style="text-align: right;">0.332</td>
-<td style="text-align: right;">0.687</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aaronha01</td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">0.369</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">0.684</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div style="page-break-after: always;"></div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>aaron <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> OPS)) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span> , <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Henry Aaron Statistics by Age"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lsn_18_peak_trajectories_I_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not let’s figure out how to color the points by era. We’ll need to introduce a factor variable that represents dates according to their corresponding eras. See the example in ABDWR section 3.2.1 for an example of the <code>cut()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>batting_df <span class="ot">&lt;-</span> batting_df <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">era =</span> <span class="fu">cut</span>(yearID,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1899</span>, <span class="dv">1919</span>, <span class="dv">1941</span>, <span class="dv">1960</span>, <span class="dv">1976</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                              <span class="dv">1993</span>, <span class="dv">2003</span>, <span class="dv">2050</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Dead Ball"</span>, <span class="st">"Lively Ball"</span>, <span class="st">"Integration"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Expansion"</span>, <span class="st">"Free Agency"</span>, <span class="st">"Steroid"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Long Ball"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s see a sample of what our data frame looks like now:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>batting_df <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   yearID HR         era
+1    1967 44   Expansion
+2    2001 49     Steroid
+3    1934 26 Lively Ball
+4    1920 11 Lively Ball
+5    1927 17 Lively Ball
+6    1935 25 Lively Ball
+7    1983 39 Free Agency
+8    1922 17 Lively Ball
+9    2024 39   Long Ball
+10   2020 17   Long Ball</code></pre>
+</div>
+</div>
+<p>Ready to add the color?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
-</section>
-<section id="fitting-the-quadratic-model" class="level2">
-<h2 class="anchored" data-anchor-id="fitting-the-quadratic-model">Fitting the Quadratic Model</h2>
+<section id="factor-variables" class="level1">
+<h1>Factor Variables</h1>
+<p>Previously, we focused on scatter plots of two numeric variables. Now we are introducing factor variables. With factor variables we may wish to create univariate visualizations for each level of a factor – or perhaps multivariate visualizations for each level of a factor.</p>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
+<p><strong>Construct a boxplot of salaries by decade.</strong></p>
+<p>Here, the `<code>factor" is really the factor representation of a numeric variable:</code>yearID`. Don’t worry - we’re getting to a pure factor variable.</p>
+<p>Let’s create a decade variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(OPS <span class="sc">~</span> <span class="fu">I</span>(Age <span class="sc">-</span> <span class="dv">30</span>) <span class="sc">+</span> <span class="fu">I</span>((Age <span class="sc">-</span> <span class="dv">30</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> aaron)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">1</span>]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">2</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="dv">3</span>]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">age.max =</span> <span class="dv">30</span> <span class="sc">-</span> B <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">2</span>, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">max =</span> A <span class="sc">-</span> B<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> C <span class="sc">/</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> <span class="fu">floor</span>(yearID <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  yearID teamID lgID  playerID  salary decade
+1   2004    SFN   NL aardsda01  300000   2000
+2   2007    CHA   AL aardsda01  387500   2000
+3   2008    BOS   AL aardsda01  403250   2000
+4   2009    SEA   AL aardsda01  419000   2000
+5   2010    SEA   AL aardsda01 2750000   2010
+6   2011    SEA   AL aardsda01 4500000   2010</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> <span class="fu">floor</span>(yearID <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(decade), <span class="at">y =</span> salary)) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MLB Salaries by Decade"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Salary"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Decade"</span>) <span class="sc">+</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;">age.max</th>
-<th style="text-align: right;">max</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">29.817</td>
-<td style="text-align: right;">0.987</td>
-</tr>
-</tbody>
-</table>
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>There are a lot of things that can go wrong with this. What do you think about the fit in this instance?</p>
+</div>
+</section>
+<section id="example-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
+<p><strong>Determine the average runs scored per game (average team score, not two-team total score) by teams in Major League Baseball since 1950. Note any differences in American League and National League teams.</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lg_rpg_df <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(yearID, lgID, R, G) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1950</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RPG =</span> <span class="fu">sum</span>(R) <span class="sc">/</span> <span class="fu">sum</span>(G))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lg_rpg_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+# Groups:   yearID [3]
+  yearID lgID    RPG
+   &lt;int&gt; &lt;fct&gt; &lt;dbl&gt;
+1   1950 AL     5.04
+2   1950 NL     4.66
+3   1951 AL     4.63
+4   1951 NL     4.46
+5   1952 AL     4.18
+6   1952 NL     4.17</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lg_rpg_df <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> RPG, <span class="at">color =</span> lgID)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"League Runs Per Game Since 1950"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Runs Per Game"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"League"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What jumps out at you in this figure?</p>
+<div style="page-break-after: always;"></div>
+<p><a href="https://www.nytimes.com/2021/01/26/sports/baseball/hall-of-fame-schilling.html?searchResultPosition=2">In 2021, the Baseball Hame of Fame announced that no players received the minimum vote of 75% to be inducted</a>. Famous players on the ballot included Barry Bonds, Roger Clemens, and Curt Schilling.</p>
+<p>Using the <code>HallofFame</code> data frame in the <code>Lahman</code> package, plot the number of Hall of Fame inductees each year by the Baseball Writers Association of America (BBWAA) in the player category. Change the <span class="math inline">\(y\)</span>-axis label to “Hall of Fame inductees” and <span class="math inline">\(x\)</span>-axis to “year”. The <code>HallofFame</code> data frame contains a row for every year a player was voted on and whether he was inducted.</p>
+<p>Suggested steps:</p>
+<ul>
+<li><p>Filter the data frame to contain only inducted players (<code>inducted == "Y"</code>, <code>category == "Player"</code>, <code>votedBy == "BBWAA"</code>) ().</p></li>
+<li><p>Determine how many players were inducted each year ().</p></li>
+<li><p>Plot the number of inducted players by year.</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inductees by year.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>yearlyHF <span class="ot">&lt;-</span> HallOfFame <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inducted <span class="sc">==</span> <span class="st">"Y"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         category <span class="sc">==</span> <span class="st">"Player"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         votedBy <span class="sc">==</span> <span class="st">"BBWAA"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(yearID)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Unfortunately, yearlyHF data frame does not contain years with no inductees.</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># We can join it with another data frame containing all the years and replace </span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># NAs with 0s.</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>yearlyHF <span class="ot">&lt;-</span> yearlyHF <span class="sc">|&gt;</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(<span class="fu">data.frame</span>(<span class="at">yearID =</span> <span class="dv">1940</span><span class="sc">:</span><span class="dv">2022</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">replace_na</span>(n,<span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- \newpage -->
+<p>Roger Clemens and Curt Schilling have been on the ballot for the Hall of Fame several times. After not being selected for a 10th time in 2022, they were removed from the ballot.</p>
+</section>
+<section id="clemens-and-schilling" class="level2">
+<h2 class="anchored" data-anchor-id="clemens-and-schilling">Clemens and Schilling</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="clemens.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Roger Clemens</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="schilling.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Curt Schilling</figcaption>
+</figure>
+</div>
+<p>First, let’s create a data set containing all pitchers with an indicator of whether they are in the Hall of Fame.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get career wins, earned run average, and strikeouts.</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>careers <span class="ot">&lt;-</span> Pitching <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">W =</span> <span class="fu">sum</span>(W),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">ER =</span> <span class="fu">sum</span>(ER),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">IPouts =</span> <span class="fu">sum</span>(IPouts),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">SO =</span> <span class="fu">sum</span>(SO)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ERA =</span> <span class="dv">9</span><span class="sc">*</span>ER<span class="sc">/</span>(IPouts<span class="sc">/</span><span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IPouts<span class="sc">/</span><span class="dv">3</span> <span class="sc">&gt;</span> <span class="dv">500</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add whether they were inducted in the Hall of Fame.</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>careers <span class="ot">&lt;-</span> HallOfFame <span class="sc">|&gt;</span> </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inducted <span class="sc">==</span> <span class="st">"Y"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>         category <span class="sc">==</span> <span class="st">"Player"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, inducted) <span class="sc">|&gt;</span> </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(careers) <span class="sc">|&gt;</span> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">inducted =</span> <span class="fu">replace_na</span>(inducted,<span class="st">"N"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s look at career strikeouts by whether or not they were inducted.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>careers <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SO, <span class="at">y =</span> ERA, <span class="at">color =</span> inducted)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s figure out where Clemens and Schilling are.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>clemschil <span class="ot">&lt;-</span> careers <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(playerID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"clemero02"</span>, <span class="st">"schilcu01"</span>)) </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>careers <span class="sc">|&gt;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SO, <span class="at">y =</span> ERA, <span class="at">color =</span> inducted)) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> clemschil, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">x =</span> SO, <span class="at">y =</span> ERA, <span class="at">label =</span> playerID),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>ERA vs.&nbsp;SO by Hall of Fame status for pitchers with at least 500 innings pitched.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn">Your Turn</h2>
+<p>In the last figure, there is an uninducted player with about 2500 strikeouts and a 2.5 ERA. Determine who that player is and add his <code>playerID</code> to the plot above.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lsn_5_r_graphics_II_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

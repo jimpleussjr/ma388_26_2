@@ -122,5 +122,9 @@
   "lessons/lsn_20_multilevel_modeling.qmd": {
     "lsn_20_multilevel_modeling.html": "c81c41f8",
     "lsn_20_multilevel_modeling.tex": "bfe9179c"
+  },
+  "lessons/lsn_20_multilevel_modeling.knit.md": {
+    "lsn_20_multilevel_modeling.knit.html": "14e0031e",
+    "lsn_20_multilevel_modeling.knit.tex": "ae844c8d"
   }
 }

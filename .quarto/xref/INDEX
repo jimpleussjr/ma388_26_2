@@ -118,5 +118,9 @@
   },
   "lessons/lsn_19_peak_trajectories_II_cadets.Rmd": {
     "lsn_19_peak_trajectories_II_cadets.html": "3525c242"
+  },
+  "lessons/lsn_20_multilevel_modeling.qmd": {
+    "lsn_20_multilevel_modeling.html": "c81c41f8",
+    "lsn_20_multilevel_modeling.tex": "bfe9179c"
   }
 }

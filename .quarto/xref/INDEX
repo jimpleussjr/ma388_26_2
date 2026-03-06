@@ -126,5 +126,13 @@
   "lessons/lsn_20_multilevel_modeling.knit.md": {
     "lsn_20_multilevel_modeling.knit.html": "14e0031e",
     "lsn_20_multilevel_modeling.knit.tex": "ae844c8d"
+  },
+  "lessons/lsn_21_simulation_I.qmd": {
+    "lsn_21_simulation_I.html": "2c782ae8",
+    "lsn_21_simulation_I.tex": "e71ecef8"
+  },
+  "lessons/lsn_22_simulation_II.qmd": {
+    "lsn_22_simulation_II.html": "0de4307f",
+    "lsn_22_simulation_II.tex": "6e5ab548"
   }
 }

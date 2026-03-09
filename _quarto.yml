@@ -46,6 +46,8 @@ website:
             text: "Lesson 20: Multilevel Modeling"
           - href: lessons/lsn_21_simulation_I.qmd
             text: "Lesson 21: Simulating Baseball - Part I"
+          - href: lessons/lsn_22_simulation_II.qmd
+            text: "Lesson 22: Simulating Baseball - Part II"
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

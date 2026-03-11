@@ -134,5 +134,9 @@
   "lessons/lsn_22_simulation_II.qmd": {
     "lsn_22_simulation_II.html": "0de4307f",
     "lsn_22_simulation_II.tex": "6e5ab548"
+  },
+  "lessons/lsn_23_the_great_streak.qmd": {
+    "lsn_23_the_great_streak.html": "bbc4b213",
+    "lsn_23_the_great_streak.tex": "4273b840"
   }
 }

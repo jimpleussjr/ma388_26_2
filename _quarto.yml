@@ -6,7 +6,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: Lessons
+      - text: Lessons 1-10
         menu:
           - href: lessons/lsn_1_course_intro.qmd
             text: "Lesson 1: Course Introduction"
@@ -26,6 +26,8 @@ website:
             text: "Lesson 9: Value of Plays: Run Expectancy Matrix"
           - href: lessons/lsn_10_hits_stealing.qmd
             text: "Lesson 10: Value of Plays: Base Hits and Stealing"
+      - text: Lessons 11-20
+        menu:
           - href: lessons/lsn_11_swinging_tendencies.qmd
             text: "Lesson 11: Behaviors by Count: Swinging Tendencies"
           - href: lessons/lsn_12_umpire_tendencies.qmd
@@ -44,6 +46,8 @@ website:
             text: "Lesson 19: Comparing Peak Trajectories II"
           - href: lessons/lsn_20_multilevel_modeling.qmd
             text: "Lesson 20: Multilevel Modeling"
+      - text: Lessons 21-30
+        menu:
           - href: lessons/lsn_21_simulation_I.qmd
             text: "Lesson 21: Simulating Baseball - Part I"
           - href: lessons/lsn_22_simulation_II.qmd

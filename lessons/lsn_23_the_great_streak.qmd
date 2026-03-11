@@ -112,7 +112,7 @@ moving_average <- function(df, width){
               Average = rollsum(H, width, fill = NA) / rollsum(AB, width, fill = NA))
 }
 
-joe_ma <- moving_average(joe, 10)
+joe_ma <- moving_average(joe, 50)
 
 joe_ma |> 
   ggplot(aes(x = Game, y = Average)) +
@@ -126,6 +126,8 @@ joe_ma |>
 ## How unusual was DiMaggio's streak for a player who hit safely in 114 of 139 games?
 
 * Let's review Father Costa's approach.
+
+[MLB Video: Costa 56 Probability](https://www.mlb.com/yankees/video/56-probability-c702744983)
 
 ```{r}
 joe |> 
@@ -141,9 +143,6 @@ joe |>
   
 
 ```
-
-
-[MLB Video: Costa 56 Probability](https://www.mlb.com/yankees/video/56-probability-c702744983)
 
 * Here's another approach using simulation.
 

@@ -132,10 +132,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Lessons</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons-1-10" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lessons 1-10</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons-1-10">    
         <li>
     <a class="dropdown-item" href="../lessons/lsn_1_course_intro.html">
  <span class="dropdown-text">Lesson 1: Course Introduction</span></a>
@@ -172,6 +172,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../lessons/lsn_10_hits_stealing.html">
  <span class="dropdown-text">Lesson 10: Value of Plays: Base Hits and Stealing</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons-11-20" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lessons 11-20</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons-11-20">    
         <li>
     <a class="dropdown-item" href="../lessons/lsn_11_swinging_tendencies.html">
  <span class="dropdown-text">Lesson 11: Behaviors by Count: Swinging Tendencies</span></a>
@@ -208,6 +215,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../lessons/lsn_20_multilevel_modeling.html">
  <span class="dropdown-text">Lesson 20: Multilevel Modeling</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons-21-30" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lessons 21-30</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons-21-30">    
         <li>
     <a class="dropdown-item" href="../lessons/lsn_21_simulation_I.html">
  <span class="dropdown-text">Lesson 21: Simulating Baseball - Part I</span></a>
@@ -404,7 +418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Average =</span> <span class="fu">rollsum</span>(H, width, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">/</span> <span class="fu">rollsum</span>(AB, width, <span class="at">fill =</span> <span class="cn">NA</span>))</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>joe_ma <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(joe, <span class="dv">10</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>joe_ma <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(joe, <span class="dv">50</span>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>joe_ma <span class="sc">|&gt;</span> </span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Game, <span class="at">y =</span> Average)) <span class="sc">+</span></span>
@@ -427,6 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Let’s review Father Costa’s approach.</li>
 </ul>
+<p><a href="https://www.mlb.com/yankees/video/56-probability-c702744983">MLB Video: Costa 56 Probability</a></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>joe <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(Date,<span class="fu">ymd</span>(<span class="st">'19410515'</span>),<span class="fu">ymd</span>(<span class="st">'19410716'</span>))) <span class="sc">|&gt;</span> </span>
@@ -445,7 +460,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1   247   223    91 0.408    56        3.98          0.876           0.000606</code></pre>
 </div>
 </div>
-<p><a href="https://www.mlb.com/yankees/video/56-probability-c702744983">MLB Video: Costa 56 Probability</a></p>
 <ul>
 <li>Here’s another approach using simulation.</li>
 </ul>

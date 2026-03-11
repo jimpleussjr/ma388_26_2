@@ -138,5 +138,9 @@
   "lessons/lsn_23_the_great_streak.qmd": {
     "lsn_23_the_great_streak.html": "bbc4b213",
     "lsn_23_the_great_streak.tex": "4273b840"
+  },
+  "lessons/lsn_24_streakiness_statistics.qmd": {
+    "lsn_24_streakiness_statistics.html": "c667d16d",
+    "lsn_24_streakiness_statistics.tex": "a01ff57f"
   }
 }

@@ -142,5 +142,13 @@
   "lessons/lsn_24_streakiness_statistics.qmd": {
     "lsn_24_streakiness_statistics.html": "c667d16d",
     "lsn_24_streakiness_statistics.tex": "a01ff57f"
+  },
+  "lessons/lsn_24_streaky_performances.qmd": {
+    "lsn_24_streaky_performances.html": "8a7b0435",
+    "lsn_24_streaky_performances.tex": "a813039f"
+  },
+  "grab_bag/march_madness.qmd": {
+    "march_madness.html": "2a9e6ade",
+    "march_madness.tex": "25ed02a7"
   }
 }

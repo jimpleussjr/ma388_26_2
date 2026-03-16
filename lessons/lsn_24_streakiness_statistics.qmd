@@ -30,35 +30,32 @@ We looked at DiMaggio's streak of games with hits, but now we turn our attention
 
 ```{r}
 # Load the data.
-fields_file = "master/data/fields.csv"
-data_file = "master/data/all2011.csv"
-site = "https://raw.githubusercontent.com/maxtoki/baseball_R/"
-fields <- read_csv(file = paste(site, fields_file, sep =""))
-retro2011 <- read_csv(file = paste(site, data_file, sep = ""),
-                    col_names = pull(fields, Header),
-                    na = character())
+
+retro2011 <- retrosheet_data(years_to_acquire = '2011') |> 
+  pluck('2011') |> 
+  pluck('events')
 ```
 
 Filter the data to include only Miguel Cabrera's plate appearances.
 
 ```{r}
 library(Lahman)
-cabrera_id <- People %>% 
-  filter(nameFirst == "Miguel", nameLast == "Cabrera") %>% 
-  select(retroID) %>% pull()
+cabrera_id <- People |> 
+  filter(nameFirst == "Miguel", nameLast == "Cabrera") |> 
+  select(retroID) |> pull()
 
-cabrera <- retro2011 %>% 
-  subset(BAT_ID == cabrera_id & AB_FL==TRUE)
+cabrera <- retro2011 |> 
+  subset(bat_id == cabrera_id & ab_fl==TRUE)
 ```
 
 To look at streaks we need to first identify which at-bats resulted in a hit and which resulted in an out. 
 
 ```{r}
-cabrera <- cabrera %>% 
-  mutate(H = ifelse(H_FL > 0, 1, 0),
-         DATE = str_sub(GAME_ID, 4, 12),
+cabrera <- cabrera |> 
+  mutate(H = ifelse(h_fl > 0, 1, 0),
+         DATE = str_sub(game_id, 4, 12),
          AB = 1,
-         AB_Num = row_number()) %>% 
+         AB_Num = row_number()) |> 
   arrange(DATE)
 ```
 
@@ -72,12 +69,12 @@ streaks <- function(y){
 }
 
 # First, let's look at hit streaks.
-cab_hits <- cabrera %>% 
-  pull(H) %>% 
-  streaks() %>%
+cab_hits <- cabrera |> 
+  pull(H) |> 
+  streaks() |>
   filter(values == 1)
 
-cab_hits %>% 
+cab_hits |> 
   pull(lengths) 
 ```
 
@@ -89,17 +86,17 @@ cab_hits %>%
 library(zoo)
 moving_average <- function(df, width){
   N <- nrow(df)
-  df %>% 
+  df |> 
     transmute(Game = rollmean(1:N, k = width, fill = NA),
               Average = rollsum(H, width, fill = NA) / rollsum(AB, width, fill = NA))
 }
 
 # Let's assume ~3 ABs/game, so 30 ABs will give us a ~10-game window.
-moving_average(cabrera, 30) %>% 
+moving_average(cabrera, 30) |> 
   ggplot(aes(Game, Average)) +
   geom_line() + xlab("AB") +
   geom_hline(yintercept = mean(cabrera$H)) +
-  geom_rug(data = cabrera %>% filter(H==1),
+  geom_rug(data = cabrera |> filter(H==1),
            aes(AB_Num, .3 * H), sides = "b")
 ```
 
@@ -111,12 +108,12 @@ Now let's look at Cabrera's hitting slumps.
 
 ```{r}
 # Find Cabrera's hitting slumps.
-cab_outs <- cabrera %>% 
-  pull(H) %>% 
-  streaks() %>%
+cab_outs <- cabrera |> 
+  pull(H) |> 
+  streaks() |>
   filter(values == 0)
 
-cab_outs %>% 
+cab_outs |> 
   pull(lengths) 
 ```
 
@@ -128,33 +125,33 @@ How does this compare to the rest of the league?  Since Cabrera had 572 at bats 
 
 ```{r}
 # Filter the data to get all players with over 500 at-bats in the season.
-retro_500 = retro2011 %>% 
-  group_by(BAT_ID) %>% 
-  summarise(AB = sum(AB_FL)) %>% 
-  filter(AB >= 500) %>% 
-  pull(BAT_ID)
+retro_500 = retro2011 |> 
+  group_by(bat_id) |> 
+  summarise(AB = sum(ab_fl)) |> 
+  filter(AB >= 500) |> 
+  pull(bat_id)
 
 # Create a function to calculate the longest slump for each player.
 longest_ofer <- function(batter){
-  retro2011 %>% 
-    filter(BAT_ID == batter, AB_FL == TRUE) %>% 
-    mutate(H = ifelse(H_FL > 0, 1, 0),
-           DATE = substr(GAME_ID, 4, 12)) %>% 
-    arrange(DATE) %>% 
-    pull(H) %>% 
-    streaks() %>% 
-    filter(values == 0) %>% 
+  retro2011 |> 
+    filter(bat_id == batter, ab_fl == TRUE) |> 
+    mutate(H = ifelse(h_fl > 0, 1, 0),
+           DATE = substr(game_id, 4, 12)) |> 
+    arrange(DATE) |> 
+    pull(H) |> 
+    streaks() |> 
+    filter(values == 0) |> 
     summarize(MAX_STREAK = max(lengths))
 }
 
 # Find each player's longest slump.
-retro_500 %>% 
-  map_df(longest_ofer) %>% 
-  mutate(BAT_ID = retro_500) %>% 
-  left_join(People %>% select(nameFirst, nameLast, retroID), 
-            by = c("BAT_ID" = "retroID")) %>% 
-  arrange(-MAX_STREAK) %>% 
-  mutate(Rank = row_number()) %>% 
+retro_500 |> 
+  map_df(longest_ofer) |> 
+  mutate(BAT_ID = retro_500) |> 
+  left_join(People |> select(nameFirst, nameLast, retroID), 
+            by = c("BAT_ID" = "retroID")) |> 
+  arrange(-MAX_STREAK) |> 
+  mutate(Rank = row_number()) |> 
   knitr::kable()
 ```
 
@@ -166,11 +163,11 @@ Calculate the streakiness coefficient for Cabrera.
 
 ```{r}
 # Streakiness Coefficient 
-cabrera_coeff <- cabrera %>% 
-  pull(H) %>%
-  streaks() %>% 
-  filter(values == 0) %>% 
-  summarize(C = sum(lengths ^ 2)) %>% 
+cabrera_coeff <- cabrera |> 
+  pull(H) |>
+  streaks() |> 
+  filter(values == 0) |> 
+  summarize(C = sum(lengths ^ 2)) |> 
   pull()
 
 cabrera_coeff
@@ -181,11 +178,11 @@ Now we can simulate what may have happened at random for a player with the same 
 ```{r}
 # Create a function to simulate the streakiness coefficient.
 random_mix <- function(y) {
-  y %>% 
-    sample() %>% 
-    streaks() %>% 
-    filter(values == 0) %>% 
-    summarize(C = sum(lengths ^ 2)) %>% 
+  y |> 
+    sample() |> 
+    streaks() |> 
+    filter(values == 0) |> 
+    summarize(C = sum(lengths ^ 2)) |> 
     pull()
 }
 

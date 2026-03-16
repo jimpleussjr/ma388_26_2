@@ -54,10 +54,14 @@ website:
             text: "Lesson 22: Simulating Baseball - Part II"
           - href: lessons/lsn_23_the_great_streak.qmd
             text: "Lesson 23: Baseball Streaks - The Great Streak"
+          - href: lessons/lsn_24_streakiness_statistics.qmd
+            text: "Lesson 24: Baseball Streaks - Streakiness Statistics"
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd
         text: 'Grab Bag Topics'
+      - href: grab_bag/march_madness.qmd
+        text: 'March Madness'
 format:
   html:
     theme: cosmo

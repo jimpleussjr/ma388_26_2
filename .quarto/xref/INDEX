@@ -150,5 +150,13 @@
   "grab_bag/march_madness.qmd": {
     "march_madness.html": "2a9e6ade",
     "march_madness.tex": "25ed02a7"
+  },
+  "lessons/lsn_25_statcast_spray_charts.qmd": {
+    "lsn_25_statcast_spray_charts.html": "29ef1a26",
+    "lsn_25_statcast_spray_charts.tex": "f934ce8f"
+  },
+  "lessons/lsn_26_statcast_spray_charts.qmd": {
+    "lsn_26_statcast_spray_charts.html": "fc544706",
+    "lsn_26_statcast_spray_charts.tex": "de67b186"
   }
 }

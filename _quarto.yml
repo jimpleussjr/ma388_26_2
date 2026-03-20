@@ -55,7 +55,9 @@ website:
           - href: lessons/lsn_23_the_great_streak.qmd
             text: "Lesson 23: Baseball Streaks - The Great Streak"
           - href: lessons/lsn_24_streakiness_statistics.qmd
-            text: "Lesson 24: Baseball Streaks - Streakiness Statistics"
+            text: "Lesson 26: Baseball Streaks - Streakiness Statistics"
+          - href: lessons/lsn_26_large_data_spray_charts.qmd
+            text: "Lesson 26: Working with Large Data - Statcast Spray Charts"  
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

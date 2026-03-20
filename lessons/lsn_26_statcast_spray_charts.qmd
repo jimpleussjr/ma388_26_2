@@ -1,6 +1,6 @@
 ---
-title: "MA388 Sabermetrics: Lesson 24"
-subtitle: "Streakiness Statistics"
+title: "MA388 Sabermetrics: Lesson 26"
+subtitle: "Statast Spray Charts"
 format:
   html:
     theme: cosmo

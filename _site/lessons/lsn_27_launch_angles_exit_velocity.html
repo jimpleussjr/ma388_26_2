@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MA388 Sabermetrics: Lesson 22 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 27 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -278,8 +278,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 22</h1>
-<p class="subtitle lead">Simulating Baseball: Part II</p>
+<h1 class="title">MA388 Sabermetrics: Lesson 27</h1>
+<p class="subtitle lead">Launch Angles and Exit Velocity</p>
 </div>
 
 
@@ -393,7 +393,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ev_plot <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">color =</span> estimated_woba_using_speedangle) <span class="sc">+</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_gradient2</span>(<span class="st">"BA"</span>, <span class="at">low =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">'blue'</span>,<span class="at">midpoint=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -453,13 +454,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> ev_plot <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">color =</span> estimated_woba_using_speedangle) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> ev_plot_2015 <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">color =</span> estimated_woba_using_speedangle) <span class="sc">+</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>c<span class="sc">+</span>d</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_gradient2</span>(<span class="st">"BA"</span>, <span class="at">low =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">'blue'</span>,<span class="at">midpoint=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> ev_plot_2015 <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">color =</span> estimated_woba_using_speedangle) <span class="sc">+</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_gradient2</span>(<span class="st">"BA"</span>, <span class="at">low =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">'blue'</span>,<span class="at">midpoint=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">"wOBA"</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>c<span class="sc">+</span>d</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

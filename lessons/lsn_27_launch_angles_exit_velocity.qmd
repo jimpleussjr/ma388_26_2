@@ -1,6 +1,6 @@
 ---
-title: "MA388 Sabermetrics: Lesson 22"
-subtitle: "Simulating Baseball: Part II"
+title: "MA388 Sabermetrics: Lesson 27"
+subtitle: "Launch Angles and Exit Velocity"
 format:
   html:
     theme: cosmo
@@ -109,6 +109,7 @@ From [MLB.com](https://www.mlb.com/glossary/advanced-stats/weighted-on-base-aver
 ```{r}
 ev_plot +
   aes(color = estimated_woba_using_speedangle) + 
+    scale_color_gradient2("BA", low = "red", mid = "white", high = 'blue',midpoint=1) +
   guides(color = guide_colorbar(title = "wOBA"))
 ```
 
@@ -158,10 +159,12 @@ Let's make the same side-by-side plot for wOBA:
 ```{r}
 c = ev_plot +
   aes(color = estimated_woba_using_speedangle) + 
+    scale_color_gradient2("BA", low = "red", mid = "white", high = 'blue',midpoint=1) +
   guides(color = guide_colorbar(title = "wOBA"))
 
 d = ev_plot_2015 +
   aes(color = estimated_woba_using_speedangle) + 
+    scale_color_gradient2("BA", low = "red", mid = "white", high = 'blue',midpoint=1) +
   guides(color = guide_colorbar(title = "wOBA"))
 
 c+d

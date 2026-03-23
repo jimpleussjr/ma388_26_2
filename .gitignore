@@ -2,5 +2,7 @@
 .Rproj.user
 .claude/
 _freeze/
+/lessons/statcast_2017.csv
+/lessons/statcast_2015.csv
 
 **/*.quarto_ipynb

@@ -158,5 +158,9 @@
   "lessons/lsn_26_statcast_spray_charts.qmd": {
     "lsn_26_statcast_spray_charts.html": "fc544706",
     "lsn_26_statcast_spray_charts.tex": "de67b186"
+  },
+  "lessons/lsn_27_launch_angles_exit_velocity.qmd": {
+    "lsn_27_launch_angles_exit_velocity.html": "9525f607",
+    "lsn_27_launch_angles_exit_velocity.tex": "1f0346e8"
   }
 }

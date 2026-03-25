@@ -162,5 +162,9 @@
   "lessons/lsn_27_launch_angles_exit_velocity.qmd": {
     "lsn_27_launch_angles_exit_velocity.html": "9525f607",
     "lsn_27_launch_angles_exit_velocity.tex": "1f0346e8"
+  },
+  "lessons/lsn_28_home_run_hitting_I.qmd": {
+    "lsn_28_home_run_hitting_I.html": "e248ac8b",
+    "lsn_28_home_run_hitting_I.tex": "5bbd3cd2"
   }
 }

@@ -60,7 +60,9 @@ website:
             text: "Lesson 26: Working with Large Data - Statcast Spray Charts"
           - href: lessons/lsn_27_launch_angles_exit_velocity.qmd
             text: "Lesson 27: Working with Large Data - Launch Angles and Exit Velocity" 
-            
+          - href: lessons/lsn_28_home_run_hitting_I.qmd
+            text: "Lesson 28: Home Run Hitting I" 
+              
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

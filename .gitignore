@@ -7,4 +7,4 @@ _freeze/
 /lessons/statcast_2023.csv
 
 **/*.quarto_ipynb
-_site/
+

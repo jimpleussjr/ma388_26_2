@@ -166,5 +166,9 @@
   "lessons/lsn_28_home_run_hitting_I.qmd": {
     "lsn_28_home_run_hitting_I.html": "e248ac8b",
     "lsn_28_home_run_hitting_I.tex": "5bbd3cd2"
+  },
+  "lessons/lsn_29_home_run_hitting_II.qmd": {
+    "lsn_29_home_run_hitting_II.html": "c9c96ed4",
+    "lsn_29_home_run_hitting_II.tex": "e5c993cb"
   }
 }

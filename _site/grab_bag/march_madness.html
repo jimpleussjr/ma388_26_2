@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -358,12 +393,246 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 <hr>
-<iframe src="cbs-sports-2026-bracket.pdf" width="140%" height="900" style="border: none;">
-Your browser does not support PDFs. <a href="cbs-sports-2026-bracket.pdf">Download the bracket PDF</a>.
-</iframe>
-<iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;">
-Your browser does not support PDFs. <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>.
-</iframe>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ## Results</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'march_madness_results.csv'</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>results <span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name,Round 32,Upset Points,Sweet 16,Elite 8,Final 4 ,Championship Game,Champion,Total</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Akula, Suhaan,23,1,24,12,12,10,6,88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Palam, Kai,26,1,24,18,8,5,0,82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yhu, Logan,27,1,26,15,8,5,0,82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poloskey, Parker,24,0,26,18,8,5,0,81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kwasniak, Babe,23,1,24,15,8,5,0,76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bartosh, Braden,25,2,20,12,4,5,6,74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duong, Ylan,23,2,24,15,8,0,0,72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chalk,24,0,24,15,8,,,71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Collins, Ethan,24,2,22,15,8,0,0,71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Teuscher, Kayla,25,1,22,15,8,0,0,71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jacknewitz, Marisa,26,3,22,6,8,5,0,70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">McCauley, Ireland,24,2,16,9,8,5,6,70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O’Keefe, Brendon,23,1,24,12,4,5,0,69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Owen, Jacob,23,1,22,12,4,5,0,67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yun, Grace,25,1,20,12,4,5,0,67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gohlich, Tyler,21,1,22,12,4,5,0,65</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ellis, Ethan,22,0,18,12,12,0,0,64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carmichael, Harry,25,0,18,12,4,5,0,64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Treacy, Keagan,25,2,18,9,4,5,0,63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coffman, Carter,24,2,20,12,4,0,0,62</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bekele, Brook,23,0,22,12,4,0,0,61</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lai, Sean,26,2,20,6,4,0,0,58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nordby, Kristian,25,1,16,12,4,0,0,58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">West, Jared,24,1,24,9,0,0,0,58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wurst, Riley,24,0,22,12,0,0,0,58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Catapano, Tyler,25,1,20,8,0,0,0,54</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hyder, Robert,25,2,18,9,0,0,0,54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LTC Pleuss,24,1,20,9,0,0,0,54</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Scott, Ryan,20,0,20,3,4,5,0,52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fellows, Gunnar,21,1,20,9,0,0,0,51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Russell, Owen,21,1,16,12,0,0,0,50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zick, Christina,24,1,16,9,0,0,0,50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burtner, Elijah,22,2,12,6,4,0,0,46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leja, Gabriel,21,3,16,6,0,0,0,46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">=======</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">,Round 32,Upset Points,Sweet 16,Elite 8,Final 4 ,Championship Game,Champion,Total,Final 4 Remaining,Champ Remaining</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yhu, Logan,27,1,26,,,,,54,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jacknewitz, Marisa,26,3,22,,,,,51,2,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Palam, Kai,26,1,24,,,,,51,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poloskey, Parker,24,0,26,,,,,50,3,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duong, Ylan,23,2,24,,,,,49,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">West, Jared,24,1,24,,,,,49,2,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Akula, Suhaan,23,1,24,,,,,48,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Collins, Ethan,24,2,22,,,,,48,3,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kwasniak, Babe,23,1,24,,,,,48,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lai, Sean,26,2,20,,,,,48,3,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O’Keefe, Brendon,23,1,24,,,,,48,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Teuscher, Kayla,25,1,22,,,,,48,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chalk,24,0,24,,,,,48,3,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bartosh, Braden,25,2,20,,,,,47,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Catapano, Tyler,25,1,20,,,,,46,3,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coffman, Carter,24,2,20,,,,,46,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Owen, Jacob,23,1,22,,,,,46,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wurst, Riley,24,0,22,,,,,46,2,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Yun, Grace,25,1,20,,,,,46,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bekele, Brook,23,0,22,,,,,45,2,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hyder, Robert,25,2,18,,,,,45,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Treacy, Keagan,25,2,18,,,,,45,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LTC Pleuss,24,1,20,,,,,45,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gohlich, Tyler,21,1,22,,,,,44,3,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carmichael, Harry,25,0,18,,,,,43,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fellows, Gunnar,21,1,20,,,,,42,1,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">McCauley, Ireland,24,2,16,,,,,42,4,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nordby, Kristian,25,1,16,,,,,42,2,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zick, Christina,24,1,16,,,,,41,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ellis, Ethan,22,0,18,,,,,40,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leja, Gabriel,21,3,16,,,,,40,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Scott, Ryan,20,0,20,,,,,40,4,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Russell, Owen,21,1,16,,,,,38,3,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burtner, Elijah,22,2,12,,,,,36,3,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5 <iframe src="cbs-sports-2026-bracket.pdf" width="140%" height="900" style="border: none;"> Your browser does not support PDFs. <a href="cbs-sports-2026-bracket.pdf">Download the bracket PDF</a>. </iframe></p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD <!-- <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;"> --> <!--   Your browser does not support PDFs.  --> <!--   <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>. --> <!-- </iframe> --> ======= <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;"> Your browser does not support PDFs. <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>. </iframe> &gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5</p>
 
 
 </section>

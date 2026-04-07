@@ -63,12 +63,33 @@ Welcome to our class March Madness bracket challenge! Points are awarded by roun
 
 ---
 
+<<<<<<< HEAD
+## Results
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+results <- read_csv('march_madness_results.csv')
+results |> 
+  kable()
+```
+
+
+=======
+>>>>>>> 2d36b39d35593137fd19992826f6076beb5a9ed5
 <iframe src="cbs-sports-2026-bracket.pdf" width="140%" height="900" style="border: none;">
   Your browser does not support PDFs. 
   <a href="cbs-sports-2026-bracket.pdf">Download the bracket PDF</a>.
 </iframe>
 
+<<<<<<< HEAD
+<!-- <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;"> -->
+<!--   Your browser does not support PDFs.  -->
+<!--   <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>. -->
+<!-- </iframe> -->
+=======
 <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;">
   Your browser does not support PDFs. 
   <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>.
 </iframe>
+>>>>>>> 2d36b39d35593137fd19992826f6076beb5a9ed5

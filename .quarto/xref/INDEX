@@ -170,5 +170,13 @@
   "lessons/lsn_29_home_run_hitting_II.qmd": {
     "lsn_29_home_run_hitting_II.html": "c9c96ed4",
     "lsn_29_home_run_hitting_II.tex": "e5c993cb"
+  },
+  "lessons/lsn_30_equivalence_coefficient.qmd": {
+    "lsn_30_equivalence_coefficient.html": "56d376f9",
+    "lsn_30_equivalence_coefficient.tex": "900cede9"
+  },
+  "lessons/lsn_31_ops+_babip.qmd": {
+    "lsn_31_ops+_babip.html": "b0c99c05",
+    "lsn_31_ops+_babip.tex": "17c86135"
   }
 }

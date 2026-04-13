@@ -253,6 +253,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../lessons/lsn_29_home_run_hitting_II.html">
  <span class="dropdown-text">Lesson 29: Home Run Hitting II</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_30_equivalence_coefficient.html">
+ <span class="dropdown-text">Lesson 30: Equivalence Coefficient</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lessons-31-40" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lessons 31-40</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lessons-31-40">    
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_31_ops+_babip.html">
+ <span class="dropdown-text">Lesson 31: OPS+ and BABIP</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -295,6 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#example-c-sweet-16-correct-pick" id="toc-example-c-sweet-16-correct-pick" class="nav-link" data-scroll-target="#example-c-sweet-16-correct-pick">Example C — Sweet 16 correct pick</a></li>
   </ul></li>
   <li><a href="#bonus-points" id="toc-bonus-points" class="nav-link" data-scroll-target="#bonus-points">Bonus Points</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="march_madness.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -393,7 +409,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ## Results</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
@@ -403,236 +421,411 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 100%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 18%">
+<col style="width: 9%">
+<col style="width: 6%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">Round 32</th>
+<th style="text-align: right;">Upset Points</th>
+<th style="text-align: right;">Sweet 16</th>
+<th style="text-align: right;">Elite 8</th>
+<th style="text-align: right;">Final 4</th>
+<th style="text-align: right;">Championship Game</th>
+<th style="text-align: right;">Champion</th>
+<th style="text-align: right;">Total</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Name,Round 32,Upset Points,Sweet 16,Elite 8,Final 4 ,Championship Game,Champion,Total</td>
+<td style="text-align: left;">Akula, Suhaan</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">88</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Akula, Suhaan,23,1,24,12,12,10,6,88</td>
+<td style="text-align: left;">Palam, Kai</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">82</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Palam, Kai,26,1,24,18,8,5,0,82</td>
+<td style="text-align: left;">Yhu, Logan</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">82</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Yhu, Logan,27,1,26,15,8,5,0,82</td>
+<td style="text-align: left;">Poloskey, Parker</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">81</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Poloskey, Parker,24,0,26,18,8,5,0,81</td>
+<td style="text-align: left;">Kwasniak, Babe</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">76</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Kwasniak, Babe,23,1,24,15,8,5,0,76</td>
+<td style="text-align: left;">Bartosh, Braden</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">74</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Bartosh, Braden,25,2,20,12,4,5,6,74</td>
+<td style="text-align: left;">Duong, Ylan</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">72</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Duong, Ylan,23,2,24,15,8,0,0,72</td>
+<td style="text-align: left;">Chalk</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">71</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Chalk,24,0,24,15,8,,,71</td>
+<td style="text-align: left;">Collins, Ethan</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">71</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Collins, Ethan,24,2,22,15,8,0,0,71</td>
+<td style="text-align: left;">Teuscher, Kayla</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">71</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Teuscher, Kayla,25,1,22,15,8,0,0,71</td>
+<td style="text-align: left;">Jacknewitz, Marisa</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">70</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Jacknewitz, Marisa,26,3,22,6,8,5,0,70</td>
+<td style="text-align: left;">McCauley, Ireland</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">70</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">McCauley, Ireland,24,2,16,9,8,5,6,70</td>
+<td style="text-align: left;">O’Keefe, Brendon</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">69</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">O’Keefe, Brendon,23,1,24,12,4,5,0,69</td>
+<td style="text-align: left;">Owen, Jacob</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">67</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Owen, Jacob,23,1,22,12,4,5,0,67</td>
+<td style="text-align: left;">Yun, Grace</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">67</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Yun, Grace,25,1,20,12,4,5,0,67</td>
+<td style="text-align: left;">Gohlich, Tyler</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">65</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Gohlich, Tyler,21,1,22,12,4,5,0,65</td>
+<td style="text-align: left;">Ellis, Ethan</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">64</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Ellis, Ethan,22,0,18,12,12,0,0,64</td>
+<td style="text-align: left;">Carmichael, Harry</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">64</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Carmichael, Harry,25,0,18,12,4,5,0,64</td>
+<td style="text-align: left;">Treacy, Keagan</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">63</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Treacy, Keagan,25,2,18,9,4,5,0,63</td>
+<td style="text-align: left;">Coffman, Carter</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">62</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Coffman, Carter,24,2,20,12,4,0,0,62</td>
+<td style="text-align: left;">Bekele, Brook</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">61</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bekele, Brook,23,0,22,12,4,0,0,61</td>
+<td style="text-align: left;">Lai, Sean</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">58</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Lai, Sean,26,2,20,6,4,0,0,58</td>
+<td style="text-align: left;">Nordby, Kristian</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">58</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Nordby, Kristian,25,1,16,12,4,0,0,58</td>
+<td style="text-align: left;">West, Jared</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">58</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">West, Jared,24,1,24,9,0,0,0,58</td>
+<td style="text-align: left;">Wurst, Riley</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">58</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Wurst, Riley,24,0,22,12,0,0,0,58</td>
+<td style="text-align: left;">Catapano, Tyler</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">54</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Catapano, Tyler,25,1,20,8,0,0,0,54</td>
+<td style="text-align: left;">Hyder, Robert</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">54</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Hyder, Robert,25,2,18,9,0,0,0,54</td>
+<td style="text-align: left;">LTC Pleuss</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">54</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">LTC Pleuss,24,1,20,9,0,0,0,54</td>
+<td style="text-align: left;">Scott, Ryan</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">52</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Scott, Ryan,20,0,20,3,4,5,0,52</td>
+<td style="text-align: left;">Fellows, Gunnar</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">51</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Fellows, Gunnar,21,1,20,9,0,0,0,51</td>
+<td style="text-align: left;">Russell, Owen</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Russell, Owen,21,1,16,12,0,0,0,50</td>
+<td style="text-align: left;">Zick, Christina</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Zick, Christina,24,1,16,9,0,0,0,50</td>
+<td style="text-align: left;">Burtner, Elijah</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">46</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Burtner, Elijah,22,2,12,6,4,0,0,46</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Leja, Gabriel,21,3,16,6,0,0,0,46</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">=======</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">,Round 32,Upset Points,Sweet 16,Elite 8,Final 4 ,Championship Game,Champion,Total,Final 4 Remaining,Champ Remaining</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yhu, Logan,27,1,26,,,,,54,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Jacknewitz, Marisa,26,3,22,,,,,51,2,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Palam, Kai,26,1,24,,,,,51,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Poloskey, Parker,24,0,26,,,,,50,3,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Duong, Ylan,23,2,24,,,,,49,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">West, Jared,24,1,24,,,,,49,2,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Akula, Suhaan,23,1,24,,,,,48,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Collins, Ethan,24,2,22,,,,,48,3,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Kwasniak, Babe,23,1,24,,,,,48,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Lai, Sean,26,2,20,,,,,48,3,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">O’Keefe, Brendon,23,1,24,,,,,48,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Teuscher, Kayla,25,1,22,,,,,48,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chalk,24,0,24,,,,,48,3,</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bartosh, Braden,25,2,20,,,,,47,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Catapano, Tyler,25,1,20,,,,,46,3,0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Coffman, Carter,24,2,20,,,,,46,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Owen, Jacob,23,1,22,,,,,46,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Wurst, Riley,24,0,22,,,,,46,2,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Yun, Grace,25,1,20,,,,,46,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bekele, Brook,23,0,22,,,,,45,2,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hyder, Robert,25,2,18,,,,,45,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Treacy, Keagan,25,2,18,,,,,45,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LTC Pleuss,24,1,20,,,,,45,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gohlich, Tyler,21,1,22,,,,,44,3,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Carmichael, Harry,25,0,18,,,,,43,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Fellows, Gunnar,21,1,20,,,,,42,1,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">McCauley, Ireland,24,2,16,,,,,42,4,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Nordby, Kristian,25,1,16,,,,,42,2,0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Zick, Christina,24,1,16,,,,,41,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ellis, Ethan,22,0,18,,,,,40,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Leja, Gabriel,21,3,16,,,,,40,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Scott, Ryan,20,0,20,,,,,40,4,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Russell, Owen,21,1,16,,,,,38,3,1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Burtner, Elijah,22,2,12,,,,,36,3,1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5</td>
+<td style="text-align: left;">Leja, Gabriel</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">46</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5 <iframe src="cbs-sports-2026-bracket.pdf" width="140%" height="900" style="border: none;"> Your browser does not support PDFs. <a href="cbs-sports-2026-bracket.pdf">Download the bracket PDF</a>. </iframe></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD <!-- <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;"> --> <!--   Your browser does not support PDFs.  --> <!--   <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>. --> <!-- </iframe> --> ======= <iframe src="LTC_Pleuss_2026_bracket.pdf" width="140%" height="900" style="border: none;"> Your browser does not support PDFs. <a href="LTC_Pleuss_2026_bracket.pdf">Download the bracket PDF</a>. </iframe> &gt;&gt;&gt;&gt;&gt;&gt;&gt; 2d36b39d35593137fd19992826f6076beb5a9ed5</p>
+<iframe src="cbs-sports-2026-bracket.pdf" width="140%" height="900" style="border: none;">
+Your browser does not support PDFs. <a href="cbs-sports-2026-bracket.pdf">Download the bracket PDF</a>.
+</iframe>
 
 
 </section>

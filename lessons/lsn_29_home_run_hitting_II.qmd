@@ -26,39 +26,39 @@ library(knitr)
 library(baseballr)
 ```
 
-```{r, include = FALSE}
-# Data for this lesson is an extract from the complete 2023 season.
-# df <- read_csv("statcast2023.csv") |>
-#   filter(type == "X") |>
-#   select(batter, pitcher, stand, events, home_team, away_team, plate_x, plate_z, 
-# hc_x, hc_y, launch_speed, launch_angle, if_fielding_alignment, hit_distance_sc) |>
-#   mutate(hit = events %in% c("single", "double", "triple", "home_run"))
-# write_csv(df, "statcast2023_bip.csv")
-```
-
 ```{r}
-# # Statcast season window for 2023 (regular + early postseason window as example)
+# Statcast season window for 2023 (regular + early postseason window as example)
 # start_date <- as.Date("2023-04-02")
-# end_date   <- as.Date("2023-11-01")
+# end_date   <- as.Date("2023-10-07")
 # 
 # # Break the range into chunks (API is happier with day- or week-sized chunks)
 # date_chunks <- seq(start_date, end_date, by = "1 week")
 # date_ends   <- pmin(date_chunks + 6, end_date)
 # 
 # # Pull BIP for each chunk
-# statcast_2023 <- map2_dfr(date_chunks, date_ends, ~{
+# statcast_2023 <- statcast_search(start_date = date_chunks[1], end_date = date_ends[1])
+# for(i in 2:length(date_chunks)){
+#   message("Fetching: ", date_chunks[i], " to ", date_chunks[i]+6)
+#   Sys.sleep(0.75)  # be polite to the endpoint
+#   statcast_2023 <<- bind_rows(statcast_2023,statcast_search(start_date = date_chunks[i], end_date = date_chunks[i] + 6))
+# }
+# 
+# statcast_2023 <- 
+#   map2_dfr(date_chunks, date_ends, ~{
 #   message("Fetching: ", .x, " to ", .y)
 #   Sys.sleep(0.75)  # be polite to the endpoint
-#   statcast_search(start_date = .x, end_date = .y)
+#   statcast_2023 <<- bind_rows(statcast_2023,statcast_search(start_date = .x, end_date = .y))
 # })
-# 
-# write_csv(statcast_2023,'statcast_2023.csv')
-# 
+# # # write_csv(statcast_2023,'statcast_2023.csv')
+# # 
 # bip_2023 <-
 #   statcast_2023 |>
-#   filter(type=='X')
+#   filter(type=='X') |>
+# mutate(hit = events %in% c('single','double','triple','home run'))
 # 
 # write_csv(bip_2023,'statcast_2023_bip.csv')
+# # 
+
 
 ```
 

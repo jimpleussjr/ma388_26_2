@@ -297,6 +297,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lessons/lsn_31_ops+_babip.html">
  <span class="dropdown-text">Lesson 31: OPS+ and BABIP</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_32_linear_weights.html">
+ <span class="dropdown-text">Lesson 32: Linear Weights</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -391,19 +395,20 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Batting <span class="sc">|&gt;</span> </span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(playerID <span class="sc">%in%</span> player_ids) <span class="sc">|&gt;</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">|&gt;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">HR =</span> <span class="fu">sum</span>(HR),</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">BB =</span> <span class="fu">sum</span>(BB),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">AB =</span> <span class="fu">sum</span>(AB),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">HBP =</span> <span class="fu">sum</span>(HBP),</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">SF =</span> <span class="fu">sum</span>(SF)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PA =</span> AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF) <span class="sc">|&gt;</span> </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(People <span class="sc">|&gt;</span> <span class="fu">select</span>(nameLast, nameFirst, playerID)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste</span>(nameFirst, nameLast, <span class="at">sep =</span> <span class="st">" "</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">everything</span>(), <span class="sc">-</span>nameLast, <span class="sc">-</span>nameFirst, <span class="sc">-</span>HBP, <span class="sc">-</span>SF) <span class="ot">-&gt;</span> career_totals</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>career_totals <span class="sc">|&gt;</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Career Statistics (through 2022 season)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID<span class="sc">&lt;</span><span class="dv">2023</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">|&gt;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">HR =</span> <span class="fu">sum</span>(HR),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">BB =</span> <span class="fu">sum</span>(BB),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">AB =</span> <span class="fu">sum</span>(AB),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">HBP =</span> <span class="fu">sum</span>(HBP),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">SF =</span> <span class="fu">sum</span>(SF)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PA =</span> AB <span class="sc">+</span> BB <span class="sc">+</span> HBP <span class="sc">+</span> SF) <span class="sc">|&gt;</span> </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(People <span class="sc">|&gt;</span> <span class="fu">select</span>(nameLast, nameFirst, playerID)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste</span>(nameFirst, nameLast, <span class="at">sep =</span> <span class="st">" "</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">everything</span>(), <span class="sc">-</span>nameLast, <span class="sc">-</span>nameFirst, <span class="sc">-</span>HBP, <span class="sc">-</span>SF) <span class="ot">-&gt;</span> career_totals</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>career_totals <span class="sc">|&gt;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Career Statistics (through 2022 season)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Career Statistics (through 2022 season)</caption>
@@ -420,18 +425,18 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">judgeaa01</td>
-<td style="text-align: right;">315</td>
-<td style="text-align: right;">693</td>
-<td style="text-align: right;">3564</td>
-<td style="text-align: right;">4316</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">472</td>
+<td style="text-align: right;">2638</td>
+<td style="text-align: right;">3155</td>
 <td style="text-align: left;">Aaron Judge</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">martijd02</td>
-<td style="text-align: right;">331</td>
-<td style="text-align: right;">601</td>
-<td style="text-align: right;">6152</td>
-<td style="text-align: right;">6854</td>
+<td style="text-align: right;">282</td>
+<td style="text-align: right;">518</td>
+<td style="text-align: right;">5286</td>
+<td style="text-align: right;">5886</td>
 <td style="text-align: left;">J. D. Martinez</td>
 </tr>
 </tbody>
@@ -488,15 +493,15 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">judgeaa01</td>
-<td style="text-align: right;">315</td>
-<td style="text-align: right;">693</td>
-<td style="text-align: right;">3564</td>
-<td style="text-align: right;">4316</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">472</td>
+<td style="text-align: right;">2638</td>
+<td style="text-align: right;">3155</td>
 <td style="text-align: left;">Aaron Judge</td>
-<td style="text-align: right;">1363.814</td>
-<td style="text-align: right;">1.401797</td>
-<td style="text-align: right;">4928</td>
-<td style="text-align: right;">442</td>
+<td style="text-align: right;">2354.691</td>
+<td style="text-align: right;">1.937235</td>
+<td style="text-align: right;">4993</td>
+<td style="text-align: right;">426</td>
 </tr>
 </tbody>
 </table>

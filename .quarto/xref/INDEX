@@ -178,5 +178,12 @@
   "lessons/lsn_31_ops+_babip.qmd": {
     "lsn_31_ops+_babip.html": "b0c99c05",
     "lsn_31_ops+_babip.tex": "17c86135"
+  },
+  "lessons/test_slides.qmd": {
+    "test_slides.html": "00b4bc75"
+  },
+  "lessons/lsn_32_linear_weights.qmd": {
+    "lsn_32_linear_weights.html": "b9caa91d",
+    "lsn_32_linear_weights.tex": "4d9fb1e3"
   }
 }

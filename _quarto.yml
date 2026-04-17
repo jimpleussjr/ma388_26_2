@@ -70,6 +70,8 @@ website:
         menu:
           - href: lessons/lsn_31_ops+_babip.qmd
             text: "Lesson 31: OPS+ and BABIP"
+          - href: lessons/lsn_32_linear_weights.qmd
+            text: "Lesson 32: Linear Weights"
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

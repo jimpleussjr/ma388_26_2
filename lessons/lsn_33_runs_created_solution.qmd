@@ -71,9 +71,9 @@ Let's see how many player-seasons yield valid *runs created* estimates using eac
 
 ```{r}
 RC_df |> 
-  summarize(RC_valid = sum(RC,na.rm = TRUE),
-            RC_SB_valid = sum(RC_SB,na.rm = TRUE),
-            RC_TECH_valid = sum(RC_TECH,na.rm = TRUE)) |> 
+  summarize(RC_valid = sum(!is.na(RC)),
+            RC_SB_valid = sum(!is.na(RC_SB)),
+            RC_TECH_valid = sum(!is.na(RC_TECH))) |> 
   kable()
 ```
 
@@ -204,7 +204,7 @@ RC_df |>
   arrange(-AVG) |> 
   head(9) |> 
   left_join(select(People, playerID, nameFirst, nameLast), by = "playerID") |> 
-  select(nameFirst, nameLast, yearID, teamID, lgID) |> 
+  select(nameFirst, nameLast, yearID, teamID, lgID,RC_win_pct,AVG) |> 
   kable()
 ```
 

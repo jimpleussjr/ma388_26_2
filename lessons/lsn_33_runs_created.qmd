@@ -1,5 +1,5 @@
 ---
-title: "MA388 Sabermetrics: Lesson 32"
+title: "MA388 Sabermetrics: Lesson 33"
 subtitle: "Runs Created School"
 format:
   html:
@@ -71,9 +71,9 @@ Let's see how many player-seasons yield valid *runs created* estimates using eac
 
 ```{r}
 RC_df |> 
-  summarize(RC_valid = sum(RC,na.rm = TRUE),
-            RC_SB_valid = sum(RC_SB,na.rm = TRUE),
-            RC_TECH_valid = sum(RC_TECH,na.rm = TRUE)) |> 
+  summarize(RC_valid = sum(!is.na(RC)),
+            RC_SB_valid = sum(!is.na(RC_SB)),
+            RC_TECH_valid = sum(!is.na(RC_TECH))) |> 
   kable()
 ```
 

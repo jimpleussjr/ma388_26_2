@@ -422,9 +422,9 @@ window.Quarto = {
 <p>Let’s see how many player-seasons yield valid <em>runs created</em> estimates using each formula:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RC_df <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(RC,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(RC_SB,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(RC_TECH,<span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC)),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_SB)),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_TECH))) <span class="sc">|&gt;</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -437,9 +437,9 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1779183</td>
-<td style="text-align: right;">-Inf</td>
-<td style="text-align: right;">-Inf</td>
+<td style="text-align: right;">82214</td>
+<td style="text-align: right;">70693</td>
+<td style="text-align: right;">58579</td>
 </tr>
 </tbody>
 </table>
@@ -632,7 +632,7 @@ window.Quarto = {
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>AVG) <span class="sc">|&gt;</span> </span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">9</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(People, playerID, nameFirst, nameLast), <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nameFirst, nameLast, yearID, teamID, lgID) <span class="sc">|&gt;</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nameFirst, nameLast, yearID, teamID, lgID,RC_win_pct,AVG) <span class="sc">|&gt;</span> </span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -643,6 +643,8 @@ window.Quarto = {
 <th style="text-align: right;">yearID</th>
 <th style="text-align: left;">teamID</th>
 <th style="text-align: left;">lgID</th>
+<th style="text-align: right;">RC_win_pct</th>
+<th style="text-align: right;">AVG</th>
 </tr>
 </thead>
 <tbody>
@@ -652,6 +654,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.8688559</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Michael</td>
@@ -659,6 +663,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.8198842</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Corey</td>
@@ -666,6 +672,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.7986623</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Michael</td>
@@ -673,6 +681,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.7833863</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Justin</td>
@@ -680,6 +690,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.7485346</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Drew</td>
@@ -687,6 +699,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.6988568</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Nolan</td>
@@ -694,6 +708,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.6841895</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Charlie</td>
@@ -701,6 +717,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.6368969</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Wilin</td>
@@ -708,6 +726,8 @@ window.Quarto = {
 <td style="text-align: right;">2014</td>
 <td style="text-align: left;">COL</td>
 <td style="text-align: left;">NL</td>
+<td style="text-align: right;">0.5734411</td>
+<td style="text-align: right;">0.7347453</td>
 </tr>
 </tbody>
 </table>

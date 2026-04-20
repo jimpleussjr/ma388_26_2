@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MA388 Sabermetrics: Lesson 32 – MA388 Sabermetrics</title>
+<title>MA388 Sabermetrics: Lesson 33 – MA388 Sabermetrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -353,7 +353,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MA388 Sabermetrics: Lesson 32</h1>
+<h1 class="title">MA388 Sabermetrics: Lesson 33</h1>
 <p class="subtitle lead">Runs Created School</p>
 </div>
 
@@ -422,9 +422,9 @@ window.Quarto = {
 <p>Let’s see how many player-seasons yield valid <em>runs created</em> estimates using each formula:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RC_df <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(RC,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(RC_SB,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(RC_TECH,<span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC)),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_SB)),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_TECH))) <span class="sc">|&gt;</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -437,9 +437,9 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1779183</td>
-<td style="text-align: right;">-Inf</td>
-<td style="text-align: right;">-Inf</td>
+<td style="text-align: right;">82214</td>
+<td style="text-align: right;">70693</td>
+<td style="text-align: right;">58579</td>
 </tr>
 </tbody>
 </table>

@@ -33,6 +33,14 @@ $$RC_{SB} = \frac{(H+BB-CS)\times (TB+(0.55\times SB))}{AB+BB}$$
 
 $$RC_{TECH} = \frac{(H+BB-CS + HBP - GIDP)\times (TB+(0.26\times (BB-IBB+HBP)) + 0.52 \times(SH+SF+SB)))}{AB+BB+HBP+SH+SF}$$
 
+### Foundation
+
+All these formulas take on the general formula:
+
+$$ RC_X = \frac{A\times B}{C} $$
+
+*What do A, B, and C communicate to the equation?*
+
 Do we have access to all of these statistics?  Yes and no -- it depends on the year and whether they were recorded at that time in history yet or not.  We do see that Lahman has placeholders for all of them when they are available.
 
 ```{r}
@@ -63,11 +71,13 @@ Let's see how many player-seasons yield valid *runs created* estimates using eac
 
 ```{r}
 RC_df |> 
-  summarize(RC_valid = sum(!is.na(RC)),
-            RC_SB_valid = sum(!is.na(RC_SB)),
-            RC_TECH_valid = sum(!is.na(RC_TECH))) |> 
+  summarize(RC_valid = sum(RC,na.rm = TRUE),
+            RC_SB_valid = sum(RC_SB,na.rm = TRUE),
+            RC_TECH_valid = sum(RC_TECH,na.rm = TRUE)) |> 
   kable()
 ```
+
+
 
 As expected, we have better coverage for the older formulas since some statistics required for the newer formulas have not always been recorded.  How good are these formulas?  What should the sum of all players' *runs created* be?  Let's look at the 2001 season.
 
@@ -127,16 +137,13 @@ We see in *Understanding Sabermetrics* a way to balance how many runs a player c
 RC_df <- RC_df |>
   # Let's consider only players who had some minimum number of at-bats.
   filter(AB > 100) |> 
-  group_by(playerID, yearID) |> 
-  mutate(SH = ifelse(is.na(SH), 0, SH),
-         SF = ifelse(is.na(SF), 0, SF),
-         GIDP = ifelse(is.na(GIDP), 0, GIDP),
-         OUTS = AB - H + SH + SF + GIDP,
+  replace_na(list(SH=0,SF=0,GIDP=0)) |> 
+  mutate(OUTS = AB - H + SH + SF + GIDP,
          SINGLE_GAMES = OUTS / 27,
          RC_rate = RC / SINGLE_GAMES,
          RC_SB_rate = RC_SB / SINGLE_GAMES,
-         RC_TECH_rate = RC_TECH / SINGLE_GAMES) |> 
-  ungroup()
+         RC_TECH_rate = RC_TECH / SINGLE_GAMES,
+         .by=c('playerID','yearID')) 
 ```
 
 ### Question 1 (again): Who is the best batter in history?  
@@ -146,8 +153,8 @@ Consider now placing a lineup of just one batter against an average opponent.  W
 ```{r}
 year_lg_runs_per_game <- Teams |> 
   filter(yearID > 1910) |> 
-  group_by(yearID, lgID) |> 
-  summarize(lg_avg_runs_per_game = sum(R) / sum(G))
+  summarize(lg_avg_runs_per_game = sum(R) / sum(G),
+            .by=c('lgID','yearID'))
 
 RC_df <- RC_df |> 
   left_join(year_lg_runs_per_game, by = c("yearID", "lgID"))
@@ -173,7 +180,6 @@ Again, you'll need to decide a few things:
 ```{r}
 # Make the case for your "best batter" claim.
 
-
 ```
 
 \newpage
@@ -184,7 +190,6 @@ Which team had the best combination of nine batters on its roster in the same ye
 
 ```{r}
 # Make the case for your "best lineup" claim.
-
 
 ```
 

@@ -340,6 +340,7 @@ window.Quarto = {
   <li><a href="#basic-runs-created" id="toc-basic-runs-created" class="nav-link" data-scroll-target="#basic-runs-created">Basic Runs Created</a></li>
   <li><a href="#stolen-base-version-of-runs-created" id="toc-stolen-base-version-of-runs-created" class="nav-link" data-scroll-target="#stolen-base-version-of-runs-created">Stolen Base Version of Runs Created</a></li>
   <li><a href="#technical-version-of-runs-created" id="toc-technical-version-of-runs-created" class="nav-link" data-scroll-target="#technical-version-of-runs-created">“Technical” Version of Runs Created</a></li>
+  <li><a href="#foundation" id="toc-foundation" class="nav-link" data-scroll-target="#foundation">Foundation</a></li>
   <li><a href="#question-1-who-is-the-best-batter-in-history" id="toc-question-1-who-is-the-best-batter-in-history" class="nav-link" data-scroll-target="#question-1-who-is-the-best-batter-in-history">Question 1: Who is the best batter in history?</a></li>
   <li><a href="#question-1-again-who-is-the-best-batter-in-history" id="toc-question-1-again-who-is-the-best-batter-in-history" class="nav-link" data-scroll-target="#question-1-again-who-is-the-best-batter-in-history">Question 1 (again): Who is the best batter in history?</a></li>
   <li><a href="#question-2-which-team-had-the-greatest-lineup" id="toc-question-2-which-team-had-the-greatest-lineup" class="nav-link" data-scroll-target="#question-2-which-team-had-the-greatest-lineup">Question 2: Which team had the greatest lineup?</a></li>
@@ -384,6 +385,12 @@ window.Quarto = {
 <section id="technical-version-of-runs-created" class="level3">
 <h3 class="anchored" data-anchor-id="technical-version-of-runs-created">“Technical” Version of Runs Created</h3>
 <p><span class="math display">\[RC_{TECH} = \frac{(H+BB-CS + HBP - GIDP)\times (TB+(0.26\times (BB-IBB+HBP)) + 0.52 \times(SH+SF+SB)))}{AB+BB+HBP+SH+SF}\]</span></p>
+</section>
+<section id="foundation" class="level3">
+<h3 class="anchored" data-anchor-id="foundation">Foundation</h3>
+<p>All these formulas take on the general formula:</p>
+<p><span class="math display">\[ RC_X = \frac{A\times B}{C} \]</span></p>
+<p><em>What do A, B, and C communicate to the equation?</em></p>
 <p>Do we have access to all of these statistics? Yes and no – it depends on the year and whether they were recorded at that time in history yet or not. We do see that Lahman has placeholders for all of them when they are available.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -415,9 +422,9 @@ window.Quarto = {
 <p>Let’s see how many player-seasons yield valid <em>runs created</em> estimates using each formula:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RC_df <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC)),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_SB)),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(RC_TECH))) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">RC_valid =</span> <span class="fu">sum</span>(RC,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_SB_valid =</span> <span class="fu">sum</span>(RC_SB,<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">RC_TECH_valid =</span> <span class="fu">sum</span>(RC_TECH,<span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -430,9 +437,9 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">82214</td>
-<td style="text-align: right;">70693</td>
-<td style="text-align: right;">58579</td>
+<td style="text-align: right;">1779183</td>
+<td style="text-align: right;">-Inf</td>
+<td style="text-align: right;">-Inf</td>
 </tr>
 </tbody>
 </table>
@@ -528,16 +535,13 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>RC_df <span class="ot">&lt;-</span> RC_df <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Let's consider only players who had some minimum number of at-bats.</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID, yearID) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SH =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(SH), <span class="dv">0</span>, SH),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">SF =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(SF), <span class="dv">0</span>, SF),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">GIDP =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(GIDP), <span class="dv">0</span>, GIDP),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">OUTS =</span> AB <span class="sc">-</span> H <span class="sc">+</span> SH <span class="sc">+</span> SF <span class="sc">+</span> GIDP,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">SINGLE_GAMES =</span> OUTS <span class="sc">/</span> <span class="dv">27</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_rate =</span> RC <span class="sc">/</span> SINGLE_GAMES,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_SB_rate =</span> RC_SB <span class="sc">/</span> SINGLE_GAMES,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_TECH_rate =</span> RC_TECH <span class="sc">/</span> SINGLE_GAMES) <span class="sc">|&gt;</span> </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">SH=</span><span class="dv">0</span>,<span class="at">SF=</span><span class="dv">0</span>,<span class="at">GIDP=</span><span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OUTS =</span> AB <span class="sc">-</span> H <span class="sc">+</span> SH <span class="sc">+</span> SF <span class="sc">+</span> GIDP,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">SINGLE_GAMES =</span> OUTS <span class="sc">/</span> <span class="dv">27</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_rate =</span> RC <span class="sc">/</span> SINGLE_GAMES,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_SB_rate =</span> RC_SB <span class="sc">/</span> SINGLE_GAMES,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">RC_TECH_rate =</span> RC_TECH <span class="sc">/</span> SINGLE_GAMES,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by=</span><span class="fu">c</span>(<span class="st">'playerID'</span>,<span class="st">'yearID'</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="question-1-again-who-is-the-best-batter-in-history" class="level3">
@@ -546,8 +550,8 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>year_lg_runs_per_game <span class="ot">&lt;-</span> Teams <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;</span> <span class="dv">1910</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lg_avg_runs_per_game =</span> <span class="fu">sum</span>(R) <span class="sc">/</span> <span class="fu">sum</span>(G))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lg_avg_runs_per_game =</span> <span class="fu">sum</span>(R) <span class="sc">/</span> <span class="fu">sum</span>(G),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by=</span><span class="fu">c</span>(<span class="st">'lgID'</span>,<span class="st">'yearID'</span>))</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>RC_df <span class="ot">&lt;-</span> RC_df <span class="sc">|&gt;</span> </span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(year_lg_runs_per_game, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"yearID"</span>, <span class="st">"lgID"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

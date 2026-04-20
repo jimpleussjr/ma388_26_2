@@ -302,6 +302,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lessons/lsn_32_linear_weights.html">
  <span class="dropdown-text">Lesson 32: Linear Weights</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_33_runs_created.html">
+ <span class="dropdown-text">Lesson 33: Runs Created School</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -397,7 +401,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Let’s see what this looks like for the 2011 season.</p>
-<div style="page-break-after: always;"></div>
+<!-- \newpage -->
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -449,7 +453,7 @@ window.Quarto = {
 </div>
 </div>
 <p>How do these weights compare to those in slugging percentage (SLG)?</p>
-<div style="page-break-after: always;"></div>
+<!-- \newpage -->
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for 2011 Players with at least 500 at-bats.</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"AB"</span>, <span class="st">"H"</span>, <span class="st">"X2B"</span>, <span class="st">"X3B"</span>, <span class="st">"HR"</span>, <span class="st">"BB"</span>, <span class="st">"HBP"</span>, <span class="st">"SF"</span>, <span class="st">"RBI"</span>)</span>
@@ -874,7 +878,7 @@ window.Quarto = {
 
 </div>
 </div>
-<div style="page-break-after: always;"></div>
+<!-- \newpage -->
 <p>In terms of BattingRuns, is it more important to hit for power or on base percentage?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>batting_2011 <span class="sc">|&gt;</span></span>

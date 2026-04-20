@@ -185,5 +185,13 @@
   "lessons/lsn_32_linear_weights.qmd": {
     "lsn_32_linear_weights.html": "b9caa91d",
     "lsn_32_linear_weights.tex": "4d9fb1e3"
+  },
+  "lessons/lsn_33_runs_created.qmd": {
+    "lsn_33_runs_created.html": "f108b19b",
+    "lsn_33_runs_created.tex": "0b7dc87d"
+  },
+  "lessons/lsn_33_runs_created_solution.qmd": {
+    "lsn_33_runs_created_solution.html": "d4ec082a",
+    "lsn_33_runs_created_solution.tex": "111193a9"
   }
 }

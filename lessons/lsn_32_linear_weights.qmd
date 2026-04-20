@@ -71,7 +71,7 @@ How do we interpret BattingRuns?
 
 Let’s see what this looks like for the 2011 season.
 
-\newpage
+<!-- \newpage -->
 
 ```{r}
 library(Lahman)
@@ -90,7 +90,7 @@ weights |> kable(digits = 3)
 
 How do these weights compare to those in slugging percentage (SLG)?
 
-\newpage
+<!-- \newpage -->
 
 ```{r}
 # Filter for 2011 Players with at least 500 at-bats.
@@ -223,7 +223,7 @@ What other factors would you want to consider?
 <div style="margin-top: .5 in;"></div>
 :::
 
-\newpage
+<!-- \newpage -->
 
 In terms of BattingRuns, is it more important to hit for power or on base percentage?
 

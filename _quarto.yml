@@ -72,6 +72,8 @@ website:
             text: "Lesson 31: OPS+ and BABIP"
           - href: lessons/lsn_32_linear_weights.qmd
             text: "Lesson 32: Linear Weights"
+          - href: lessons/lsn_33_runs_created.qmd
+            text: "Lesson 33: Runs Created School"
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

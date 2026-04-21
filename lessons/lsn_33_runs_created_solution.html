@@ -302,8 +302,12 @@ window.Quarto = {
  <span class="dropdown-text">Lesson 32: Linear Weights</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lessons/lsn_33_runs_created.html">
+    <a class="dropdown-item" href="../lessons/lsn_33_runs_created_solution.html">
  <span class="dropdown-text">Lesson 33: Runs Created School</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lessons/lsn_34_quarto_presentations.html">
+ <span class="dropdown-text">Lesson 34: Quarto Presentations</span></a>
   </li>  
     </ul>
   </li>
@@ -573,9 +577,9 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the case for your "best batter" claim.</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>RC_df <span class="sc">|&gt;</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AB <span class="sc">&gt;</span> <span class="dv">250</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>RC) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>RC_rate) <span class="sc">|&gt;</span> </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, RC) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID, RC,RC_SB,RC_TECH,RC_rate) <span class="sc">|&gt;</span> </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -584,33 +588,51 @@ window.Quarto = {
 <th style="text-align: left;">playerID</th>
 <th style="text-align: right;">yearID</th>
 <th style="text-align: right;">RC</th>
+<th style="text-align: right;">RC_SB</th>
+<th style="text-align: right;">RC_TECH</th>
+<th style="text-align: right;">RC_rate</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ruthba01</td>
-<td style="text-align: right;">1921</td>
-<td style="text-align: right;">232.8365</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ruthba01</td>
-<td style="text-align: right;">1923</td>
-<td style="text-align: right;">216.2211</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">gehrilo01</td>
-<td style="text-align: right;">1927</td>
-<td style="text-align: right;">210.9221</td>
+<td style="text-align: left;">bondsba01</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">183.8033</td>
+<td style="text-align: right;">185.2988</td>
+<td style="text-align: right;">203.3741</td>
+<td style="text-align: right;">20.17353</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bondsba01</td>
-<td style="text-align: right;">2001</td>
-<td style="text-align: right;">209.5911</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">185.9135</td>
+<td style="text-align: right;">187.6834</td>
+<td style="text-align: right;">208.0899</td>
+<td style="text-align: right;">19.30640</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">hornsro01</td>
-<td style="text-align: right;">1922</td>
-<td style="text-align: right;">206.0320</td>
+<td style="text-align: left;">ruthba01</td>
+<td style="text-align: right;">1920</td>
+<td style="text-align: right;">205.8254</td>
+<td style="text-align: right;">200.7835</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">19.16305</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ruthba01</td>
+<td style="text-align: right;">1921</td>
+<td style="text-align: right;">232.8365</td>
+<td style="text-align: right;">228.7498</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">18.48996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ruthba01</td>
+<td style="text-align: right;">1923</td>
+<td style="text-align: right;">216.2211</td>
+<td style="text-align: right;">208.8958</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">18.24366</td>
 </tr>
 </tbody>
 </table>

@@ -181,9 +181,9 @@ Again, you'll need to decide a few things:
 # Make the case for your "best batter" claim.
 RC_df |> 
   filter(AB > 250) |> 
-  arrange(-RC) |> 
+  arrange(-RC_rate) |> 
   head(5) |> 
-  select(playerID, yearID, RC) |> 
+  select(playerID, yearID, RC,RC_SB,RC_TECH,RC_rate) |> 
   kable()
 ```
 

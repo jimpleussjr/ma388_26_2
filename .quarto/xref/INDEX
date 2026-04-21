@@ -193,5 +193,16 @@
   "lessons/lsn_33_runs_created_solution.qmd": {
     "lsn_33_runs_created_solution.html": "d4ec082a",
     "lsn_33_runs_created_solution.tex": "111193a9"
+  },
+  "lessons/lsn_34_quarto_presentations.qmd": {
+    "lsn_34_quarto_presentations.html": "a148a5f7",
+    "lsn_34_quarto_presentations.tex": "b2cc9ec5"
+  },
+  "lessons/quarto_slides_demo.qmd": {
+    "quarto_slides_demo.html": "e7a581f5",
+    "demo_slides.html": "889c111b"
+  },
+  "lessons/lsn_34_quarto_presentation_demo.qmd": {
+    "lsn_34_quarto_presentation_demo.html": "ac030fb7"
   }
 }

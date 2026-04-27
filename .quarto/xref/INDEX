@@ -204,5 +204,13 @@
   },
   "lessons/lsn_34_quarto_presentation_demo.qmd": {
     "lsn_34_quarto_presentation_demo.html": "ac030fb7"
+  },
+  "lessons/slide_demo.qmd": {
+    "slide_demo.html": "40d90eed",
+    "Hitting_Leaders.html": "0b8026c9"
+  },
+  "lessons/lsn_35_shiny.qmd": {
+    "lsn_35_shiny.html": "75a2be09",
+    "lsn_35_shiny.tex": "1ff81b1a"
   }
 }

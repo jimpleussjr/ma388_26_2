@@ -76,6 +76,10 @@ website:
             text: "Lesson 33: Runs Created School"
           - href: lessons/lsn_34_quarto_presentations.qmd
             text: "Lesson 34: Quarto Presentations"
+          - href: lessons/lsn_34_quarto_presentation_demo.qmd
+            text: "Example Quarto Presentation"
+          - href: lessons/lsn_35_shiny.qmd
+            text: "Lesson 35: Shiny"  
       - href: calendar/calendar.qmd
         text: Calendar
       - href: grab_bag/grab_bag.qmd

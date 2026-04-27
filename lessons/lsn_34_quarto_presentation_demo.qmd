@@ -66,13 +66,13 @@ league_stats <- Batting %>%
 
 ## Cool Interactive Features {.smaller}
 
-::: {.incremental}
-- Incremental bullet builds
-- Fragments that appear on click
-- Code highlighting line-by-line
-- Auto-animate transitions
-- Speaker notes / chalkboard
-- Embedded HTML widgets
+::: incremental
+-   Incremental bullet builds
+-   Fragments that appear on click
+-   Code highlighting line-by-line
+-   Auto-animate transitions
+-   Speaker notes / chalkboard
+-   Embedded HTML widgets
 :::
 
 # Batting Leaders
@@ -97,11 +97,11 @@ player_stats %>%
   kable()
 ```
 
-::: {.fragment}
+::: fragment
 OPS combines ability to get on base **and** hit for power.
 :::
 
-::: {.fragment}
+::: fragment
 Great single-number summary for offensive value.
 :::
 
@@ -121,36 +121,44 @@ team_stats |>
   labs(x = "Year", y = "Batting Average")
 ```
 
-## `r params$team_name` Home Runs vs League Average {auto-animate=true}
+## `r params$team_name` Home Runs {auto-animate="true"}
 
 ```{r}
 peakHR <- team_stats |> slice_max(HR,n=1)
 team_stats |>
   ggplot(aes(yearID, HR)) +
-  geom_line(linewidth = 1.2) +
+  geom_line(aes(color='Team'),linewidth = 1.2) +
   geom_point(size = 2) +
   theme_bw() +
-  labs(x = "Year", y = "Home Runs")#+
-  # geom_line(data=league_stats, color = "red",linewidth=1.2, class = "fragment")
+  labs(x = "Year", y = "Home Runs",color="") +
+  # geom_line(data=league_stats, aes(color = "League"),linewidth=1.2, class = "fragment") +
+  # geom_point(data=league_stats,size = 2) +
+  scale_color_manual(values = c("Team" = "black", "League" = "red"))
+
 ```
 
-::: {.fragment}
+::: fragment
 Peak power occurs in `r peakHR$yearID` with `r peakHR$HR` homeruns
 :::
 
-::: {.fragment}
+::: fragment
 Shortened 2020 season.
 :::
 
-## `r params$team_name` Home Runs {auto-animate=true}
+## `r params$team_name` Home Runs vs League Average {auto-animate="true"}
 
 ```{r}
 peakHR <- team_stats |> slice_max(HR,n=1)
 team_stats |>
   ggplot(aes(yearID, HR)) +
-  geom_line(linewidth = 1.2) +
+  geom_line(aes(color='Team'),linewidth = 1.2) +
   geom_point(size = 2) +
   theme_bw() +
-  labs(x = "Year", y = "Home Runs")+
-  geom_line(data=league_stats, color = "red",linewidth=1.2, class = "fragment")
+  labs(x = "Year", y = "Home Runs",color="") +
+  geom_line(data=league_stats, aes(color = "League"),linewidth=1.2, class = "fragment") +
+  geom_point(data=league_stats,size = 2) +
+  scale_color_manual(values = c("Team" = "black", "League" = "red"))
+
 ```
+-   Peak power occurs in `r peakHR$yearID` with `r peakHR$HR` homeruns
+-   Shortened 2020 season.
